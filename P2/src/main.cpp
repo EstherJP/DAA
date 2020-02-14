@@ -4,6 +4,7 @@
 #include "ReadTape.hpp"
 #include "WriteTape.hpp"
 #include "instruction.hpp"
+#include "memory.hpp"
 
 using namespace std;
 
@@ -15,12 +16,5 @@ int main(int argc, char* argv[]) {
     ReadTape read(input);
     WriteTape write(output);
 
-    read.readFile();
-
-    write.setTape(4);
-    write.incrementCabezal();
-    write.setTape(7);
-    write.incrementCabezal();
-
-    write.writeFile();
+    Memory reg;
 }

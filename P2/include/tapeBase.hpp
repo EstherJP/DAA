@@ -29,5 +29,4 @@ class TapeBase {
         void setTape(int t);
 
         void showTape(void);
-
 };

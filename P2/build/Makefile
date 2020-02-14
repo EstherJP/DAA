@@ -6,12 +6,15 @@ ODIR=../src
 
 LIBS=-lm
 
-_OBJ = main.o tapeBase.o ReadTape.o WriteTape.o instruction.o
+_OBJ = main.o tapeBase.o ReadTape.o WriteTape.o instruction.o memory.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 all: main
 
 $(ODIR)/tapeBase.o: $(ODIR)/tapeBase.cpp $(IDIR)/tapeBase.hpp 
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+$(ODIR)/memory.o: $(ODIR)/memory.cpp $(IDIR)/memory.hpp 
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(ODIR)/ReadTape.o: $(ODIR)/ReadTape.cpp $(IDIR)/ReadTape.hpp $(IDIR)/tapeBase.hpp 
