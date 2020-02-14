@@ -33,3 +33,10 @@ vector<int> TapeBase::getTape(void) {
 void TapeBase::setTape(int t) { 
     tape_.push_back(t); 
 }
+
+void TapeBase::showTape(void) {
+    for(int i = 0; i < tape_.size(); i++) {
+        cout << tape_[i] << " ";
+    }
+    cout << endl;
+}

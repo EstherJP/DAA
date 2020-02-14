@@ -7,21 +7,14 @@ WriteTape::WriteTape(char* filename) : TapeBase(filename) {}
 
 WriteTape::~WriteTape() {}
 
-void WriteTape::readFile(void) {
+void WriteTape::writeFile(void) {
 
-    ofstream file();
-    file.open(getFilename());
+    ofstream file(getFilename());
+    // file.open(getFilename());
 
-    if(!file.is_open()) {
-        cout << "ERROR APERTURA" << endl;
+    for(int i = 0; i < getTape().size(); i++) {
+        file << getTape()[i] << endl;
     }
-
-    else {
-        while (!file.eof()) {
-            for(int i = 0; i < getTape().size(); i++) {
-                file << getTape()[i];
-            }
-        }
-    } 
     file.close();
+    cout << "Cinta exportada" << endl;
 }

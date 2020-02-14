@@ -28,6 +28,6 @@ class TapeBase {
         vector<int> getTape(void);
         void setTape(int t);
 
-        virtual void readFile(void) = 0;    // Método virtual por defecto que lee el fichero y crea la cinta
-        // virtual void writeTape(void) = 0;
+        void showTape(void);
+
 };
