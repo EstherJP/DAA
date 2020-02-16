@@ -18,9 +18,7 @@ void Simulation::readFile(void) {
     fstream file;
     file.open(filename_);
 
-    if(!file.is_open()) {
-        cout << "ERROR APERTURA" << endl;
-    }
+    if(!file.is_open()) throw "Error: program file don't exist";
 
     else {
         while (!file.eof()) {
@@ -187,17 +185,21 @@ void Simulation::ejecutar(int t) {
         }
 
         else if(name == "div") {
+            string err = "Error: division 0";
             if(dir == 0) {
-                reg_.setAcc(reg_.getAcc() / reg_.getReg(o));
+                if(reg_.getReg(o) == 0) throw err;
+                else reg_.setAcc(reg_.getAcc() / reg_.getReg(o));
             }
 
             else if(dir == 1) {
                 int aux = reg_.getReg(o);
-                reg_.setAcc(reg_.getAcc() / aux);
+                if(aux == 0) throw err;
+                else reg_.setAcc(reg_.getAcc() / aux);
             }
 
             else if(dir == 2) {
-                reg_.setAcc(reg_.getAcc() / o);
+                if(o == 0) throw err;
+                else reg_.setAcc(reg_.getAcc() / o);
             }
 
             if(t == 1) {
@@ -221,8 +223,11 @@ void Simulation::ejecutar(int t) {
 
         else if(name == "write") {
             if(dir == 0) {
-                write_.setTape(reg_.getReg(o));
-                write_.incrementCabezal();
+                if(reg_.getReg(o) == 0) throw "Error: can't WRITE 0";
+                else {
+                    write_.setTape(reg_.getReg(o));
+                    write_.incrementCabezal();
+                }
             }
             else if(dir == 1) {
                 int aux = reg_.getReg(o);

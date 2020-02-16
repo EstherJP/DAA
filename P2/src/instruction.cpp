@@ -2,14 +2,14 @@
 
 using namespace std;
 
-Instruction::Instruction(string instr, int pos): instr_(instr) {
+Instruction::Instruction(string instr, int pos): instr_(instr),  pos_(pos) {
     // si es etiqueta
     if(instr_.back() == ':') {
         instr_.pop_back();
         tag_ = instr_;
-        posTag_ = pos;
         typeInstr_ = 2;
     }
+
 
     else if(instr_ == "halt") {
         nameInstr_ = instr_;
@@ -85,7 +85,9 @@ bool Instruction::legalInstr(void) {
     }
 
     if(typeInstr_ == 4) {
-        cout << "No existe la instruccion: " << nameInstr_ << endl;
+        string pos = to_string(pos_);
+        string err = "Error: illegal_instruction at line " + pos;
+        throw err;
     }
 }
 
@@ -109,15 +111,14 @@ string Instruction::getTag(void) {
     return tag_;
 }
 
-int Instruction::getPosTag(void) {
-    return posTag_;
+int Instruction::getPos(void) {
+    return pos_;
 }
 
 void Instruction::showInfo(void) {
     cout << "---INSTRUCCIONES---" << endl;
     if(!tag_.empty()) {
         cout << "Etiqueta: " << tag_ << endl;
-        cout << "postag: " << posTag_ << endl << endl;
     }
 
     else {

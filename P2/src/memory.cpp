@@ -19,15 +19,11 @@ void Memory::store(int i, int dir) {
         register_[aux] = register_[0];
     }
 
-    else if(dir > 1) {
-        cout << "Error: no existe este direccionamiento\n";
-        return;
-    }
+    else if(dir == 2) throw "Error: STORE cant't has inmediate direct";
 
-    else if(i > 16) {
-        cout << "Error: overflow register\n";
-        return;
-    }
+    else if(dir > 1) throw "Error: direct doesn't exist";
+
+    else if(i > 16) throw "Error: overflow register";
 }
 
 // LOAD
@@ -45,15 +41,9 @@ void Memory::load(int i, int dir) {
         register_[0] = i;
     }
 
-    else if(dir > 2) {
-        cout << "Error: no existe este direccionamiento\n";
-        return;
-    }
+    else if(dir > 2) throw "Error: direct doesn't exist";
 
-    else if(i > 16) {
-        cout << "Error: overflow register\n";
-        return;
-    }
+    else if(i > 16) throw  "Error: overflow register";
 }
 
 // READ

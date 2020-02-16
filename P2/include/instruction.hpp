@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <exception>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ class Instruction {
         int typeInstr_ = 4;              // tipo de intruccion: 0 operacion o 1 salto 2 etiqueta 3 halt
 
         string tag_;                  // etiqueta de salto
-        int posTag_ = 0;                //posicion de esa etiqueta
+        int pos_ = 0;                //posicion de esa instruccion
 
         public:
             Instruction(string instr, int pos);  // primero comprueba si es legal la etiqueta
@@ -31,7 +32,7 @@ class Instruction {
             int getDir(void);
             int typeInstr(void);
             string getTag(void);
-            int getPosTag(void);
+            int getPos(void);
 
             void showInfo(void);
 };
