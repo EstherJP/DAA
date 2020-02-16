@@ -1,4 +1,4 @@
-#include "memory.hpp"
+#include "../include/memory.hpp"
 
 using namespace std;
 
@@ -54,12 +54,30 @@ void Memory::load(int i, int dir) {
         cout << "Error: overflow register\n";
         return;
     }
-
 }
+
+// READ
+void Memory::read(int i, int d) {
+    register_[i] = d;
+}
+
+
+int Memory::getAcc(void) {
+    return register_[0];
+}
+
 
 void Memory::showMemory(void) {
     for(int i = 0; i < register_.size(); i++) {
         cout << i << ": " << register_[i] << endl;
     }
     cout << endl;
+}
+
+void Memory::setAcc(int d) {
+    register_[0] = d;
+}
+
+int Memory::getReg(int i) {
+    return register_[i];
 }

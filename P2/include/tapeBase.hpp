@@ -10,7 +10,7 @@ using namespace std;
 class TapeBase {
     private:
         char* filename_;    // Nombre del fichero para leer o escribir
-        int cabezal_;       // Cabezal de la cinta de escritura o de lectura
+        int cabezal_ = 0;       // Cabezal de la cinta de escritura o de lectura
         vector<int> tape_;  // Cinta representada como un vector que albergará los valores por orden del fichero de entrada cuyo índice será el cabezal
 
     public:

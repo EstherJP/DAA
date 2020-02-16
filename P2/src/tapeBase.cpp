@@ -1,12 +1,10 @@
-#include "tapeBase.hpp"
+#include "../include/tapeBase.hpp"
 
 using namespace std;
 
 TapeBase::TapeBase() {}
 
-TapeBase::TapeBase(char* filename): filename_(filename) {
-    int cabezal_ = 0;
-}
+TapeBase::TapeBase(char* filename): filename_(filename) {}
 
 TapeBase::~TapeBase() {}
 
@@ -23,7 +21,7 @@ int TapeBase::getValue(void) {
 }
 
 void TapeBase::incrementCabezal(void) { 
-    cabezal_ = cabezal_+1; 
+    cabezal_++; 
 }
 
 vector<int> TapeBase::getTape(void) { 

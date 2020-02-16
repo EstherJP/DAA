@@ -6,7 +6,7 @@ ODIR=../src
 
 LIBS=-lm
 
-_OBJ = main.o tapeBase.o ReadTape.o WriteTape.o instruction.o memory.o
+_OBJ = main.o tapeBase.o ReadTape.o WriteTape.o instruction.o memory.o simulation.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 all: main
@@ -24,6 +24,9 @@ $(ODIR)/WriteTape.o: $(ODIR)/WriteTape.cpp $(IDIR)/WriteTape.hpp $(IDIR)/tapeBas
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(ODIR)/instruction.o: $(ODIR)/instruction.cpp $(IDIR)/instruction.hpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+$(ODIR)/simulation.o: $(ODIR)/simulation.cpp $(IDIR)/simulation.hpp $(IDIR)/instruction.hpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(ODIR)/main.o: $(ODIR)/main.cpp $(IDIR)/tapeBase.hpp $(IDIR)/ReadTape.hpp $(IDIR)/instruction.hpp $(IDIR)/WriteTape.hpp  

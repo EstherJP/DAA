@@ -1,9 +1,11 @@
-#include "ReadTape.hpp"
+#include "../include/ReadTape.hpp"
 #include <fstream>
 
 using namespace std;
 
-ReadTape::ReadTape(char* filename) : TapeBase(filename) {}
+ReadTape::ReadTape(char* filename) : TapeBase(filename) {
+    readFile();
+}
 
 ReadTape::~ReadTape() {}
 
