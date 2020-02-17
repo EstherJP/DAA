@@ -15,33 +15,34 @@ using namespace std;
 
 class Simulation {
     private:
-        char* filename_;                    // nombre fichero del programa
-        vector<string> program_;            // programa sin chequear
-        vector<Instruction> legalProgram_;  // memoria de instruccciones programa con el que voy a trabajar
+        char* filename_;                    // Nombre fichero del programa
+        vector<string> program_;            // Programa sin comprobar
+        vector<Instruction> legalProgram_;  // Memoria de instruccciones del programa
+        int PC_= 0;                         // Program Counter
 
-        int PC_= 0;
-        int totalInstr_ = 0;
+        int totalInstr_ = 0;                // Total de instrucciones ejecutadas
 
-        vector<pair<string, int>> tags_;
+        vector<pair<string, int>> tags_;    // Vector que contiene el nombre de la etiqueta y su posicion en el programa
 
-        Memory reg_;
-        ReadTape read_;
-        WriteTape write_;
+        Memory reg_;                        // Memoria de registros
+        ReadTape read_;                     // Cinta de entrada
+        WriteTape write_;                   // Cinta de salida
 
     public:
-        Simulation(char* filename, ReadTape& read, WriteTape& write);
-        ~Simulation();
+        Simulation();   // Constructor por defecto
+        Simulation(char* filename, ReadTape& read, WriteTape& write);   // Constructor que lee el fichero y guarda el programa
+        ~Simulation();  // Destructor por defecto
 
-        void readFile(void);
-        void createProgram(void);
+        void readFile(void);        // Lee el programa
+        void createProgram(void);   // Crea la memoria de instrucciones asegurandose de que son legales
 
-        Memory getReg(void);
+        Memory getReg(void);        // Gettes
         ReadTape getRTape(void);
         WriteTape getWTape(void);
         int getTotalInstr(void);
 
-        void ejecutar(int t = 0);
+        void ejecutar(int t = 0);   // Ejecuta el programa realizando las acciones de las instrucciones
 
-        void showProgram(void);
-
+        void showProgram(void);     // Muestra el programa
+        void showLegalProgram(void);
 };

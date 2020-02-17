@@ -10,6 +10,7 @@ Simulation::Simulation(char* filename, ReadTape& read, WriteTape& write):
 {
     readFile();
     createProgram();
+    // showLegalProgram();
 }
 
 Simulation::~Simulation() {}
@@ -18,12 +19,15 @@ void Simulation::readFile(void) {
     fstream file;
     file.open(filename_);
 
-    if(!file.is_open()) throw "Error: program file don't exist";
+    // Si no se abre lanza un error
+    string err = "Error: program file doesn't exist";
+    if(!file.is_open()) throw err;
 
     else {
+        // Recorro el fichero
         while (!file.eof()) {
             string instr;   
-
+            // Paso la instruccion a minuscula
             file >> instr;
             for (int i = 0; i < instr.length(); i++){
 		        instr[i] = tolower(instr[i]);
@@ -33,7 +37,7 @@ void Simulation::readFile(void) {
                 getline(file, instr);
             }
              
-            else if(instr.back() == ':') {  
+            else if(instr.back() == ':') {   // un if con haly y :
                 program_.push_back(instr); 
             }
 
@@ -54,7 +58,7 @@ void Simulation::readFile(void) {
     } 
     file.close();
 }
-
+// Creo el programa
 void Simulation::createProgram(void) {
     for(int i = 0; i < program_.size(); i++) {
         if(program_[i].back() == ':') {
@@ -67,7 +71,7 @@ void Simulation::createProgram(void) {
             legalProgram_.push_back(instr);
         }
 
-        else {
+        else if(program_[i].back() != ':') {
             Instruction instr(program_[i], i);
             legalProgram_.push_back(instr);
         }
@@ -77,6 +81,13 @@ void Simulation::createProgram(void) {
 void Simulation::showProgram(void) {
     for(int i = 0; i < program_.size(); i++) {
         cout << program_[i] << endl;
+    }
+    cout << endl;
+}
+
+void Simulation::showLegalProgram(void) {
+    for(int i = 0; i < legalProgram_.size(); i++) {
+        legalProgram_[i].showInfo();
     }
     cout << endl;
 }
@@ -98,6 +109,7 @@ void Simulation::ejecutar(int t) {
         string name = legalProgram_[PC_].getName();
         string operand = legalProgram_[PC_].getOperand();
         int dir = legalProgram_[PC_].getDir();
+        bool salta = false;
         string d;
         if(dir == 0) d = "directo";
         else if(dir == 1) d = "indirecto";
@@ -108,6 +120,7 @@ void Simulation::ejecutar(int t) {
         dato >> o; 
          
         if(name == "load") {
+            totalInstr_++;
             reg_.load(o, dir);
 
             if(t == 1) {
@@ -118,6 +131,7 @@ void Simulation::ejecutar(int t) {
         }
 
         else if(name == "store") {
+            totalInstr_++;
             reg_.store(o, dir);
             
             if(t == 1) {
@@ -128,6 +142,7 @@ void Simulation::ejecutar(int t) {
         }
 
         else if(name == "add") { 
+            totalInstr_++;
             if(dir == 0) {
                 reg_.setAcc(reg_.getAcc() + reg_.getReg(o));
             }
@@ -147,6 +162,7 @@ void Simulation::ejecutar(int t) {
         }
 
         else if(name == "sub") {
+            totalInstr_++;
             if(dir == 0) {
                 reg_.setAcc(reg_.getAcc() - reg_.getReg(o));
             }
@@ -165,7 +181,8 @@ void Simulation::ejecutar(int t) {
             }
         }
 
-        else if(name == "mult") {
+        else if(name == "mult" || name == "mul") {
+            totalInstr_++;
             if(dir == 0) {
                 reg_.setAcc(reg_.getAcc() * reg_.getReg(o));
             }
@@ -185,6 +202,7 @@ void Simulation::ejecutar(int t) {
         }
 
         else if(name == "div") {
+            totalInstr_++;
             string err = "Error: division 0";
             if(dir == 0) {
                 if(reg_.getReg(o) == 0) throw err;
@@ -210,20 +228,22 @@ void Simulation::ejecutar(int t) {
         }
 
         else if(name == "read") {
+            totalInstr_++;
             reg_.read(o, read_.getValue());
+            read_.incrementCabezal();
 
             if(t == 1) {
                 cout << "READ: " << read_.getValue() << " y lo guardo en " << operand << endl;
                 PC_++;
                 break;
             }
-
-            read_.incrementCabezal();
         }
 
         else if(name == "write") {
-            if(dir == 0) {
-                if(reg_.getReg(o) == 0) throw "Error: can't WRITE 0";
+            totalInstr_++;
+            if(o == 0 && dir == 0) {
+                string err = "Error: can't WRITE 0";
+                if(dir == 0) throw err;
                 else {
                     write_.setTape(reg_.getReg(o));
                     write_.incrementCabezal();
@@ -247,66 +267,73 @@ void Simulation::ejecutar(int t) {
         }
 
         else if(name == "jump") {
+            // Recorro las etiquetas y si el operando del salto coincide con la etiqueta, PC = posicion etiqueta, si no PC++
+            totalInstr_++;
             for(auto i: tags_) {
                 if(i.first == operand) {
+                    salta = true;
                     PC_ = i.second;
-                    break;
-                }
-                else if(t == 1) {
-                    PC_++;
                     break;
                 }
             }
 
             if(t == 1) {
+                if(salta == false) {
+                    PC_++;
+                    salta = false;
+                }
                 cout << "JUMP: " << operand << " a la posicion " << PC_  << endl;
                 break;
             }
         }
 
         else if(name == "jgtz") {
+            totalInstr_++;
             for(auto i: tags_) {
                 if(reg_.getAcc() > 0 && i.first == operand) {
+                    salta = true;
                     PC_ = i.second;
-                    break;
-                }
-                else if(t == 1) {
-                    PC_++;
                     break;
                 }
             }
 
             if(t == 1) {
+                if(salta == false) {
+                    PC_++;
+                    salta = false;
+                }
                 cout << "JGTZ: " << operand << " a la posicion " << PC_ << " Acc: " << reg_.getAcc() << endl;
                 break;
             }
         }
 
         else if(name == "jzero") {
+            totalInstr_++;
             for(auto i: tags_) {
                 if(reg_.getAcc() == 0 && i.first == operand) {
+                    salta = true;
                     PC_ = i.second;
-                    break;
-                }
-                else if(t == 1)  { 
-                    PC_++;
                     break;
                 }
             }
 
             if(t == 1) {
+                if(salta == false) {
+                    PC_++;
+                    salta = false;
+                }
                 cout << "JZERO: " << operand << " en la posicion " << PC_ << " Acc: " << reg_.getAcc() << endl;
                 break;
             }
         }
 
          else if(name == "halt") {
+            totalInstr_++;
             if(t == 1) cout << "Paro el programa y escribo en la cinta de salida" << endl;
     
             write_.writeFile();
             break;
         }
-        totalInstr_++;
     }
 }
 

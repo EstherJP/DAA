@@ -10,6 +10,7 @@ Memory::~Memory() {}
 
 // STORE
 void Memory::store(int i, int dir) {
+    string err;
     if(dir == 0) {
         register_[i] = register_[0];
     }
@@ -19,15 +20,24 @@ void Memory::store(int i, int dir) {
         register_[aux] = register_[0];
     }
 
-    else if(dir == 2) throw "Error: STORE cant't has inmediate direct";
+    else if(dir == 2){
+        err = "Error: STORE cant't has inmediate direct";
+        throw err;
+    }
+    else if(dir > 1) {
+        err = "Error: direct doesn't exist";
+        throw err;
+    }
 
-    else if(dir > 1) throw "Error: direct doesn't exist";
-
-    else if(i > 16) throw "Error: overflow register";
+    else if(i >= 16) {
+        err = "Error: overflow register";
+        throw err;
+    }
 }
 
 // LOAD
 void Memory::load(int i, int dir) {
+    string err;
     if(dir == 0) {
         register_[0] = register_[i];
     }
@@ -41,9 +51,15 @@ void Memory::load(int i, int dir) {
         register_[0] = i;
     }
 
-    else if(dir > 2) throw "Error: direct doesn't exist";
+    else if(dir > 2) {
+        err = "Error: direct doesn't exist";
+        throw err;
+    }
 
-    else if(i > 16) throw  "Error: overflow register";
+    else if(i > 16){
+        err = "Error: overflow register";
+        throw err;
+    } 
 }
 
 // READ

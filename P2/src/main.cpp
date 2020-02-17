@@ -62,8 +62,8 @@ int main(int argc, char* argv[]) {
                     
                     case 'e':
                         cout << "---Ejecutar---" << endl;
-                        cout << "El total de instrucciones ejecutadas ha sido " << sim.getTotalInstr() << endl;
                         sim.ejecutar();
+                        cout << "El total de instrucciones ejecutadas ha sido " << sim.getTotalInstr() << endl;
                         opcion = 'x';
                         break;
                     

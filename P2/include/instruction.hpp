@@ -9,30 +9,29 @@ using namespace std;
 
 class Instruction {
     private:
-        string instr_;              // instruccion entera jump hola, halt, read 2, add =4...
+        string instr_;              // Instrucción 
 
-        string nameInstr_;          // nombre instruccion
+        string nameInstr_;          // Nombre instrucción
+        string operand_;            // Operando o etiqueta 
+        int dir_ = 0;               // Tipo de direccionamiento: 0 directo, 1 indirecto, 2 inmediato
+        int typeInstr_ = 4;         // Tipo de intruccion: 0 operacion, 1 salto, 2 etiqueta, 3 halt
+        int pos_ = 0;               // Posicion de la instruccion sin tener en cuenta los comentarios
 
-        string operand_;                 // operando o etiqueta 
-        int dir_ = 0;                   // tipo de direccionamiento 0 directo 1 indirecto 2 directo
-
-        int typeInstr_ = 4;              // tipo de intruccion: 0 operacion o 1 salto 2 etiqueta 3 halt
-
-        string tag_;                  // etiqueta de salto
-        int pos_ = 0;                //posicion de esa instruccion
+        string tag_;                // Etiqueta de la instrucción de salto, si lo es
 
         public:
-            Instruction(string instr, int pos);  // primero comprueba si es legal la etiqueta
-            ~Instruction();
+            Instruction();          // Constructor por defecto
+            Instruction(string instr, int pos);  // Contructor: comprueba si la instruccion es legal y la almacena.
+            ~Instruction();         // Destructor por defecto
 
-            bool legalInstr(void);      // metodo para comprobar 0, no es legal, 1 es legal
+            bool legalInstr(void);      // Comprobar: 0 no legal, 1 legal
          
             string getName(void);
             string getOperand(void);
             int getDir(void);
-            int typeInstr(void);
+            int getTypeInstr(void);
             string getTag(void);
             int getPos(void);
 
-            void showInfo(void);
+            void showInfo(void);    // Muestra la informacion de la instruccion
 };

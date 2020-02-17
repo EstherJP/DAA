@@ -37,4 +37,5 @@ void TapeBase::showTape(void) {
         cout << tape_[i] << " ";
     }
     cout << endl;
+    cout << "Cabezal: " << cabezal_ << endl;
 }
