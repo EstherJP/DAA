@@ -11,6 +11,12 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     try {
+        string err;
+        if(argc != 5) {
+            err = "Error: insuficient arguments";
+            throw err;
+        }
+
         char* program = argv[1];
         char* input = argv[2];
         char* output = argv[3];
@@ -20,6 +26,7 @@ int main(int argc, char* argv[]) {
         ReadTape read(input);
         WriteTape write(output);
         Simulation sim(program, read, write);
+        Simulation traza(program, read, write);
 
         if(debug == 0) {
             sim.ejecutar();
@@ -62,13 +69,13 @@ int main(int argc, char* argv[]) {
                     
                     case 'e':
                         cout << "---Ejecutar---" << endl;
-                        sim.ejecutar();
-                        cout << "El total de instrucciones ejecutadas ha sido " << sim.getTotalInstr() << endl;
+                        traza.ejecutar();
+                        cout << "El total de instrucciones ejecutadas ha sido " << traza.getTotalInstr() << endl;
                         opcion = 'x';
                         break;
                     
                     case 's': 
-                        cout << "Desensamblar" << endl;
+                        cout << "---Desensamblar---" << endl;
                         break;
                     
                     case 'i':

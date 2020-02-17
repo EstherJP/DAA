@@ -62,16 +62,17 @@ void Simulation::readFile(void) {
 void Simulation::createProgram(void) {
     for(int i = 0; i < program_.size(); i++) {
         if(program_[i].back() == ':') {
+            // lo meto en el vector de pair
             program_[i].pop_back();  
             pair<string, int> tag = make_pair(program_[i], i);
             tags_.push_back(tag);
-
+            // lo meto en el programa legal
             program_[i].push_back(':');
             Instruction instr(program_[i], i);
             legalProgram_.push_back(instr);
         }
 
-        else if(program_[i].back() != ':') {
+        else {
             Instruction instr(program_[i], i);
             legalProgram_.push_back(instr);
         }
@@ -230,13 +231,13 @@ void Simulation::ejecutar(int t) {
         else if(name == "read") {
             totalInstr_++;
             reg_.read(o, read_.getValue());
-            read_.incrementCabezal();
 
             if(t == 1) {
                 cout << "READ: " << read_.getValue() << " y lo guardo en " << operand << endl;
                 PC_++;
                 break;
             }
+            read_.incrementCabezal();
         }
 
         else if(name == "write") {
@@ -260,7 +261,7 @@ void Simulation::ejecutar(int t) {
             }
 
             if(t == 1) {
-                cout << "WRITE: direccionamiento " << dir << " con el operando " << operand << endl;
+                cout << "WRITE: direccionamiento " << d << " con el operando " << operand << endl;
                 PC_++;
                 break;
             }
