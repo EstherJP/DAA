@@ -1,0 +1,24 @@
+# Programa que calcula n^n de forma exponencial
+READ 1
+LOAD 1
+STORE 2
+LOAD =1
+STORE 3
+start:
+LOAD 1
+SUB 3
+LOAD 3
+JZERO fin
+LOAD 2
+MULT 2
+STORE 2
+LOAD 1
+DIV =2
+STORE 2
+LOAD 3
+ADD =1
+STORE 3
+JUMP start
+fin:
+WRITE 2
+HALT
