@@ -10,19 +10,6 @@
 #include "../include/ReadTape.hpp"
 #include "../include/WriteTape.hpp"
 
-#define LOAD 1
-#define STORE 2
-#define ADD 3
-#define SUB 4
-#define MULT 5
-#define DIV 6
-#define READ 7
-#define WRITE 8
-#define JUMP 9
-#define JGTZ 10
-#define JZERO 11
-#define HALT 12
-
 using namespace std;
 
 class RAM {
@@ -33,7 +20,6 @@ class RAM {
         WriteTape write_;                   // Cinta de salida
 
         int totalInstr_ = 0;                // Total de instrucciones ejecutadas
-
 
     public:
         RAM();   // Constructor por defecto

@@ -21,7 +21,9 @@ int TapeBase::getValue(void) {
 }
 
 void TapeBase::incrementCabezal(void) { 
-    cabezal_++; 
+    if(cabezal_ != tape_.size() - 1) {
+        cabezal_++;
+    }
 }
 
 vector<int> TapeBase::getTape(void) { 

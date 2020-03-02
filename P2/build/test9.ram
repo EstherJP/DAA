@@ -1,24 +1,17 @@
-# Programa que calcula n^n de forma exponencial
+# Programa que calcula n^n de forma logaritmica
 READ 1
 LOAD 1
 STORE 2
 LOAD =1
 STORE 3
-start:
+while: 
 LOAD 1
-SUB 3
-LOAD 3
-JZERO fin
+MULT 1
+STORE 1
 LOAD 2
-MULT 2
-STORE 2
-LOAD 1
 DIV =2
 STORE 2
-LOAD 3
-ADD =1
-STORE 3
-JUMP start
-fin:
-WRITE 2
-HALT
+SUB =1
+JGTZ while
+WRITE 1
+halt

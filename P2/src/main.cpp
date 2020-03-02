@@ -5,7 +5,9 @@
 #include "../include/WriteTape.hpp"
 #include "../include/instruction.hpp"
 #include "../include/memory.hpp"
-#include "../include/simulation.hpp"
+#include "../include/RAM.hpp"
+#include "../include/program.hpp"
+
 
 using namespace std;
 
@@ -17,7 +19,7 @@ int main(int argc, char* argv[]) {
             throw err;
         }
 
-        char* program = argv[1];
+        char* fileRam = argv[1];
         char* input = argv[2];
         char* output = argv[3];
         char* c_debug = argv[4];
@@ -25,8 +27,9 @@ int main(int argc, char* argv[]) {
 
         ReadTape read(input);
         WriteTape write(output);
-        Simulation sim(program, read, write);
-        Simulation traza(program, read, write);
+        Program program(fileRam);
+
+        RAM sim(program, read, write);
 
         if(debug == 0) {
             sim.ejecutar();
@@ -37,7 +40,6 @@ int main(int argc, char* argv[]) {
             char opcion;
             do {
                 cout << ">h" << endl;
-                cout << "p: ver programa" << endl;
                 cout << "r: ver los registros" << endl;
                 cout << "t: traza" << endl;
                 cout << "e: ejecutar" << endl;
@@ -52,10 +54,6 @@ int main(int argc, char* argv[]) {
                 cout << endl;
 
                 switch (opcion) {
-                    case 'p':
-                        cout << "---Programa---" << endl;
-                        sim.showProgram();
-                        break;
                     case 'r':
                         cout << "---Memoria---" << endl;
                         sim.getReg().showMemory();
@@ -69,13 +67,14 @@ int main(int argc, char* argv[]) {
                     
                     case 'e':
                         cout << "---Ejecutar---" << endl;
-                        traza.ejecutar();
-                        cout << "El total de instrucciones ejecutadas ha sido " << traza.getTotalInstr() << endl;
+                        sim.ejecutar();
+                        cout << "El total de instrucciones ejecutadas ha sido " << sim.getTotalInstr() << endl;
                         opcion = 'x';
                         break;
                     
                     case 's': 
                         cout << "---Desensamblar---" << endl;
+                        program.showProgram();
                         break;
                     
                     case 'i':

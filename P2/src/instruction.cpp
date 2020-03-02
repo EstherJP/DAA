@@ -9,13 +9,14 @@ Instruction::Instruction(string instr, int pos): instr_(instr),  pos_(pos) {
     if(instr_.back() == ':') {
         instr_.pop_back();
         tag_ = instr_;
-        typeInstr_ = 2;
+        typeInstr_ = ETIQUETA;
     }
 
     // Si la instruccion es halt
-    else if(instr_ == "halt") {
+    else if(instr_ == "halt" || instr == "HALT") {
         nameInstr_ = instr_;
-        typeInstr_ = 3;
+        opcode_ = HALT;
+        typeInstr_ = HLT;
     }
 
     else {
@@ -33,11 +34,11 @@ Instruction::Instruction(string instr, int pos): instr_(instr),  pos_(pos) {
         string aux;
         for(int i = instr_.length()-1; i >= 0; i--) {
             if(instr_[i] == '*') {
-                dir_ = 1;
+                dir_ = INDIRECTO;
             }
 
             else if(instr_[i] == '=') {
-                dir_ = 2;
+                dir_ = INMEDIATO;
             }
 
             else if(instr_[i] != ' ') {
@@ -59,26 +60,64 @@ Instruction::Instruction(string instr, int pos): instr_(instr),  pos_(pos) {
 
 Instruction::~Instruction() {}
 
-bool Instruction::legalInstr(void) {
-    // Creo un vector string con las instrucciones de salto y otra con las instrucciones de operación
-    vector<string> salto = {"jump", "jgtz", "jzero"};
-    vector<string> operacion = {"load", "store", "add", "sub", "mult", "div", "read", "write"};
-    // Recorro las instrucciones de salto y compruebo si pertenecen
-    for(int i = 0; i < salto.size(); i++) {
-        if(salto[i] == nameInstr_) {
-            typeInstr_ = 1;
-            break;
-        }
+void Instruction::legalInstr(void) {
+    if(nameInstr_ == "LOAD" || nameInstr_ == "load") {
+        opcode_ = LOAD;
+        typeInstr_ = OPERACION;
     }
-    // Compruebo si pertenecen a las instrucciones de operacion
-    for(int i = 0; i < operacion.size(); i++) {
-        if(operacion[i] == nameInstr_) {
-            typeInstr_ = 0;
-            break;
-        }
+
+    else if(nameInstr_ == "STORE" || nameInstr_ == "store") {
+        opcode_ = STORE;
+        typeInstr_ = OPERACION;
     }
+
+    else if(nameInstr_ == "ADD" || nameInstr_ == "add") {
+        opcode_ = ADD;
+        typeInstr_ = OPERACION;
+    }
+
+    else if(nameInstr_ == "SUB" || nameInstr_ == "sub") {
+        opcode_ = SUB;
+        typeInstr_ = OPERACION;
+    }
+
+    else if(nameInstr_ == "MULT" || nameInstr_ == "mult") {
+        opcode_ = MULT;
+        typeInstr_ = OPERACION;
+    }
+
+    else if(nameInstr_ == "DIV" || nameInstr_ == "div") {
+        opcode_ = DIV;
+        typeInstr_ = OPERACION;
+    }
+
+    else if(nameInstr_ == "READ" || nameInstr_ == "read") {
+        opcode_ = READ;
+        typeInstr_ = OPERACION;
+    }
+
+    else if(nameInstr_ == "WRITE" || nameInstr_ == "write") {
+        opcode_ = WRITE;
+        typeInstr_ = OPERACION;
+    }
+
+    else if(nameInstr_ == "JUMP" || nameInstr_ == "jump") {
+        opcode_ = JUMP;
+        typeInstr_ = SALTO;
+    }
+
+    else if(nameInstr_ == "JGTZ" || nameInstr_ == "jgtz") {
+        opcode_ = JGTZ;
+        typeInstr_ = SALTO;
+    }
+
+    else if(nameInstr_ == "JZERO" || nameInstr_ == "jzero") {
+        opcode_ = JZERO;
+        typeInstr_ = SALTO;
+    }
+
     // Si no son ni etiqueta ni intruccion, significa que la instruccion no existe
-    if(typeInstr_ == 4) {
+    if(typeInstr_ == BAD_INSTR) {
         string pos = to_string(pos_);
         string err = "Error: illegal_instruction at line " + pos;
         throw err;
@@ -108,6 +147,10 @@ string Instruction::getTag(void) {
 
 int Instruction::getPos(void) {
     return pos_;
+}
+
+int Instruction::getOpcode(void) {
+    return opcode_;
 }
 
 // Informacion de la instruccion

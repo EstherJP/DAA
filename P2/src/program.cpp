@@ -64,7 +64,7 @@ void Program::createProgram(void) {
             // lo meto en el programa legal
             program_[i].push_back(':');
             Instruction instr(program_[i], i);
-            legalProgram_.push_back(instr);
+           legalProgram_.push_back(instr);
         }
 
         else {
