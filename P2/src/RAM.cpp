@@ -31,9 +31,9 @@ void RAM::ejecutar(int t) {
         int opcode = program_.getInstr().getOpcode();
         bool salta = false;
         string d;
-        if(dir == 0) d = "directo";
-        else if(dir == 1) d = "indirecto";
-        else if(dir == 2) d = "inmediato";
+        if(dir == DIRECTO) d = "directo";
+        else if(dir == INDIRECTO) d = "indirecto";
+        else if(dir == INMEDIATO) d = "inmediato";
 
         stringstream dato(operand); 
         int o = 0; 

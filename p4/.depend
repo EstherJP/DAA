@@ -1,0 +1,12 @@
+main.o: main.cpp framework/Framework.h framework/Problema.h \
+ framework/Solucion.h merge/mergeS.hpp merge/../framework/Solucion.h \
+ merge/mergeP.hpp merge/../framework/Problema.h
+Framework.o: framework/Framework.cpp framework/Framework.h \
+ framework/Problema.h framework/Solucion.h
+Problema.o: framework/Problema.cpp framework/Problema.h \
+ framework/Solucion.h
+Solucion.o: framework/Solucion.cpp framework/Solucion.h
+mergeP.o: merge/mergeP.cpp merge/mergeP.hpp merge/../framework/Problema.h \
+ merge/../framework/Solucion.h merge/mergeS.hpp \
+ merge/../framework/Solucion.h
+mergeS.o: merge/mergeS.cpp merge/mergeS.hpp merge/../framework/Solucion.h
