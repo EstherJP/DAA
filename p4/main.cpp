@@ -8,6 +8,8 @@
 #include"framework/Framework.h"
 #include"merge/mergeS.hpp"
 #include"merge/mergeP.hpp"
+#include"quick/quickS.hpp"
+#include"quick/quickP.hpp"
 
 using namespace std;
 
@@ -31,6 +33,14 @@ int main(int argc, char* argv[]){
 	framework->divideyVenceras(problema, solucion);
 	cout << "\nResultado merge:" << endl;
 	solucion->resolver();
+
+	Problema* problemaQ = new quickP(v);
+	Solucion* solucionQ = new quickS();
+	Framework* frameworkQ = new Framework();
+
+	frameworkQ->divideyVenceras(problemaQ, solucionQ);
+	cout << "\nResultado quick:" << endl;
+	solucionQ->resolver();
 
 };
 

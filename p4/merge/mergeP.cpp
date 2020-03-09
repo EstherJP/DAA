@@ -18,12 +18,10 @@ pair<Problema*,Problema*> mergeP::descomponer() {
   int p = v_.size() / 2;
 
   for (int i = 0; i < p; i++) {
-    // cout << "primer vector: " << v_[i] << " ";
     v1.push_back(v_[i]);
   }
 
   for (int i = p; i < v_.size(); i++) {
-    // cout << "segundo vector: " << v_[i] << " ";
     v2.push_back(v_[i]);
   }
 

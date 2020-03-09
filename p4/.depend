@@ -1,6 +1,8 @@
 main.o: main.cpp framework/Framework.h framework/Problema.h \
  framework/Solucion.h merge/mergeS.hpp merge/../framework/Solucion.h \
- merge/mergeP.hpp merge/../framework/Problema.h
+ merge/mergeP.hpp merge/../framework/Problema.h quick/quickS.hpp \
+ quick/../framework/Solucion.h quick/quickP.hpp \
+ quick/../framework/Problema.h
 Framework.o: framework/Framework.cpp framework/Framework.h \
  framework/Problema.h framework/Solucion.h
 Problema.o: framework/Problema.cpp framework/Problema.h \
@@ -10,3 +12,7 @@ mergeP.o: merge/mergeP.cpp merge/mergeP.hpp merge/../framework/Problema.h \
  merge/../framework/Solucion.h merge/mergeS.hpp \
  merge/../framework/Solucion.h
 mergeS.o: merge/mergeS.cpp merge/mergeS.hpp merge/../framework/Solucion.h
+quickP.o: quick/quickP.cpp quick/quickP.hpp quick/../framework/Problema.h \
+ quick/../framework/Solucion.h quick/quickS.hpp \
+ quick/../framework/Solucion.h
+quickS.o: quick/quickS.cpp quick/quickS.hpp quick/../framework/Solucion.h
