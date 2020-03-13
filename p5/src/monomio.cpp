@@ -54,3 +54,11 @@ Monomio operator+(const Monomio &x, const Monomio &y) {
   return res;
 }
 
+Monomio operator*(const Monomio &x, const Monomio &y) {
+  Monomio res;
+  res.setExponente(x.getExponente() + y.getExponente());
+  res.setCoeficiente(x.getCoeficiente() * y.getCoeficiente());
+  return res;
+}
+
+

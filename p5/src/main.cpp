@@ -3,6 +3,9 @@
 #include <time.h>
 #include "../include/monomio.hpp"
 #include "../include/polinomio.hpp"
+#include "../include/strategyBase.hpp"
+#include "../include/strategy.hpp"
+#include "../include/product.hpp"
 
 using namespace std;
 
@@ -27,12 +30,17 @@ int main(int argc, char* argv[]) {
     Polinomio firstPolinomio(createMonomio(size));
     Polinomio secondPolinomio(createMonomio(size2));
 
-    firstPolinomio.write();
-    cout << firstPolinomio;
+    Product* classicProduct;
+    Product* DyVProduct;
 
-    secondPolinomio.write();
-    cout << secondPolinomio;
+    classicProduct = new Product(new StrategyClassic);
+    DyVProduct = new Product(new StrategyDyV);
 
+    classicProduct->ProductInterface(firstPolinomio, secondPolinomio);
+    // DyVProduct->ProductInterface(firstPolinomio, secondPolinomio);
+
+    delete classicProduct;
+    delete DyVProduct;
 
   } catch(char const* e) {
     cout << e << endl;

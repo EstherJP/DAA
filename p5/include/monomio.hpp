@@ -26,4 +26,5 @@ class Monomio {
     friend istream& operator>>(istream &sin, Monomio &r);
 
     friend Monomio operator+(const Monomio &x, const Monomio &y);
+    friend Monomio operator*(const Monomio &x, const Monomio &y);
 };

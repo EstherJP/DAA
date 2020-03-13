@@ -27,13 +27,25 @@ void Polinomio::write() {
   // cout << "Polinomio: " << polinomio_ << endl;
 }
 
+int Polinomio::getTerminos() {
+  return terminos_;
+}
+
+int Polinomio::getGrado() {
+  return grado_;
+}
+
 vector<Monomio> Polinomio::getPolinomio() const {
   return polinomio_;
 }
 
 ostream& operator<<(ostream &sout, const Polinomio &p) {
   for (int i = 0; i < p.getPolinomio().size(); i++) {
-    cout << p.getPolinomio()[i] << " + ";
+    if (i == p.getPolinomio().size() - 1) {
+      cout << p.getPolinomio()[i];
+    } else {
+      cout << p.getPolinomio()[i] << " + ";
+    }
   }
   cout << endl;
 }

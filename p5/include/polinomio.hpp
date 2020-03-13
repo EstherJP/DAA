@@ -7,7 +7,7 @@
 using namespace std;
 
 class Polinomio {
-  private:
+  protected:
     int grado_;
     int terminos_;
     vector<Monomio> polinomio_;
@@ -20,6 +20,8 @@ class Polinomio {
     void write();
 
     vector<Monomio> getPolinomio() const;
+    int getTerminos();
+    int getGrado();
 
     friend ostream& operator<<(ostream &sout, const Polinomio &p);
 };
