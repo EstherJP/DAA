@@ -9,26 +9,16 @@
 
 using namespace std;
 
-vector<Monomio> createMonomio(int size) {
-  vector<Monomio> polinomio;
-  for (int i = 0; i < size; i++) {
-    int coef = rand() % 11;
-    if (coef != 0) {
-      Monomio monomio(coef, i);
-      polinomio.push_back(monomio);
-    }
-  }
-  return polinomio;
-}
-
 int main(int argc, char* argv[]) {
   try {
-    vector<Monomio> polinomio;
     int size = atoi(argv[1]);
     int size2 = atoi(argv[2]);
 
-    Polinomio firstPolinomio(createMonomio(size));
-    Polinomio secondPolinomio(createMonomio(size2));
+    Polinomio firstPolinomio(size);
+    Polinomio secondPolinomio(size2);
+
+    cout << "Primer polinomio: " << firstPolinomio << endl;
+    cout << "Segundo Polinomio: " << secondPolinomio << endl;
 
     Product* classicProduct;
     Product* DyVProduct;
@@ -36,6 +26,7 @@ int main(int argc, char* argv[]) {
     classicProduct = new Product(new StrategyClassic);
     DyVProduct = new Product(new StrategyDyV);
 
+    cout << "-----ClassicStrategy-----" << endl;
     classicProduct->ProductInterface(firstPolinomio, secondPolinomio);
     // DyVProduct->ProductInterface(firstPolinomio, secondPolinomio);
 

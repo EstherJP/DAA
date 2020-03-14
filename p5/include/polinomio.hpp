@@ -14,7 +14,8 @@ class Polinomio {
   
   public:
     Polinomio();
-    Polinomio(/*int coef[], const int tam,*/ vector<Monomio> pol);
+    Polinomio(const int tam);
+    Polinomio(int coef[], const int tam);
     void build();
 
     void write();

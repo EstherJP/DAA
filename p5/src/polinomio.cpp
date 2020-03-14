@@ -3,22 +3,28 @@
 using namespace std;
 
 Polinomio::Polinomio() {}
-Polinomio::Polinomio(/*int coef[], const int tam,*/ vector<Monomio> p):
-  polinomio_(p)
+
+Polinomio::Polinomio(const int tam): 
+  terminos_(tam),
+  grado_(tam - 1)
 {
   build();
 }
+    
+Polinomio::Polinomio(int coef[], const int tam):
+  terminos_(tam),
+  grado_(tam - 1)
+{
+  for (int i = 0; i < terminos_; i++) {
+    polinomio_.push_back(Monomio(coef[i], i));
+  }
+}
 
 void Polinomio::build() {
-  terminos_ = polinomio_.size();
-  int maxExpo = 0;
-  
   for (int i = 0; i < terminos_; i++) {
-    if (polinomio_[i].getExponente() > maxExpo) {
-      maxExpo = polinomio_[i].getExponente();
-    }
+    int coef = rand() % 11;
+    polinomio_.push_back(Monomio(coef, i));
   }
-  grado_ = maxExpo;
 }
 
 void Polinomio::write() {

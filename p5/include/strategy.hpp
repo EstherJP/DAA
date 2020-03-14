@@ -12,19 +12,21 @@ class StrategyClassic : public Strategy {
   public:
     void polinomioProduct(Polinomio& firstPolinomio, Polinomio& secondPolinomio) {
       int sum = 0;
-      int sum2 = 0;
-      vector<Monomio> res;
-      cout << "-----ClassicStrategy-----" << endl;
-      for (int i = 0; i < 2 * firstPolinomio.getTerminos() - 2; i++) {
-        for (int j = 0; j < i; j++) {
-          sum += firstPolinomio.getPolinomio()[i].getCoeficiente() * secondPolinomio.getPolinomio()[i - j].getCoeficiente();
+      int coef[firstPolinomio.getGrado() + secondPolinomio.getGrado() + 1];
+
+      for (int i = 0; i <= 2 * firstPolinomio.getTerminos() - 2; i++) {
+        for (int j = 0; j <= i; j++) {
+          if (j  > firstPolinomio.getGrado() || (i - j) > secondPolinomio.getGrado()) {
+            sum += 0;
+          } else {
+            sum += firstPolinomio.getPolinomio()[j].getCoeficiente() * secondPolinomio.getPolinomio()[i - j].getCoeficiente();
+          }
         }
-        Monomio m(sum, i);
-        res.push_back(m);
+        coef[i] = sum;
+        sum = 0;
       }
-      Polinomio resultado(res);
-      cout << "Primer polinomio: " << firstPolinomio << endl;
-      cout << "Segungo polinomio: " << secondPolinomio << endl; 
+
+      Polinomio resultado(coef, firstPolinomio.getGrado() + secondPolinomio.getGrado() + 1);
       cout << "Resultado: " << endl;
       cout << resultado << endl;
     }

@@ -27,10 +27,14 @@ void Monomio::setExponente(int e) {
 }
 
 ostream& operator<<(ostream &sout, const Monomio &s) {
-  if (s.getExponente() != 0) {
-    sout << s.getCoeficiente() << "x" << "^" << s.getExponente();
-  } else {
-    sout << s.getCoeficiente();
+  if (s.getCoeficiente() != 0) {
+    if (s.getExponente() != 0 && s.getExponente() != 1) {
+      sout << s.getCoeficiente() << "x" << "^" << s.getExponente();
+    } else if (s.getExponente() == 1) {
+      sout << s.getCoeficiente() << "x";
+    } else {
+      sout << s.getCoeficiente();
+    }
   }
   return sout;
 }
@@ -60,5 +64,3 @@ Monomio operator*(const Monomio &x, const Monomio &y) {
   res.setCoeficiente(x.getCoeficiente() * y.getCoeficiente());
   return res;
 }
-
-
