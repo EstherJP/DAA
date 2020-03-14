@@ -4,6 +4,8 @@
 
 #include "polinomio.hpp"
 #include "strategyBase.hpp"
+#include <cmath>
+#include <math.h>
 
 using namespace std;
 
@@ -35,9 +37,50 @@ class StrategyClassic : public Strategy {
 //Clase estrategia por columnas
 class StrategyDyV: public Strategy {
   public:     
-    void polinomioProduct(Polinomio& firstProduct, Polinomio& secondProduct) {
-      cout << "-----DyVStrategy-----" << endl;
-          
+    pair<Polinomio*, Polinomio*> dividirPolinomio(Polinomio& polinomio) {
+	    pair<Polinomio*, Polinomio*> polinomios;
+      int sizeLow = polinomio.getTerminos() / 2;
+      int sizeHigh = ceil((double)(polinomio.getTerminos()) / 2);
+
+      int low[sizeLow];
+      int high[sizeHigh];
+
+      for (int i = 0; i < sizeLow; i++) {
+        low[i] = polinomio.getPolinomio()[i].getCoeficiente();
+      }
+
+      int iter = 0;
+      for (int i = sizeLow; i < polinomio.getTerminos(); i++) {
+        high[iter] = polinomio.getPolinomio()[i].getCoeficiente();
+        iter++;
+      }
+
+      polinomios.first = new Polinomio(low, sizeLow);
+      polinomios.second = new Polinomio(high, sizeHigh);
+
+      return polinomios;
+    }
+
+    void polinomioProduct(Polinomio& firstPolinomio, Polinomio& secondPolinomio) {
+      dividirPolinomio(firstPolinomio);
+      dividirPolinomio(secondPolinomio);
+
+      Polinomio* plow = dividirPolinomio(firstPolinomio).first;
+      Polinomio* phigh = dividirPolinomio(firstPolinomio).second;
+
+      cout << "Parte baja p: " << plow;
+      cout << "Parte alta p: " << phigh << endl;
+
+      Polinomio* qlow = dividirPolinomio(secondPolinomio).first;
+      Polinomio* qhigh = dividirPolinomio(secondPolinomio).second;
+
+      cout << "\nParte baja q: " << qlow << endl;
+      cout << "Parte alta q: " << qhigh << endl;
+
+      // polinomioProduct();
+      // polinomioProduct();
+      // polinomioProduct();
+      
 
     }
 };

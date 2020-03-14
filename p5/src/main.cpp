@@ -26,9 +26,11 @@ int main(int argc, char* argv[]) {
     classicProduct = new Product(new StrategyClassic);
     DyVProduct = new Product(new StrategyDyV);
 
-    cout << "-----ClassicStrategy-----" << endl;
-    classicProduct->ProductInterface(firstPolinomio, secondPolinomio);
-    // DyVProduct->ProductInterface(firstPolinomio, secondPolinomio);
+    // cout << "-----ClassicStrategy-----" << endl;
+    // classicProduct->ProductInterface(firstPolinomio, secondPolinomio);
+
+    cout << "-----DyVStrategy-----" << endl;
+    DyVProduct->ProductInterface(firstPolinomio, secondPolinomio);
 
     delete classicProduct;
     delete DyVProduct;

@@ -25,4 +25,5 @@ class Polinomio {
     int getGrado();
 
     friend ostream& operator<<(ostream &sout, const Polinomio &p);
+    friend ostream& operator<<(ostream &sout, const Polinomio* p);
 };

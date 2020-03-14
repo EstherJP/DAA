@@ -55,3 +55,14 @@ ostream& operator<<(ostream &sout, const Polinomio &p) {
   }
   cout << endl;
 }
+
+ostream& operator<<(ostream &sout, const Polinomio* p) {
+  for (int i = 0; i < p->getPolinomio().size(); i++) {
+    if (i == p->getPolinomio().size() - 1) {
+      cout << p->getPolinomio()[i];
+    } else {
+      cout << p->getPolinomio()[i] << " + ";
+    }
+  }
+  cout << endl;
+}
