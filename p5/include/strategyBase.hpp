@@ -6,5 +6,5 @@
 //Clase abstracta estrategia
 class Strategy {
     public: 
-        virtual void polinomioProduct(Polinomio& firstPolinomio, Polinomio& secondPolinomio) = 0;
+        virtual Polinomio* polinomioProduct(Polinomio* firstPolinomio, Polinomio* secondPolinomio) = 0;
 };

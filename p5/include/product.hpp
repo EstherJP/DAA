@@ -19,7 +19,7 @@ class Product {
         Product(Strategy* strategy): strategy_(strategy) {}
 
         // Llamada a la estrategia según el contexto
-        void ProductInterface(Polinomio& firstPolinomio, Polinomio& secondPolinomio) {
+        void ProductInterface(Polinomio* firstPolinomio, Polinomio* secondPolinomio) {
             if(strategy_)
                 strategy_->polinomioProduct(firstPolinomio, secondPolinomio);
             else

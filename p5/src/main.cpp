@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include <chrono>
 #include "../include/monomio.hpp"
 #include "../include/polinomio.hpp"
 #include "../include/strategyBase.hpp"
@@ -12,13 +13,9 @@ using namespace std;
 int main(int argc, char* argv[]) {
   try {
     int size = atoi(argv[1]);
-    int size2 = atoi(argv[2]);
 
-    Polinomio firstPolinomio(size);
-    Polinomio secondPolinomio(size2);
-
-    cout << "Primer polinomio: " << firstPolinomio << endl;
-    cout << "Segundo Polinomio: " << secondPolinomio << endl;
+    Polinomio* firstPolinomio = new Polinomio(size);
+    Polinomio* secondPolinomio = new Polinomio(size);
 
     Product* classicProduct;
     Product* DyVProduct;
@@ -26,11 +23,23 @@ int main(int argc, char* argv[]) {
     classicProduct = new Product(new StrategyClassic);
     DyVProduct = new Product(new StrategyDyV);
 
-    // cout << "-----ClassicStrategy-----" << endl;
-    // classicProduct->ProductInterface(firstPolinomio, secondPolinomio);
+    chrono::time_point<chrono::system_clock> start, end;
+
+    cout << "-----ClassicStrategy-----" << endl;
+    start = chrono::system_clock::now();
+    classicProduct->ProductInterface(firstPolinomio, secondPolinomio);
+    end = chrono::system_clock::now();
+
+    chrono::duration<float, milli> duration = end-start;
+    cout << "Tiempo transcurrido: " << duration.count() << "ms" << endl << endl;
 
     cout << "-----DyVStrategy-----" << endl;
+    start = chrono::system_clock::now();
     DyVProduct->ProductInterface(firstPolinomio, secondPolinomio);
+    end = chrono::system_clock::now();
+
+    duration = end-start;
+    cout << "Tiempo transcurrido: " << duration.count() << "ms" << endl << endl;
 
     delete classicProduct;
     delete DyVProduct;

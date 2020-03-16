@@ -27,7 +27,7 @@ void Monomio::setExponente(int e) {
 }
 
 ostream& operator<<(ostream &sout, const Monomio &s) {
-  if (s.getCoeficiente() != 0) {
+  // if (s.getCoeficiente() != 0) {
     if (s.getExponente() != 0 && s.getExponente() != 1) {
       sout << s.getCoeficiente() << "x" << "^" << s.getExponente();
     } else if (s.getExponente() == 1) {
@@ -35,7 +35,7 @@ ostream& operator<<(ostream &sout, const Monomio &s) {
     } else {
       sout << s.getCoeficiente();
     }
-  }
+  // }
   return sout;
 }
 
@@ -52,8 +52,6 @@ Monomio operator+(const Monomio &x, const Monomio &y) {
   if (x.getExponente() == y.getExponente()) {
     res.setExponente(x.getExponente());
     res.setCoeficiente(x.getCoeficiente() + y.getCoeficiente());
-  } else {
-    throw "ERR: Cannot + 2 monomios";
   }
   return res;
 }
