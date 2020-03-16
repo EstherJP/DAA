@@ -20,15 +20,15 @@ class Polinomio {
 
     void write();
 
-    vector<Monomio> getPolinomio() const;
+    vector<Monomio>& getPolinomio();
     int getTerminos();
     int getGrado();
     void setMonomio(Monomio m, int i);
 
     void extendZero(int size);
   
-    friend ostream& operator<<(ostream &sout, const Polinomio &p);
-    friend ostream& operator<<(ostream &sout, const Polinomio* p);
+    friend ostream& operator<<(ostream &sout, Polinomio &p);
+    friend ostream& operator<<(ostream &sout, Polinomio* p);
 
     friend Polinomio* operator+(Polinomio &x, Polinomio &y);
     friend Polinomio* operator-(Polinomio &x, Polinomio &y);

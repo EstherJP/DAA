@@ -41,7 +41,7 @@ int Polinomio::getGrado() {
   return grado_;
 }
 
-vector<Monomio> Polinomio::getPolinomio() const {
+vector<Monomio>& Polinomio::getPolinomio() {
   return polinomio_;
 }
 
@@ -52,7 +52,7 @@ void Polinomio::extendZero(int size) {
   terminos_ += size; 
 }
 
-ostream& operator<<(ostream &sout, const Polinomio &p) {
+ostream& operator<<(ostream &sout, Polinomio &p) {
   for (int i = 0; i < p.getPolinomio().size(); i++) {
     if (i == p.getPolinomio().size() - 1) {
       cout << p.getPolinomio()[i];
@@ -63,7 +63,7 @@ ostream& operator<<(ostream &sout, const Polinomio &p) {
   cout << endl;
 }
 
-ostream& operator<<(ostream &sout, const Polinomio* p) {
+ostream& operator<<(ostream &sout, Polinomio* p) {
   for (int i = 0; i < p->getPolinomio().size(); i++) {
     if (i == p->getPolinomio().size() - 1) {
       cout << p->getPolinomio()[i];
