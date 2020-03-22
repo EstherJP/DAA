@@ -41,7 +41,7 @@ int Polinomio::getGrado() {
   return grado_;
 }
 
-vector<Monomio>& Polinomio::getPolinomio() {
+vector<Monomio> Polinomio::getPolinomio() {
   return polinomio_;
 }
 
@@ -78,7 +78,7 @@ void Polinomio::setMonomio(Monomio m, int i) {
   polinomio_[i] = m;
 }
 
-Polinomio* operator+(Polinomio &x, Polinomio &y) {
+Polinomio* operator+(Polinomio x, Polinomio y) {
   if (x.getTerminos() < y.getTerminos()) {
     x.extendZero(y.getTerminos() - x.getTerminos());
   } else if (x.getTerminos() > y.getTerminos()) {
@@ -110,7 +110,7 @@ Polinomio* operator-(Polinomio &x, Polinomio &y) {
   return resultado;
 }
 
-Polinomio* operator*(Polinomio &x, const int &exp){
+Polinomio* operator*(Polinomio &x, int exp){
   int coef[x.getTerminos() + exp];
   for (int i = 0; i < exp; i++) {
       coef[i] = 0;

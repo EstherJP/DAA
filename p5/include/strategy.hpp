@@ -17,7 +17,7 @@ class StrategyClassic : public Strategy {
 
       for (int i = 0; i <= 2 * firstPolinomio->getTerminos() - 2; i++) {
         for (int j = 0; j <= i; j++) {
-          if (j  > firstPolinomio->getGrado() + 1 || (i - j) > secondPolinomio->getGrado() + 1) {
+          if (j  > firstPolinomio->getGrado() || (i - j) > secondPolinomio->getGrado()) {
             sum += 0;
           } else {
             sum += firstPolinomio->getPolinomio()[j].getCoeficiente() * secondPolinomio->getPolinomio()[i - j].getCoeficiente();

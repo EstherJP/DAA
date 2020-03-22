@@ -5,11 +5,26 @@ mergeS::mergeS() {}
 mergeS::~mergeS() {}
 
 
-void mergeS::resolver() {  //¿?
+void mergeS::resolver() {
+  bool ordenado;
+  cout << "Vector: ";
   for(int i = 0; i < v_.size(); i++) {
     cout << v_[i] << " ";
   }
   cout << endl;
+  for (int i = 0; i < v_.size() - 1; i++) {
+    if (v_[i] < v_[i + 1]) {
+      ordenado = true;
+    } else {
+      ordenado = false;
+      break;
+    }
+  }
+  if (ordenado == true) {
+    cout << "El vector está ordenado correctamente.\n";
+  } else {
+    cout << "El vector no está ordenado correctamente.\n";
+  }
 }
 
 void mergeS::mezcla(pair<Solucion*,Solucion*> subSoluciones) {

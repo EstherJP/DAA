@@ -7,7 +7,7 @@ quickP::quickP(vector<int> v) : Problema::Problema() {
 quickP::~quickP() {}
 
 bool quickP::isCasoMinimo() {
-	return (v_.size() < 2);
+	return (v_.size() <= 2);
 }
 
 pair<Problema*,Problema*> quickP::descomponer() {
@@ -15,7 +15,7 @@ pair<Problema*,Problema*> quickP::descomponer() {
   vector<int> v1;
   vector<int> v2;
   
-  int i = 0;
+  int i = 1;
   int j = v_.size() - 1;
   int pivote = 0;
 
@@ -51,9 +51,19 @@ pair<Problema*,Problema*> quickP::descomponer() {
   subProblemas.second = new quickP(v2);
 
   return subProblemas;
-
 } 
 
 void quickP::solver(Solucion* s) {
+  vector<int> aux;
+  if (v_.size() == 2) {
+    if (v_[0] > v_[1]) {
+      aux.push_back(v_[1]);
+      aux.push_back(v_[0]);
+    } else {
+      aux = v_;
+    }
+	  ((quickS*)s)->setValor(aux);
+  } else {
 	((quickS*)s)->setValor(v_);
+  }
 }
