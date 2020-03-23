@@ -6,14 +6,39 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-  int EQUIPOS = atoi(argv[1]);
-  if (argc == 0) {
-    cout << "ERROR: introducir numero de equipos" << endl;
+  try {
+    int EQUIPOS = atoi(argv[1]);
+    if (argc == 1) {
+      throw "ERROR: introducir numero de equipos";
+    }
+
+    bool isPotenciaDos = false;
+    int newSize;
+    for (int i = 0; i < EQUIPOS; i++) {
+      if (EQUIPOS == pow(2,i)) {
+        isPotenciaDos = true;
+        break;
+      } else {
+        newSize = pow(2, i);
+        if (newSize > EQUIPOS) {
+          break;
+        }
+      }
+    }
+
+    if (isPotenciaDos == true) {
+      cout << "Calendario deportivo con " << EQUIPOS << " equipos" << endl;
+      Matrix cal(EQUIPOS);
+      calendarDyV calendario(EQUIPOS, cal);
+      calendario.write();
+    } else {
+      cout << "Calendario deportivo con " << EQUIPOS << " equipos" << endl;
+      cout << "Los 0 significan que ese día el equipo descansa ese día" << endl;
+      Matrix cal(newSize);
+      calendarDyV calendario(EQUIPOS, cal);
+      calendario.write();
+    }
+  } catch (char const* e)  {
+    cout << e << endl;
   }
-
-  Matrix cal(EQUIPOS);
-  calendarDyV calendario(EQUIPOS, cal);
-
-  cout << "Calendario deportivo con " << EQUIPOS << " equipos" << endl;
-  calendario.write();
 }

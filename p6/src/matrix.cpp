@@ -43,3 +43,7 @@ int Matrix::getValue(int i, int j) {
 void Matrix::setValue(int i, int j, int value) {
   m_[i][j] = value;
 }
+
+int Matrix::getRow() {
+  return row_;
+}

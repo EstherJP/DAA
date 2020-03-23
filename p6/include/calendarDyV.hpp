@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <cmath>
 
 #include "matrix.hpp"
 
@@ -8,6 +9,7 @@ class calendarDyV {
   private:
     Matrix calendario_;
     int equipos_;
+    bool isPotenciaDos_;
   public:
     // Constructor por defecto
     calendarDyV();
