@@ -24,6 +24,6 @@ class Matrix {
     int getValue(int i, int j);
     // Set valor en la posicion
     void setValue(int i, int j, int value);
-    // Filas
+    // Get filas
     int getRow();
 };

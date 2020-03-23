@@ -15,10 +15,10 @@ Matrix::Matrix(int size): row_(size), col_(size - 1) {
 }
 
 Matrix::~Matrix() {
-  for(int i = 0; i < row_; i++) {
+/*  for(int i = 0; i < row_; i++) {
     delete[] m_[i];
   }
-  delete[] m_;
+  delete[] m_; */
 }
 
 void Matrix::write(void) {

@@ -52,5 +52,12 @@ void calendarDyV::crearTabla(int inf, int sup) {
 }
 
 void calendarDyV::write() {
-  calendario_.write();
+  for (int i = 0; i < equipos_; i++) {
+    cout << i + 1 << ": ";
+    for (int j = 0; j < equipos_ - 1; j++) {
+      cout << " " << calendario_.getValue(i, j);
+    }
+    cout << endl;
+  }
+  cout << endl;
 }
