@@ -82,8 +82,8 @@ string LCS::backtrack(int** table, int firstPos, int secondPos) {
 }
 
 void LCS::write(void) {
-  cout << "SECUENCIA A: " << firstSequence_ << endl;
-  cout << "SECUENCIA B: " << secondSequence_ << endl;
+  cout << "Primera secuencia: " << firstSequence_ << endl;
+  cout << "Segunda secuencia: " << secondSequence_ << endl;
 }
 
 void LCS::writeTable(int** table) {
