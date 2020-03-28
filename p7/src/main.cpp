@@ -11,6 +11,20 @@ int main(int argc, char* argv[]) {
   size_t firstSize = atoi(argv[1]);
   size_t secondSize = atoi(argv[2]);
 
+  // string second = "abcdaf";
+  // string first = "acbcf";
+
   LCS lcs(firstSize, secondSize);
+  // LLamo a la table
+  lcs.LCSLength();
+
+  // Le doy la vuelta a la subcadena
+  lcs.reverseResult();
+
   lcs.write();
+  cout << "Subsecuencia: " << lcs.getResult() << endl;
+  cout << "Tamaño de la subsecuencia: " << lcs.getSubSize() << endl;
+
+  // lcs.showDiff(table, 1, 1);
+  // cout << endl;
 }
