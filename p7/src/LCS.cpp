@@ -125,24 +125,31 @@ int LCS::getSubSize(void) {
   return subsequenceSize_;
 }
 
-
-
-void LCS::showDiff(int** table, int firstPos, int secondPos) {
-  if (firstPos > 0 && firstSequence_[firstPos - 1] == secondSequence_[secondPos - 1]) {
-    showDiff(table, firstPos - 1, secondPos - 1);
-    cout << " " << firstSequence_[firstPos];
-  } else if (secondPos > 0 && (firstPos == 0 || table[firstPos][secondPos - 1] >= table[firstPos - 1][secondPos])) {
-    showDiff(table, firstPos, secondPos - 1);
-    cout << " + " << secondSequence_[secondPos];
-  } else if (firstPos > 0 && (secondPos == 0 || table[firstPos][secondPos - 1] < table[firstPos - 1][secondPos])) {
-    showDiff(table, firstPos - 1, secondPos);
-    cout << " - " << firstSequence_[firstPos];
-  } else {
-    cout << "";
-  }
-}
-
 string LCS::getResult(void) {
   return result_;
+}
+
+bool LCS::checkResult() {
+  size_t iterResult = 0;
+  // Comprobamos que la subcadena existe en la primera
+  for (size_t i = 0; i < firstSequence_.length(); i++) {
+    if (firstSequence_[i] == result_[iterResult]) {
+      iterResult++;
+    }
+  }
+  if (iterResult != result_.length()) {
+    return false;
+  }
+  // Comprobamos que la subcadena existe en la segunda
+  iterResult = 0;
+  for (size_t i = 0; i < secondSequence_.length(); i++) {
+    if (secondSequence_[i] == result_[iterResult]) {
+      iterResult++;
+    }
+  }
+  if (iterResult != result_.length()) {
+    return false;
+  }
+  return true;
 }
 

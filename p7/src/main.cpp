@@ -4,35 +4,47 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-  if (argc == 1) {
-    string first, second;
-    cout << "Introduzca primera subsecuencia: ";
-    cin >> first;
-    cout << "Introduzca segunda subsecuencia: ";
-    cin >> second;
-    cout << endl;
+  try {
+    // cadenas por teclado
+    if (argc == 3) {
+      string first = argv[1];
+      string second = argv[2];
 
-    LCS lcs(second, first);
-    lcs.LCSLength();
-    lcs.reverseResult();
-    cout << "Subsecuencia: " << lcs.getResult() << endl;
-    cout << "Tamaño de la subsecuencia: " << lcs.getSubSize() << endl;
+      LCS lcs(second, first);
+      lcs.LCSLength();
+      lcs.reverseResult();
 
-  } else if (argc == 3) {
-    size_t firstSize = atoi(argv[1]);
-    size_t secondSize = atoi(argv[2]);
+      lcs.write();
+      cout << "Subsecuencia: " << lcs.getResult() << endl;
+      cout << "Tamaño de la subsecuencia: " << lcs.getSubSize() << endl;
 
-    LCS lcs(firstSize, secondSize);
-    // LLamo a la table
-    lcs.LCSLength();
+      if (!lcs.checkResult()) {
+        cout << "El algoritmo no encontró la solución correcta" << endl;
+      }
 
-    // Le doy la vuelta a la subcadena
-    lcs.reverseResult();
+    // Cadenas aleatorias
+    } else if (argc == 4) {
+      size_t firstSize = atoi(argv[1]);
+      size_t secondSize = atoi(argv[2]);
 
-    lcs.write();
-    cout << "Subsecuencia: " << lcs.getResult() << endl;
-    cout << "Tamaño de la subsecuencia: " << lcs.getSubSize() << endl;
-  } else {
-    throw "Error: parámetros de entrada";
+      LCS lcs(firstSize, secondSize);
+      // LLamo a la table
+      lcs.LCSLength();
+
+      // Le doy la vuelta a la subcadena
+      lcs.reverseResult();
+
+      lcs.write();
+      cout << "Subsecuencia: " << lcs.getResult() << endl;
+      cout << "Tamaño de la subsecuencia: " << lcs.getSubSize() << endl;
+      
+      if (!lcs.checkResult()) {
+        cout << "El algoritmo no encontró la solución correcta" << endl;
+      } 
+    } else {
+      throw "Error: parámetros de entrada";
+    }
+  } catch (char const *e) {
+    cout << e << endl;
   }
 }

@@ -25,6 +25,8 @@ class LCS {
 
     ~LCS();
 
+    void build(void);
+
     int getSubSize(void);
     void reverseResult(void);
     string getResult(void);
@@ -32,8 +34,7 @@ class LCS {
     void LCSLength();
     string backtrack( int firstPos, int secondPos);
 
-    void showDiff(int** table, int firstPos, int secondPos);
+    bool checkResult();
 
-    void build(void);
     void write(void);
 };
