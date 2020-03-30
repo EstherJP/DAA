@@ -30,37 +30,6 @@ void LCS::build(void) {
   }
 }
 
-// int** LCS::LCSLength() {
-//   int** table = new int*[firstSequence_.length() + 1];
-//   for (size_t i = 0; i < firstSequence_.length() + 1; i++) {
-//     table[i] = new int[secondSequence_.length() + 1];
-//   }
-
-//   // Inicializamos la primera columna 0
-//   for (size_t i = 0; i <= firstSequence_.length(); i++) {
-//     table[i][0] = 0;
-//   }
-//   // Inicializamos la primera fila 0
-//   for (size_t j = 0; j <= secondSequence_.length(); j++) {
-//     table[0][j] = 0;
-//   }
-
-//   // Creamos las subsecuencias
-//   for (size_t i = 1; i <= firstSequence_.length(); i++) {
-//     for (size_t j = 1; j <= secondSequence_.length(); j++) {
-//       if (firstSequence_[i - 1] == secondSequence_[j - 1]) {
-//         table[i][j] = table[i - 1][j - 1] + 1;
-//       } else {
-//           table[i][j] = max(table[i][j - 1], table[i - 1][j]);
-//       }
-//     }
-//   }
-
-//   subsequenceSize_ = table[firstSequence_.length()][secondSequence_.length()];
-//   backtrack(table, firstSequence_.length(), secondSequence_.length());
-//   return table;
-// }
-
 void LCS::LCSLength() {
   tableLength_.build(firstSequence_.length() + 1, secondSequence_.length() + 1);
 
@@ -87,7 +56,6 @@ void LCS::LCSLength() {
   subsequenceSize_ = tableLength_.getValue(firstSequence_.length(), secondSequence_.length());
   backtrack(firstSequence_.length(), secondSequence_.length());
 }
-
 
 string LCS::backtrack(int firstPos, int secondPos) {
   if (firstPos == 0 || secondPos == 0) { // Caso base: Ya no hay nada mas que comparar
