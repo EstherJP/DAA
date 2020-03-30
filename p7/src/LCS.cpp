@@ -30,52 +30,79 @@ void LCS::build(void) {
   }
 }
 
-int** LCS::LCSLength() {
-  int** table = new int*[firstSequence_.length() + 1];
-  for (size_t i = 0; i < firstSequence_.length() + 1; i++) {
-    table[i] = new int[secondSequence_.length() + 1];
-  }
+// int** LCS::LCSLength() {
+//   int** table = new int*[firstSequence_.length() + 1];
+//   for (size_t i = 0; i < firstSequence_.length() + 1; i++) {
+//     table[i] = new int[secondSequence_.length() + 1];
+//   }
+
+//   // Inicializamos la primera columna 0
+//   for (size_t i = 0; i <= firstSequence_.length(); i++) {
+//     table[i][0] = 0;
+//   }
+//   // Inicializamos la primera fila 0
+//   for (size_t j = 0; j <= secondSequence_.length(); j++) {
+//     table[0][j] = 0;
+//   }
+
+//   // Creamos las subsecuencias
+//   for (size_t i = 1; i <= firstSequence_.length(); i++) {
+//     for (size_t j = 1; j <= secondSequence_.length(); j++) {
+//       if (firstSequence_[i - 1] == secondSequence_[j - 1]) {
+//         table[i][j] = table[i - 1][j - 1] + 1;
+//       } else {
+//           table[i][j] = max(table[i][j - 1], table[i - 1][j]);
+//       }
+//     }
+//   }
+
+//   subsequenceSize_ = table[firstSequence_.length()][secondSequence_.length()];
+//   backtrack(table, firstSequence_.length(), secondSequence_.length());
+//   return table;
+// }
+
+void LCS::LCSLength() {
+  tableLength_.build(firstSequence_.length() + 1, secondSequence_.length() + 1);
 
   // Inicializamos la primera columna 0
   for (size_t i = 0; i <= firstSequence_.length(); i++) {
-    table[i][0] = 0;
+    tableLength_.setValue(i, 0, 0);
   }
   // Inicializamos la primera fila 0
   for (size_t j = 0; j <= secondSequence_.length(); j++) {
-    table[0][j] = 0;
+    tableLength_.setValue(0, j, 0);
   }
 
   // Creamos las subsecuencias
   for (size_t i = 1; i <= firstSequence_.length(); i++) {
     for (size_t j = 1; j <= secondSequence_.length(); j++) {
       if (firstSequence_[i - 1] == secondSequence_[j - 1]) {
-        table[i][j] = table[i - 1][j - 1] + 1;
+        tableLength_.setValue(i, j, tableLength_.getValue(i - 1, j - 1) + 1);
       } else {
-          table[i][j] = max(table[i][j - 1], table[i - 1][j]);
+          tableLength_.setValue(i, j, max(tableLength_.getValue(i, j - 1), tableLength_.getValue(i - 1, j)));
       }
     }
   }
 
-  subsequenceSize_ = table[firstSequence_.length()][secondSequence_.length()];
-  backtrack(table, firstSequence_.length(), secondSequence_.length());
-  return table;
+  subsequenceSize_ = tableLength_.getValue(firstSequence_.length(), secondSequence_.length());
+  backtrack(firstSequence_.length(), secondSequence_.length());
 }
 
 
-string LCS::backtrack(int** table, int firstPos, int secondPos) {
+string LCS::backtrack(int firstPos, int secondPos) {
   if (firstPos == 0 || secondPos == 0) { // Caso base: Ya no hay nada mas que comparar
     return "";
   } 
   else if (firstSequence_[firstPos - 1] == secondSequence_[secondPos - 1]) { // Si terminan igual
     result_.push_back(firstSequence_[firstPos - 1]);
-    return backtrack(table, firstPos - 1, secondPos - 1) + firstSequence_[firstPos - 1];
+    return backtrack(firstPos - 1, secondPos - 1) + firstSequence_[firstPos - 1];
   } 
   else { // no terminan igual
-    if (table[firstPos][secondPos - 1] > table[firstPos - 1][secondPos]) { // le resto uno al mayor
-      backtrack(table, firstPos, secondPos - 1);
+    if (tableLength_.getValue(firstPos, secondPos - 1) > tableLength_.getValue(firstPos - 1, secondPos)) { // le resto uno al mayor
+      backtrack(firstPos, secondPos - 1);
     } 
     else {
-      return backtrack(table, firstPos - 1, secondPos);
+      return backtrack(firstPos - 1, secondPos);
     }
   }
   return "";
@@ -84,18 +111,6 @@ string LCS::backtrack(int** table, int firstPos, int secondPos) {
 void LCS::write(void) {
   cout << "Primera secuencia: " << firstSequence_ << endl;
   cout << "Segunda secuencia: " << secondSequence_ << endl;
-}
-
-void LCS::writeTable(int** table) {
- // Escribimos la tabla
-  cout << "TABLA:\n";
-  for (size_t i = 0; i <= firstSequence_.length(); i++) {
-    for (size_t j = 0; j <= secondSequence_.length(); j++) {
-      cout << table[i][j] << "    ";
-    }
-    cout << endl;
-  }
-  cout << endl;
 }
 
 void LCS::reverseResult(void) {

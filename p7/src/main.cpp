@@ -4,27 +4,35 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-  if (argc < 2) {
-    throw "Error: Introducir tamaño de la subsecuencia";
-  } 
+  if (argc == 1) {
+    string first, second;
+    cout << "Introduzca primera subsecuencia: ";
+    cin >> first;
+    cout << "Introduzca segunda subsecuencia: ";
+    cin >> second;
+    cout << endl;
 
-  size_t firstSize = atoi(argv[1]);
-  size_t secondSize = atoi(argv[2]);
+    LCS lcs(second, first);
+    lcs.LCSLength();
+    lcs.reverseResult();
+    cout << "Subsecuencia: " << lcs.getResult() << endl;
+    cout << "Tamaño de la subsecuencia: " << lcs.getSubSize() << endl;
 
-  // string second = "abcdaf";
-  // string first = "acbcf";
+  } else if (argc == 3) {
+    size_t firstSize = atoi(argv[1]);
+    size_t secondSize = atoi(argv[2]);
 
-  LCS lcs(firstSize, secondSize);
-  // LLamo a la table
-  lcs.LCSLength();
+    LCS lcs(firstSize, secondSize);
+    // LLamo a la table
+    lcs.LCSLength();
 
-  // Le doy la vuelta a la subcadena
-  lcs.reverseResult();
+    // Le doy la vuelta a la subcadena
+    lcs.reverseResult();
 
-  lcs.write();
-  cout << "Subsecuencia: " << lcs.getResult() << endl;
-  cout << "Tamaño de la subsecuencia: " << lcs.getSubSize() << endl;
-
-  // lcs.showDiff(table, 1, 1);
-  // cout << endl;
+    lcs.write();
+    cout << "Subsecuencia: " << lcs.getResult() << endl;
+    cout << "Tamaño de la subsecuencia: " << lcs.getSubSize() << endl;
+  } else {
+    throw "Error: parámetros de entrada";
+  }
 }
