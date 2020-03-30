@@ -8,8 +8,8 @@
 
 ## Práctica 4: Un Framework para el desarrollo de algoritmos DyV
 
-#Práctica 5: Producto de polinomios DyV
+## Práctica 5: Producto de polinomios DyV
 
-#Práctica 6: Calendario de Competiciones DyV
+## Práctica 6: Calendario de Competiciones DyV
 
-#Práctica 7: LCS mediante programación dinámica
+## Práctica 7: LCS mediante programación dinámica
