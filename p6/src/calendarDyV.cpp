@@ -77,12 +77,14 @@ bool calendarDyV::checkResult() {
     check = auxCheck;
   }
   // No se repitan por columnas
-  for (int i = 0; i < equipos_ - 1; i++) {
-    for (int j = 0; j < equipos_; j++) {
-      if (check[calendario_.getValue(j, i) - 1] == 0) {
-        check[calendario_.getValue(j, i) - 1] = 1;
-      } else if (check[calendario_.getValue(j, i) - 1] == 1) {
-        return false;
+  for (int j = 0; j < equipos_ - 1; j++) {
+    for (int i = 0; i < equipos_; i++) {
+      if (calendario_.getValue(i, j) != 0) {
+        if (check[calendario_.getValue(i, j) - 1] == 0) {
+          check[calendario_.getValue(i, j) - 1] = 1;
+        } else {
+          return false;
+        }
       }
     }
     check = auxCheck;
