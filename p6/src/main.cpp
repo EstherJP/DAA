@@ -31,12 +31,18 @@ int main(int argc, char* argv[]) {
       Matrix cal(EQUIPOS);
       calendarDyV calendario(EQUIPOS, cal);
       calendario.write();
+      if (calendario.checkResult() == false) {
+        cout << "El resultado está mal\n";
+      }
     } else {
       cout << "Calendario deportivo con " << EQUIPOS << " equipos" << endl;
       cout << "Los 0 significan que ese día el equipo descansa ese día" << endl;
       Matrix cal(newSize);
       calendarDyV calendario(EQUIPOS, cal);
       calendario.write();
+      if (calendario.checkResult() == false) {
+        cout << "El resultado está mal\n";
+      }
     }
   } catch (char const* e)  {
     cout << e << endl;

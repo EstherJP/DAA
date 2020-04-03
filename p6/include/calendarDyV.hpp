@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 #include "matrix.hpp"
 
@@ -22,5 +23,7 @@ class calendarDyV {
     void completarTabla(int eqSup, int eqInf, int diaSup, int diaInf, int equipo);
     //escribir calendario
     void write();
+    // Comprobar resultado
+    bool checkResult();
 
 };
