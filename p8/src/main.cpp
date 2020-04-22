@@ -12,18 +12,16 @@ int main(int argc, char* argv[]) {
     char* filename = argv[1];
     std::cout << "Nombre del fichero: " << filename << std::endl;
     Graph graph(filename);
-    graph.write();
+    // graph.write();
 
     MaxMeanGreedy* firstGreedy = new MaxMeanGreedy(graph);
-    // MyMaxMeanGreedy* secondGreedy = new MyMaxMeanGreedy(graph);
+    MyMaxMeanGreedy* secondGreedy = new MyMaxMeanGreedy(graph);
 
     maxMeanCalculator* interface = new maxMeanCalculator(firstGreedy);
     interface->maxMeanInterface();
-
-    // interface->setStrategy(secondGreedy);
-    // interface->maxMeanInterface();
-
-    
+    std::cout << std::endl;
+    interface->setStrategy(secondGreedy);
+    interface->maxMeanInterface();
 
   } catch(char const* error) {
     std::cout << error << std::endl;

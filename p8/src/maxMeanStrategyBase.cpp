@@ -10,7 +10,7 @@ std::vector<int> MaxMean::getBestSolution(void) {
   return bestSolution_;
 }
 
-bool MaxMean::isInCurrentSolution(int node) {
+bool MaxMean::isInCurrentSolution(float node) {
   for (size_t i = 0; i < bestSolution_.size(); i++) {
     if (bestSolution_[i] == node) {
       return true;
@@ -22,6 +22,18 @@ bool MaxMean::isInCurrentSolution(int node) {
 float MaxMean::meanDispersion(float numerator, float denominator) {
   return numerator / denominator;
 }
+
+float MaxMean::meanDispersionVector(std::vector<int> nodes) {
+  float sum = 0;
+  int iterNodeI = 0;
+  for (size_t i = iterNodeI; i < nodes.size(); i++) {
+    for (size_t j = i + 1; j < nodes.size(); j++) {
+      sum += affinities_.getValue(nodes[i], nodes[j]);
+    }
+  }
+  return (sum / nodes.size());
+}
+
 
 void MaxMean::showSolution(void) {
   std::cout << "Mejor media: " << bestMean_ << std::endl;

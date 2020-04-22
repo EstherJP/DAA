@@ -98,9 +98,60 @@ class MaxMeanGreedy : public MaxMean {
 
 class MyMaxMeanGreedy : public MaxMean {
   public:
-    MyMaxMeanGreedy(Graph affinities) : MaxMean(affinities) {}
+     MyMaxMeanGreedy(Graph affinities) : MaxMean(affinities) {
+      srand(time(NULL));
+    }
+
+    void initializeAll(void) {
+      for (int i = 0; i < affinities_.getNumberVertex(); i++) {
+        bestSolution_.push_back(i);
+      }
+    }
+
+    void deleteWorstNode(void) {
+      int min = INT_MAX;
+      int iMin;
+      int jMin;
+          
+      for (int i = 0; i < affinities_.getNumberVertex(); i++) {
+        for (int j = i; j < affinities_.getNumberVertex(); j++) {
+          if (affinities_.getValue(i, j) < min) {
+            min = affinities_.getValue(i, j);
+            iMin = i;
+            jMin = j;
+          } else if (affinities_.getValue(i, j) == min) {
+            int random = rand() % 2;
+            if (random == 1) {
+              min = affinities_.getValue(i, j);
+              iMin = i;
+              jMin = j;
+            }
+          }
+        }
+      }
+      if (isInCurrentSolution(bestSolution_[iMin])) {
+        showSolution();
+        bestSolution_.erase(bestSolution_.begin() + iMin - 1);
+        bestSolution_.erase(bestSolution_.begin() + jMin - 1);
+      }
+    }
 
     void searchSolution(void) {
-      std::cout << "Segunda estrategia greedy\n";
+      std::cout << "Segundo Greedy\n";
+      initializeAll();
+      bestMean_ = meanDispersionVector(bestSolution_);
+      std::vector<int> auxSol;
+
+      do {
+        auxSol = bestSolution_;
+        // delete node
+        deleteWorstNode();
+        float newMean = meanDispersionVector(bestSolution_);
+        if (newMean < bestMean_) {
+          bestMean_ = newMean;
+        } else {
+          bestSolution_ = auxSol;
+        }
+      } while (auxSol != bestSolution_);
     }
 };

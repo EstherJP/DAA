@@ -10,7 +10,7 @@ class MaxMean {
     std::vector<int> bestSolution_;
     float bestMean_;
 
-    bool isInCurrentSolution(int node);
+    bool isInCurrentSolution(float node);
   
   public:
     MaxMean(Graph affinities);
@@ -19,5 +19,6 @@ class MaxMean {
     virtual void searchSolution(void) = 0;
     std::vector<int> getBestSolution(void);
     float meanDispersion(float numerator, float denominator);
+    float meanDispersionVector(std::vector<int> nodes);
     void showSolution(void);
 };
