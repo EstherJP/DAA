@@ -7,11 +7,11 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
   try {
-    int EQUIPOS = atoi(argv[1]);
     if (argc == 1) {
       throw "ERROR: introducir numero de equipos";
     }
 
+    int EQUIPOS = atoi(argv[1]);
     bool isPotenciaDos = false;
     int newSize;
     for (int i = 0; i < EQUIPOS; i++) {
