@@ -24,6 +24,7 @@ class maxMeanCalculator {
     void maxMeanInterface(void) {
       if(calculateMaxMean_) {
         calculateMaxMean_->searchSolution();
+        calculateMaxMean_->showSolution();
       }
       else {
         throw "Error: Strategy not set";
