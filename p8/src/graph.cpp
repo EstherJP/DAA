@@ -20,14 +20,13 @@ void Graph::buildGraph(char* filename) {
   for (int i = 0; i < numberOfVertex_; i++) {
     setData(pos(i, i), -1.0);
   }
-  std::cout << "numer: " << numberOfVertex_ << std::endl;
 
   float data;
   int i = 0;
   int j = 1;
   while (!file.eof() && i < numberOfVertex_) {
     file >> data;
-    
+
     while (adjancencyMatrix_[pos(i, j)] != 0) {
       j++;
     }
@@ -49,12 +48,24 @@ int Graph::pos(int i, int j) {
   return  i * numberOfVertex_ + j;
 }
 
+float Graph::getValue(int i, int j) {
+  return adjancencyMatrix_[pos(i, j)];
+}
+
 void Graph::setData(int pos, float data) {
-  if (pos >= adjancencyMatrix_.size()) {
+  if ((size_t)pos >= adjancencyMatrix_.size()) {
     throw "Error: Matrix position doesn't exist";
   }
 
   adjancencyMatrix_[pos] = data;
+}
+
+std::vector<float> Graph::getMatrix(void) {
+  return adjancencyMatrix_;
+}
+
+int Graph::getNumberVertex(void) {
+  return numberOfVertex_;
 }
 
 void Graph::write(void) {

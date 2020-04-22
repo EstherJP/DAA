@@ -10,13 +10,15 @@ class Graph {
     std::vector<float> adjancencyMatrix_;
 
     void buildGraph(char* filename);
+    void setData(int pos, float data);
 
   public:
     Graph(char* filename);
     ~Graph();
 
+    std::vector<float> getMatrix(void);
+    int getNumberVertex(void);
     int pos(int i, int j);
-    void setData(int pos, float data);
-
+    float getValue(int i, int j);
     void write(void);
 };
