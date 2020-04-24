@@ -78,10 +78,10 @@ class MaxMeanGreedy : public MaxMean {
     }
 
     void searchSolution(void) {
-      std::cout << "Primera estrategia greedy\n";
+      std::cout << "----------Primera estrategia greedy----------\n";
       bestMean_ = getCurrentBestAffinity() / 2;
       std::vector<int> auxSol;
-      float sumEdge = bestMean_;
+      float sumEdge = bestMean_ * 2.0;
 
       do {
         auxSol = bestSolution_;
@@ -110,44 +110,54 @@ class MyMaxMeanGreedy : public MaxMean {
 
     void deleteWorstNode(void) {
       int min = INT_MAX;
-      int iMin;
-      int jMin;
+      int minNode;
           
-      for (int i = 0; i < affinities_.getNumberVertex(); i++) {
-        for (int j = i; j < affinities_.getNumberVertex(); j++) {
-          if (affinities_.getValue(i, j) < min) {
+      for (size_t i = 0; i < bestSolution_.size(); i++) {
+        for (int j = 0; j < affinities_.getNumberVertex(); j++) {
+          if (isInCurrentSolution(j) && affinities_.getValue(i, j) < min) {
+            // std::cout << "Minimo antiguo: " << min << " Minimo nuevo: ";
             min = affinities_.getValue(i, j);
-            iMin = i;
-            jMin = j;
-          } else if (affinities_.getValue(i, j) == min) {
+            // std::cout << min << "\n";
             int random = rand() % 2;
             if (random == 1) {
-              min = affinities_.getValue(i, j);
-              iMin = i;
-              jMin = j;
+              minNode = i;
+            } else {
+              minNode = j;
+            } 
+          } else if (isInCurrentSolution(j) && affinities_.getValue(i, j) == min) {
+            int random = rand() % 3;
+            if (random == 1) {
+              minNode = i;
+            } else if (random == 2) {
+              minNode = j;
             }
-          }
+          } 
         }
       }
-      if (isInCurrentSolution(bestSolution_[iMin])) {
-        showSolution();
-        bestSolution_.erase(bestSolution_.begin() + iMin - 1);
-        bestSolution_.erase(bestSolution_.begin() + jMin - 1);
+      // std::cout << "\nNODO A ELIMINAR: " << minNode << std::endl;
+      // std::cout << "\nAntes de eliminar: \n";
+      // showSolution();
+      for (auto iter = bestSolution_.begin(); iter != bestSolution_.end(); iter++) {
+        if (*iter == minNode) {
+          bestSolution_.erase(iter);
+          break;
+        }
       }
+      // std::cout << "Despues de eliminar: \n";
+      // showSolution();
     }
 
     void searchSolution(void) {
-      std::cout << "Segundo Greedy\n";
+      std::cout << "----------Segundo Greedy----------\n";
       initializeAll();
       bestMean_ = meanDispersionVector(bestSolution_);
       std::vector<int> auxSol;
 
       do {
         auxSol = bestSolution_;
-        // delete node
         deleteWorstNode();
         float newMean = meanDispersionVector(bestSolution_);
-        if (newMean < bestMean_) {
+        if (newMean >= bestMean_) {
           bestMean_ = newMean;
         } else {
           bestSolution_ = auxSol;
