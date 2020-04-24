@@ -16,11 +16,16 @@ int main(int argc, char* argv[]) {
 
     MaxMeanGreedy* firstGreedy = new MaxMeanGreedy(graph);
     MyMaxMeanGreedy* secondGreedy = new MyMaxMeanGreedy(graph);
+    Grasp* grasp = new Grasp(graph);
+
 
     maxMeanCalculator* interface = new maxMeanCalculator(firstGreedy);
     interface->maxMeanInterface();
     std::cout << std::endl;
     interface->setStrategy(secondGreedy);
+    interface->maxMeanInterface();
+
+    interface->setStrategy(grasp);
     interface->maxMeanInterface();
 
   } catch(char const* error) {

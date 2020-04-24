@@ -4,6 +4,7 @@
 #include <climits>
 #include <stdlib.h>
 #include <time.h>
+#include <cfloat>
 #include "../include/maxMeanStrategyBase.hpp"
 
 class MaxMeanGreedy : public MaxMean {
@@ -12,8 +13,8 @@ class MaxMeanGreedy : public MaxMean {
       srand(time(NULL));
     }
 
-    int getMax(void) {
-      int max = INT_MIN;
+    float getMax(void) {
+      float max = FLT_MIN;
       int iMax;
       int jMax;
           
@@ -36,61 +37,48 @@ class MaxMeanGreedy : public MaxMean {
 
       bestSolution_.push_back(iMax);
       bestSolution_.push_back(jMax);
-      return max;
+      return max / 2.0;
     }
 
-    int getCurrentBestAffinity(void) {
-      int max = INT_MIN;
-      int iMax;
-      int jMax;
-
-      if (bestSolution_.size() == 0) {
-        return getMax();
-      } 
-
-      int currentNode = 0;
-      for (size_t i = bestSolution_[currentNode]; (size_t)currentNode != bestSolution_.size(); 
-          i = bestSolution_[++currentNode]) {
-        for (int j = 0; j < affinities_.getNumberVertex(); j++) {
-          if (affinities_.getValue(i, j) > max && !isInCurrentSolution(j)) {
-            max = affinities_.getValue(i, j);
-            iMax = i;
-            jMax = j;
-          } else if (affinities_.getValue(i, j) == max && !isInCurrentSolution(j)) {
+    float getCurrentBestAffinity(void) {
+      std::vector<int> auxSol = bestSolution_;
+      float newMean = INT_MIN;
+      float oldMean;
+      int bestNodeFound = -1;
+      for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
+        if (!isInCurrentSolution(currentNode)) {
+          auxSol.push_back(currentNode);
+          oldMean = meanDispersionVector(auxSol);
+          if (newMean < oldMean) {
+            newMean = oldMean;
+            bestNodeFound = currentNode;
+          } else if (newMean == oldMean) {
             int random = rand() % 2;
             if (random == 1) {
-              max = affinities_.getValue(i, j);
-              iMax = i;
-              jMax = j;
+              newMean = oldMean;
+              bestNodeFound = currentNode;
             }
           }
+          auxSol.pop_back();
         }
       }
 
-      for (size_t i = 0; i < bestSolution_.size(); i++) {
-        if (bestSolution_[i] != iMax) {
-          max += affinities_.getValue(bestSolution_[i], jMax);
-        }
-      }
-
-      bestSolution_.push_back(jMax);
-      return max;
+      bestSolution_.push_back(bestNodeFound);
+      return newMean;
     }
 
     void searchSolution(void) {
       std::cout << "----------Primera estrategia greedy----------\n";
-      bestMean_ = getCurrentBestAffinity() / 2;
       std::vector<int> auxSol;
-      float sumEdge = bestMean_ * 2.0;
+      bestMean_ = getMax();
 
       do {
         auxSol = bestSolution_;
-        sumEdge += getCurrentBestAffinity();
-        float newMean = meanDispersion(sumEdge, bestSolution_.size());
-        if (newMean >= bestMean_) {
-          bestMean_ = newMean;
+        float currentMean = getCurrentBestAffinity();
+        if (bestMean_ >= currentMean) {
+          bestSolution_.pop_back();
         } else {
-          bestSolution_ = auxSol;
+          bestMean_ = currentMean;
         }
       } while (auxSol != bestSolution_);
     }
@@ -115,9 +103,7 @@ class MyMaxMeanGreedy : public MaxMean {
       for (size_t i = 0; i < bestSolution_.size(); i++) {
         for (int j = 0; j < affinities_.getNumberVertex(); j++) {
           if (isInCurrentSolution(j) && affinities_.getValue(i, j) < min) {
-            // std::cout << "Minimo antiguo: " << min << " Minimo nuevo: ";
             min = affinities_.getValue(i, j);
-            // std::cout << min << "\n";
             int random = rand() % 2;
             if (random == 1) {
               minNode = i;
@@ -134,17 +120,13 @@ class MyMaxMeanGreedy : public MaxMean {
           } 
         }
       }
-      // std::cout << "\nNODO A ELIMINAR: " << minNode << std::endl;
-      // std::cout << "\nAntes de eliminar: \n";
-      // showSolution();
+      
       for (auto iter = bestSolution_.begin(); iter != bestSolution_.end(); iter++) {
         if (*iter == minNode) {
           bestSolution_.erase(iter);
           break;
         }
       }
-      // std::cout << "Despues de eliminar: \n";
-      // showSolution();
     }
 
     void searchSolution(void) {
@@ -164,4 +146,37 @@ class MyMaxMeanGreedy : public MaxMean {
         }
       } while (auxSol != bestSolution_);
     }
+};
+
+class Grasp : public MaxMean {
+  private:
+    std::vector<int> LRC_;
+    int cardinality_ = 4;
+
+  public:
+    Grasp(Graph affinities) : MaxMean(affinities) {
+    srand(time(NULL));
+    // LRC_.resize(cardinality_);
+  }
+
+  void createLRC(void) {
+    std::vector<int> auxSol = bestSolution_;
+    int auxMean = bestMean_;
+
+    // for (int i = 0; i < affinities_.getNumberVertex(); i++) {
+    //   auxSol.push_back(i);
+    //   if (bestMean_ )
+    // }
+  }
+
+  void constructivePhase(void) {
+
+  }
+
+  void searchSolution(void) {
+    std::cout << "----------Grasp----------\n";
+
+
+  }
+
 };
