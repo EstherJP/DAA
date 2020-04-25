@@ -161,11 +161,9 @@ class Grasp : public MaxMean {
 
 
   void addLRC(int currentNode, float currentMean) {
-    std::cout << "ADDLRC\n";
     if (LRC_.size() < cardinality_) {
       LRC_.push_back(std::make_pair(currentNode, currentMean));
     } else {
-      std::cout << "Cambia al mas pequeño\n";
       float currentMin = currentMean;
       int posMin = -1;
       for (int i = 0; i < cardinality_; i++) {
@@ -183,50 +181,72 @@ class Grasp : public MaxMean {
         LRC_[posMin] = std::make_pair(currentNode, currentMean);
       }
     }
-    std::cout << "LRc Actual  ";
-    for (int i = 0; i < cardinality_; i++) {
-      std::cout << "<" << LRC_[i].first << ", " << LRC_[i].second << "> | ";
-    }
-    std::cout << "\n\n";
   }
 
   void createLRC(void) {
+    // std::cout << "--Creando LRC--\n";
     LRC_.clear();
-    float newMean;
 
     if (bestSolution_.size() == 0) {
-      std::cout << "Inicalizamos best solu\n";
-      newMean = getMax();
-      std::cout << "Meadia actual " << newMean << std::endl;
-      showSolution();
+      bestMean_ = getMax();
     }
 
+    float newMean = bestMean_;
     for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
       if (!isInCurrentSolution(currentNode)) {
-        std::cout << "NODO A COMPROBAR " << currentNode << "\n";
         bestSolution_.push_back(currentNode);
         newMean = meanDispersionVector(bestSolution_);
-        std::cout << "Media con este nodo: " << newMean << "\n";
-        showSolution();
         addLRC(currentNode, newMean);
         bestSolution_.pop_back();
-        std::cout << "\n";
       }
     }
+
+    // for (size_t i = 0; i < LRC_.size(); i++) {
+    //   std::cout << "<" << LRC_[i].first << ", " << LRC_[i].second << "> | ";
+    // }
+    // std::cout << "\n";
   }
 
   void constructivePhase(void) {
+    // std::cout << "--Fase constructiva--\n";
+    createLRC();
+    float auxMean = bestMean_;
+    std::vector<int> auxSol;
 
+    do {
+      auxSol = bestSolution_;
+      int randomNode = rand() % cardinality_;
+      bestSolution_.push_back(LRC_[randomNode].first);
+      auxMean = LRC_[randomNode].second;
+
+      if (bestMean_ >= auxMean) {
+        bestSolution_.pop_back();
+      } else {
+        bestMean_ = auxMean;
+      }
+      createLRC();
+    } while (auxSol != bestSolution_);
+    // std::cout << "\nSolucion contructiva nueva: " << "\n";
+    // showSolution();
   }
 
   void searchSolution(void) {
     std::cout << "----------Grasp----------\n";
-    createLRC();
-    std::cout << "LRc vinal:D    ";
-    for (int i = 0; i < cardinality_; i++) {
-      std::cout << "nodo: " << LRC_[i].first << " media: " << LRC_[i].second << " | ";
-    }
-    std::cout << "\n";
-  }
+    int i = 0;
+    std::vector<int> auxSol;
+    int auxMean;
+    do {
+      auxSol = bestSolution_;
+      auxMean = bestMean_;
+      constructivePhase();
 
+      if (bestMean_ < auxMean) {
+        bestSolution_ = auxSol;
+        bestMean_ = auxMean;
+      }
+      // std::cout << "\nSolucion actualizada:\n"; 
+      // showSolution();
+      i++;
+    } while (i < 200);
+  }
 };

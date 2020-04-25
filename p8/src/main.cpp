@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     interface->setStrategy(secondGreedy);
     interface->maxMeanInterface();
 
-    graph.write();
+    // graph.write();
     interface->setStrategy(grasp);
     interface->maxMeanInterface();
 
