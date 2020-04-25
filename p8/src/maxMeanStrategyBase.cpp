@@ -41,6 +41,7 @@ void MaxMean::showSolution(void) {
 }
 
 float MaxMean::getMax(void) {
+  bestSolution_.clear();
   float max = FLT_MIN;
   int iMax;
   int jMax;
@@ -130,19 +131,19 @@ void MaxMean::localAnxiousSearch(void) {
   for (int node = 0; node < affinities_.getNumberVertex(); node++) {
     std::vector<int> neightbourdSolution = generateNeightbourd(node);
     float neightbourdMean = meanDispersion(neightbourdSolution);
-    std::cout << "SOLUCION ACTUAL: ";
-    showSolution();
-    std::cout << "VECINA: \n";
-    std::cout << "Media vecina " << neightbourdMean << "\n";
-    for (int i = 0; i < neightbourdSolution.size(); i++) {
-      std::cout << neightbourdSolution[i] << " ";
-    }
-    std::cout << "\n";
+    // std::cout << "SOLUCION ACTUAL: ";
+    // showSolution();
+    // std::cout << "VECINA: \n";
+    // std::cout << "Media vecina " << neightbourdMean << "\n";
+    // for (int i = 0; i < neightbourdSolution.size(); i++) {
+    //   std::cout << neightbourdSolution[i] << " ";
+    // }
+    // std::cout << "\n";
 
     if (neightbourdMean > bestMean_) {
       bestSolution_ = neightbourdSolution;
       bestMean_ = neightbourdMean;
-      std::cout << "PARO\n";
+      // std::cout << "PARO\n";
       break;
     } 
   }

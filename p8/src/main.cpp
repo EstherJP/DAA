@@ -1,7 +1,6 @@
 #include <iostream>
 #include "../include/graph.hpp"
 #include "../include/maxMeanCalculator.hpp"
-// #include "../include/maxMeanStrategy.hpp"
 #include "../include/contructiveGreedy.hpp"
 #include "../include/destructiveGreedy.hpp"
 #include "../include/grasp.hpp"
@@ -19,7 +18,7 @@ int main(int argc, char* argv[]) {
     constructiveGreedy* constGreedy = new constructiveGreedy(graph);
     destructiveGreedy* descGreedy = new destructiveGreedy(graph);
 
-    int stopCriteria = 2;
+    int stopCriteria = 1;
     int searchCriteria_ = 1;
     int environmentCriteria_ = 1;
     Grasp* grasp = new Grasp(graph, stopCriteria, searchCriteria_, environmentCriteria_);

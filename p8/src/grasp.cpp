@@ -48,7 +48,7 @@ void Grasp::createLRC(void) {
 
 void Grasp::constructivePhase(void) {
   createLRC();
-  float auxMean = bestMean_;
+  float auxMean;
   std::vector<int> auxSol;
 
   do {
@@ -56,38 +56,22 @@ void Grasp::constructivePhase(void) {
     int randomNode = rand() % cardinality_;
     bestSolution_.push_back(LRC_[randomNode].first);
     auxMean = LRC_[randomNode].second;
-    // updateSolution(auxSol, auxMean);
-    if (bestMean_ < auxMean) {
-      bestMean_ = auxMean;
-    } else {
-      bestSolution_ = auxSol;
-    }
+    updateSolution(auxSol, auxMean);
     createLRC();
   } while (auxSol != bestSolution_);
-  // std::cout << "Saliendo de la fase constructiva la solución es: ";
-  // for (int i = 0; i < bestSolution_.size(); i++)
-  //   std::cout << bestSolution_[i] << " ";
 }
 
 void Grasp::searchSolution(void) {
   std::cout << "----------Grasp----------\n";
   int numberOfIterations = 0;
   std::vector<int> auxSol;
-  int auxMean;
-  bestMean_ = getMax();
+  float auxMean;
   do {
+    bestSolution_.clear();
+    bestMean_ = getMax();
     constructivePhase();
-    // showSolution();
-
-    // std::cout << "Aux mean " << auxMean << "\n";
-    // for (int i = 0; i < auxSol.size(); i++) {
-    //   std::cout << auxSol[i] << " ";
-    // }
-    // std::cout << "\n";
-    // postProcessing();
-    // updateSolution(auxSol, auxMean);
+    postProcessing();
     if (bestMean_ > auxMean) {
-      std::cout << "Actualizo valores\n";
       auxMean = bestMean_;
       auxSol = bestSolution_;
       numberIterWithoutImprove = 0;
@@ -96,7 +80,6 @@ void Grasp::searchSolution(void) {
     }
     numberOfIterations++;
   } while (stopCriteria(numberOfIterations));
-    bestSolution_ = auxSol;
-    bestMean_ = auxMean;
-  // updateSolution(auxSol, auxMean);
+  bestSolution_ = auxSol;
+  bestMean_ = auxMean;
 }
