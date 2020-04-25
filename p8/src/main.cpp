@@ -12,7 +12,6 @@ int main(int argc, char* argv[]) {
     char* filename = argv[1];
     std::cout << "Nombre del fichero: " << filename << std::endl;
     Graph graph(filename);
-    // graph.write();
 
     MaxMeanGreedy* firstGreedy = new MaxMeanGreedy(graph);
     MyMaxMeanGreedy* secondGreedy = new MyMaxMeanGreedy(graph);
@@ -25,6 +24,7 @@ int main(int argc, char* argv[]) {
     interface->setStrategy(secondGreedy);
     interface->maxMeanInterface();
 
+    graph.write();
     interface->setStrategy(grasp);
     interface->maxMeanInterface();
 

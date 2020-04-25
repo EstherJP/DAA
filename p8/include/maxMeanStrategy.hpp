@@ -152,7 +152,7 @@ class MyMaxMeanGreedy : public MaxMean {
 class Grasp : public MaxMean {
   private:
     std::vector<std::pair<int, float>> LRC_;
-    int cardinality_ = 2;
+    int cardinality_ = 4;
 
   public:
     Grasp(Graph affinities) : MaxMean(affinities) {
@@ -161,29 +161,33 @@ class Grasp : public MaxMean {
 
 
   void addLRC(int currentNode, float currentMean) {
-    if (LRC_.size() <= cardinality_) {
-      std::cout << "Menor que cuatro\n";
+    std::cout << "ADDLRC\n";
+    if (LRC_.size() < cardinality_) {
       LRC_.push_back(std::make_pair(currentNode, currentMean));
     } else {
       std::cout << "Cambia al mas pequeño\n";
-      float swapMean = currentMean;
-      bool changeMeanFlag = false;
+      float currentMin = currentMean;
       int posMin = -1;
       for (int i = 0; i < cardinality_; i++) {
-        std::cout << "Comparo: " << currentMean << " con " <<  LRC_[i].second << "\n";
-        if (changeMeanFlag && LRC_[posMin].second > LRC_[i].second) {
-          std::cout << "Cambia en " << i << " " << swapMean << " por " << LRC_[i].second << "\n";
+        if (currentMin > LRC_[i].second) {
           posMin = i;
-          swapMean = LRC_[i].second;
-        } else if (currentMean > LRC_[i].second) {
-          posMin = i;
-          changeMeanFlag = true;
-        } 
+          currentMin = LRC_[i].second;
+        } else if (currentMin == LRC_[i].second) {
+          int random = rand() % 2;
+          if (random == 1) {
+            posMin = i;
+          } 
+        }
       }
-      if (changeMeanFlag) {
+      if (posMin != -1) {
         LRC_[posMin] = std::make_pair(currentNode, currentMean);
       }
     }
+    std::cout << "LRc Actual  ";
+    for (int i = 0; i < cardinality_; i++) {
+      std::cout << "<" << LRC_[i].first << ", " << LRC_[i].second << "> | ";
+    }
+    std::cout << "\n\n";
   }
 
   void createLRC(void) {
@@ -191,16 +195,22 @@ class Grasp : public MaxMean {
     float newMean;
 
     if (bestSolution_.size() == 0) {
-      getMax();
+      std::cout << "Inicalizamos best solu\n";
+      newMean = getMax();
+      std::cout << "Meadia actual " << newMean << std::endl;
+      showSolution();
     }
 
     for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
       if (!isInCurrentSolution(currentNode)) {
+        std::cout << "NODO A COMPROBAR " << currentNode << "\n";
         bestSolution_.push_back(currentNode);
-        showSolution();
         newMean = meanDispersionVector(bestSolution_);
+        std::cout << "Media con este nodo: " << newMean << "\n";
+        showSolution();
         addLRC(currentNode, newMean);
         bestSolution_.pop_back();
+        std::cout << "\n";
       }
     }
   }
@@ -212,8 +222,9 @@ class Grasp : public MaxMean {
   void searchSolution(void) {
     std::cout << "----------Grasp----------\n";
     createLRC();
-    for (int i = 0; i < 4; i++) {
-      std::cout << "LRc:D " << LRC_[i].first << " ";
+    std::cout << "LRc vinal:D    ";
+    for (int i = 0; i < cardinality_; i++) {
+      std::cout << "nodo: " << LRC_[i].first << " media: " << LRC_[i].second << " | ";
     }
     std::cout << "\n";
   }

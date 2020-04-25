@@ -36,7 +36,7 @@ float MaxMean::meanDispersionVector(std::vector<int> nodes) {
 
 
 void MaxMean::showSolution(void) {
-  std::cout << "\nMejor media: " << bestMean_ << std::endl;
+  // std::cout << "\nMejor media: " << bestMean_ << std::endl;
   std::cout << "Conjunto de nodos: " << std::endl;
   for (size_t i = 0; i < bestSolution_.size(); i++) {
     std::cout << bestSolution_[i] << " ";
