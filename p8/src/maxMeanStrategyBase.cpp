@@ -70,7 +70,96 @@ float MaxMean::getMax(void) {
 void MaxMean::updateSolution(std::vector<int> currentSolution, float currentMean) {
   if (bestMean_ < currentMean) {
     bestMean_ = currentMean;
+    numberIterWithoutImprove = 0;
   } else {
     bestSolution_ = currentSolution;
+    numberIterWithoutImprove++;
+  }
+}
+
+bool MaxMean::stopCriteria(int nIterations) {
+  switch (stopCriteria_)  {
+  case 1:
+    return nIterations < MAXITERATIONS;
+    break;
+  
+  case 2:
+    return numberIterWithoutImprove < MAXITERATIONS;
+    break;
+  
+  default:
+    throw "Error: You need to set the stop criteria";
+    break;
+  }
+}
+
+void MaxMean::localGreedySearch(void) {
+
+}
+
+std::vector<int> MaxMean::generateNeightbourd(int node) {
+  std::vector<int> neightbourd = bestSolution_;
+  
+  switch (environmentCriteria_) {
+  case 1: // Apertura
+    if (!isInCurrentSolution(node)) {
+      neightbourd.push_back(node);
+      return neightbourd;
+    }
+    break;
+  
+  case 2: // Cierre
+    if (isInCurrentSolution(node)) {
+      for (auto iter = neightbourd.begin(); iter != neightbourd.end(); iter++) {
+        if (*iter == node) {
+          neightbourd.erase(iter);
+          break;
+        }
+      }
+    }
+
+  default:
+    throw "Error: You need to set an environment criteria";
+    break;
+  }
+}
+
+void MaxMean::localAnxiousSearch(void) {
+  float currentMean = bestMean_;
+  //Generar solucion vecina añadiendo criterio de apertura
+  for (int node = 0; node < affinities_.getNumberVertex(); node++) {
+    std::vector<int> neightbourdSolution = generateNeightbourd(node);
+    float neightbourdMean = meanDispersion(neightbourdSolution);
+    std::cout << "SOLUCION ACTUAL: ";
+    showSolution();
+    std::cout << "VECINA: \n";
+    std::cout << "Media vecina " << neightbourdMean << "\n";
+    for (int i = 0; i < neightbourdSolution.size(); i++) {
+      std::cout << neightbourdSolution[i] << " ";
+    }
+    std::cout << "\n";
+
+    if (neightbourdMean > bestMean_) {
+      bestSolution_ = neightbourdSolution;
+      bestMean_ = neightbourdMean;
+      std::cout << "PARO\n";
+      break;
+    } 
+  }
+}
+
+void MaxMean::postProcessing(void) {
+  switch (searchCriteria_) {
+  case 1:
+    localAnxiousSearch();
+    break;
+  
+  case 2:
+    localGreedySearch();
+    break;
+  
+  default:
+    throw "Error: You need to set a local search";
+    break;
   }
 }

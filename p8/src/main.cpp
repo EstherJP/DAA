@@ -18,7 +18,11 @@ int main(int argc, char* argv[]) {
 
     constructiveGreedy* constGreedy = new constructiveGreedy(graph);
     destructiveGreedy* descGreedy = new destructiveGreedy(graph);
-    Grasp* grasp = new Grasp(graph);
+
+    int stopCriteria = 2;
+    int searchCriteria_ = 1;
+    int environmentCriteria_ = 1;
+    Grasp* grasp = new Grasp(graph, stopCriteria, searchCriteria_, environmentCriteria_);
 
 
     maxMeanCalculator* interface = new maxMeanCalculator(constGreedy);

@@ -8,10 +8,11 @@ class Grasp : public MaxMean {
     int cardinality_ = 4;
 
   public:
-    Grasp(Graph affinities);
+    Grasp(Graph affinities, int stopCriteria, int searchCriteria, int environmentCriteria);
 
     void createLRC(void);
     void addLRC(int currentNode, float currentMean);
     void constructivePhase(void);
+
     void searchSolution(void);
 };
