@@ -3,6 +3,10 @@
 #include <iostream>
 #include <math.h>
 #include <cfloat>
+#include <climits>
+#include <stdlib.h>
+#include <time.h>
+#include <utility>
 
 #include "../include/graph.hpp"
 
@@ -18,10 +22,10 @@ class MaxMean {
     MaxMean(Graph affinities);
     ~MaxMean();
 
-    virtual void searchSolution(void) = 0;
-    std::vector<int> getBestSolution(void);
-    float meanDispersion(float numerator, float denominator);
-    float meanDispersionVector(std::vector<int> nodes);
-    void showSolution(void);
     float getMax(void);
+    void updateSolution(std::vector<int> newSolution, float newMean);
+    std::vector<int> getBestSolution(void);
+    float meanDispersion(std::vector<int> nodes);
+    void showSolution(void);
+    virtual void searchSolution(void) = 0;
 };

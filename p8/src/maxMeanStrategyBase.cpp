@@ -19,11 +19,7 @@ bool MaxMean::isInCurrentSolution(float node) {
   return false;
 }
 
-float MaxMean::meanDispersion(float numerator, float denominator) {
-  return numerator / denominator;
-}
-
-float MaxMean::meanDispersionVector(std::vector<int> nodes) {
+float MaxMean::meanDispersion(std::vector<int> nodes) {
   float sum = 0;
   int iterNodeI = 0;
   for (size_t i = iterNodeI; i < nodes.size(); i++) {
@@ -69,4 +65,12 @@ float MaxMean::getMax(void) {
   bestSolution_.push_back(iMax);
   bestSolution_.push_back(jMax);
   return max / 2.0;
+}
+
+void MaxMean::updateSolution(std::vector<int> currentSolution, float currentMean) {
+  if (bestMean_ < currentMean) {
+    bestMean_ = currentMean;
+  } else {
+    bestSolution_ = currentSolution;
+  }
 }

@@ -1,7 +1,10 @@
 #include <iostream>
 #include "../include/graph.hpp"
 #include "../include/maxMeanCalculator.hpp"
-#include "../include/maxMeanStrategy.hpp"
+// #include "../include/maxMeanStrategy.hpp"
+#include "../include/contructiveGreedy.hpp"
+#include "../include/destructiveGreedy.hpp"
+#include "../include/grasp.hpp"
 
 int main(int argc, char* argv[]) {
   try {
@@ -13,15 +16,15 @@ int main(int argc, char* argv[]) {
     std::cout << "Nombre del fichero: " << filename << std::endl;
     Graph graph(filename);
 
-    MaxMeanGreedy* firstGreedy = new MaxMeanGreedy(graph);
-    MyMaxMeanGreedy* secondGreedy = new MyMaxMeanGreedy(graph);
+    constructiveGreedy* constGreedy = new constructiveGreedy(graph);
+    destructiveGreedy* descGreedy = new destructiveGreedy(graph);
     Grasp* grasp = new Grasp(graph);
 
 
-    maxMeanCalculator* interface = new maxMeanCalculator(firstGreedy);
+    maxMeanCalculator* interface = new maxMeanCalculator(constGreedy);
     interface->maxMeanInterface();
     std::cout << std::endl;
-    interface->setStrategy(secondGreedy);
+    interface->setStrategy(descGreedy);
     interface->maxMeanInterface();
 
     // graph.write();
