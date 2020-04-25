@@ -95,7 +95,21 @@ bool MaxMean::stopCriteria(int nIterations) {
 }
 
 void MaxMean::localGreedySearch(void) {
+  float currentMean = bestMean_;
+  float neightbourdMean;
+  std::vector<int> neightbourdSolution;
 
+  showSolution();
+  for (int node = 0; node < affinities_.getNumberVertex(); node++) {
+    neightbourdSolution = generateNeightbourd(node);
+    neightbourdMean = meanDispersion(neightbourdSolution);
+  
+    if (neightbourdMean > bestMean_) {
+      bestSolution_ = neightbourdSolution;
+      bestMean_ = neightbourdMean;
+      node = 0;
+    } 
+  }
 }
 
 std::vector<int> MaxMean::generateNeightbourd(int node) {
@@ -127,23 +141,13 @@ std::vector<int> MaxMean::generateNeightbourd(int node) {
 
 void MaxMean::localAnxiousSearch(void) {
   float currentMean = bestMean_;
-  //Generar solucion vecina añadiendo criterio de apertura
   for (int node = 0; node < affinities_.getNumberVertex(); node++) {
     std::vector<int> neightbourdSolution = generateNeightbourd(node);
     float neightbourdMean = meanDispersion(neightbourdSolution);
-    // std::cout << "SOLUCION ACTUAL: ";
-    // showSolution();
-    // std::cout << "VECINA: \n";
-    // std::cout << "Media vecina " << neightbourdMean << "\n";
-    // for (int i = 0; i < neightbourdSolution.size(); i++) {
-    //   std::cout << neightbourdSolution[i] << " ";
-    // }
-    // std::cout << "\n";
-
+  
     if (neightbourdMean > bestMean_) {
       bestSolution_ = neightbourdSolution;
       bestMean_ = neightbourdMean;
-      // std::cout << "PARO\n";
       break;
     } 
   }

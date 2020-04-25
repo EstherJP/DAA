@@ -10,7 +10,7 @@
 
 #include "../include/graph.hpp"
 
-#define MAXITERATIONS 200
+#define MAXITERATIONS 10
 
 class MaxMean {
   protected:

@@ -34,7 +34,6 @@ void Grasp::addLRC(int currentNode, float currentMean) {
 
 void Grasp::createLRC(void) {
   LRC_.clear();
-
   float newMean = bestMean_;
   for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
     if (!isInCurrentSolution(currentNode)) {
@@ -67,6 +66,7 @@ void Grasp::searchSolution(void) {
   std::vector<int> auxSol;
   float auxMean;
   do {
+    std::cout << "Construir jeje\n";
     bestSolution_.clear();
     bestMean_ = getMax();
     constructivePhase();

@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     destructiveGreedy* descGreedy = new destructiveGreedy(graph);
 
     int stopCriteria = 1;
-    int searchCriteria_ = 1;
+    int searchCriteria_ = 2;
     int environmentCriteria_ = 1;
     Grasp* grasp = new Grasp(graph, stopCriteria, searchCriteria_, environmentCriteria_);
 
