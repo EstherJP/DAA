@@ -38,7 +38,7 @@ void Grasp::createLRC(void) {
   for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
     if (!isInCurrentSolution(currentNode)) {
       bestSolution_.push_back(currentNode);
-      newMean = meanDispersion(bestSolution_);
+      newMean = meanDispersionAdd(currentNode, bestMean_, bestSolution_);
       addLRC(currentNode, newMean);
       bestSolution_.pop_back();
     }
