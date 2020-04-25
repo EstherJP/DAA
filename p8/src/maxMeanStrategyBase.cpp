@@ -43,3 +43,30 @@ void MaxMean::showSolution(void) {
   }
   std::cout << std::endl << std::endl;
 }
+
+float MaxMean::getMax(void) {
+  float max = FLT_MIN;
+  int iMax;
+  int jMax;
+      
+  for (int i = 0; i < affinities_.getNumberVertex(); i++) {
+    for (int j = i; j < affinities_.getNumberVertex(); j++) {
+      if (affinities_.getValue(i, j) > max) {
+        max = affinities_.getValue(i, j);
+        iMax = i;
+        jMax = j;
+      } else if (affinities_.getValue(i, j) == max) {
+        int random = rand() % 2;
+        if (random == 1) {
+          max = affinities_.getValue(i, j);
+          iMax = i;
+          jMax = j;
+        }
+      }
+    }
+  }
+
+  bestSolution_.push_back(iMax);
+  bestSolution_.push_back(jMax);
+  return max / 2.0;
+}

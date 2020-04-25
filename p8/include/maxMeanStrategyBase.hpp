@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <math.h>
+#include <cfloat>
+
 #include "../include/graph.hpp"
 
 class MaxMean {
@@ -21,4 +23,5 @@ class MaxMean {
     float meanDispersion(float numerator, float denominator);
     float meanDispersionVector(std::vector<int> nodes);
     void showSolution(void);
+    float getMax(void);
 };

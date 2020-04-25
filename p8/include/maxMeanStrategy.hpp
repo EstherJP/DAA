@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <cfloat>
+#include <utility>
 #include "../include/maxMeanStrategyBase.hpp"
 
 class MaxMeanGreedy : public MaxMean {
@@ -13,32 +14,32 @@ class MaxMeanGreedy : public MaxMean {
       srand(time(NULL));
     }
 
-    float getMax(void) {
-      float max = FLT_MIN;
-      int iMax;
-      int jMax;
+    // float getMax(void) {
+    //   float max = FLT_MIN;
+    //   int iMax;
+    //   int jMax;
           
-      for (int i = 0; i < affinities_.getNumberVertex(); i++) {
-        for (int j = i; j < affinities_.getNumberVertex(); j++) {
-          if (affinities_.getValue(i, j) > max) {
-            max = affinities_.getValue(i, j);
-            iMax = i;
-            jMax = j;
-          } else if (affinities_.getValue(i, j) == max) {
-            int random = rand() % 2;
-            if (random == 1) {
-              max = affinities_.getValue(i, j);
-              iMax = i;
-              jMax = j;
-            }
-          }
-        }
-      }
+    //   for (int i = 0; i < affinities_.getNumberVertex(); i++) {
+    //     for (int j = i; j < affinities_.getNumberVertex(); j++) {
+    //       if (affinities_.getValue(i, j) > max) {
+    //         max = affinities_.getValue(i, j);
+    //         iMax = i;
+    //         jMax = j;
+    //       } else if (affinities_.getValue(i, j) == max) {
+    //         int random = rand() % 2;
+    //         if (random == 1) {
+    //           max = affinities_.getValue(i, j);
+    //           iMax = i;
+    //           jMax = j;
+    //         }
+    //       }
+    //     }
+    //   }
 
-      bestSolution_.push_back(iMax);
-      bestSolution_.push_back(jMax);
-      return max / 2.0;
-    }
+    //   bestSolution_.push_back(iMax);
+    //   bestSolution_.push_back(jMax);
+    //   return max / 2.0;
+    // }
 
     float getCurrentBestAffinity(void) {
       std::vector<int> auxSol = bestSolution_;
@@ -120,7 +121,7 @@ class MyMaxMeanGreedy : public MaxMean {
           } 
         }
       }
-      
+
       for (auto iter = bestSolution_.begin(); iter != bestSolution_.end(); iter++) {
         if (*iter == minNode) {
           bestSolution_.erase(iter);
@@ -150,23 +151,55 @@ class MyMaxMeanGreedy : public MaxMean {
 
 class Grasp : public MaxMean {
   private:
-    std::vector<int> LRC_;
+    std::vector<std::pair<int, float>> LRC_;
     int cardinality_ = 4;
 
   public:
     Grasp(Graph affinities) : MaxMean(affinities) {
     srand(time(NULL));
-    // LRC_.resize(cardinality_);
+  }
+
+
+  void addLRC(int currentNode, float currentMean) {
+    if (LRC_.size() <= cardinality_) {
+      std::cout << "Menor que cuatro\n";
+      LRC_.push_back(std::make_pair(currentNode, currentMean));
+    } else {
+      std::cout << "Cambia al mas pequeño\n";
+      float swapMean = currentMean;
+      bool changeMeanFlag = false;
+      int posMin = -1;
+      for (int i = 0; i < cardinality_; i++) {
+        std::cout << "Comparo: " << currentMean << " con " <<  LRC_[i].second << "\n";
+        if (currentMean > LRC_[i].second) {
+          std::cout << "Cambia en " << i << " " << swapMean << " por " << LRC_[i].second << "\n";
+          posMin = i;
+          changeMeanFlag = true;
+        }
+      }
+      if (changeMeanFlag) {
+        LRC_[posMin] = std::make_pair(currentNode, currentMean);
+      }
+    }
   }
 
   void createLRC(void) {
-    std::vector<int> auxSol = bestSolution_;
-    int auxMean = bestMean_;
+    LRC_.clear();
+    float newMean;
 
-    // for (int i = 0; i < affinities_.getNumberVertex(); i++) {
-    //   auxSol.push_back(i);
-    //   if (bestMean_ )
-    // }
+    if (bestSolution_.size() == 0) {
+      getMax();
+    }
+
+    for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
+      if (!isInCurrentSolution(currentNode)) {
+        bestSolution_.push_back(currentNode);
+        showSolution();
+        newMean = meanDispersionVector(bestSolution_);
+        addLRC(currentNode, newMean);
+        bestSolution_.pop_back();
+      }
+    }
   }
 
   void constructivePhase(void) {
@@ -175,8 +208,11 @@ class Grasp : public MaxMean {
 
   void searchSolution(void) {
     std::cout << "----------Grasp----------\n";
-
-
+    createLRC();
+    for (int i = 0; i < 4; i++) {
+      std::cout << "LRc:D " << LRC_[i].first << " ";
+    }
+    std::cout << "\n";
   }
 
 };
