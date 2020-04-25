@@ -27,6 +27,7 @@ float MaxMean::meanDispersion(std::vector<int> nodes) {
       sum += affinities_.getValue(nodes[i], nodes[j]);
     }
   }
+
   return (sum / nodes.size());
 }
 
@@ -190,5 +191,5 @@ float MaxMean::meanDispersionSub(int node, float currentMean, std::vector<int> n
   for (int i = 0; i < nodes.size(); i++) {
     costNode += affinities_.getValue(nodes[i], node);
   }
-  return ((currentMean * (nodes.size()) - costNode) / (nodes.size() - 1));
+  return ((currentMean * (nodes.size() + 1) - costNode) / (nodes.size()));
 }

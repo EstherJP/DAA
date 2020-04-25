@@ -52,10 +52,7 @@ void destructiveGreedy::searchSolution(void) {
   do {
     auxSol = bestSolution_;
     float deleteNode = deleteWorstNode();
-    float newMean = meanDispersion(bestSolution_);
-    std::cout << "Media con vector " << newMean << "\n";
-    newMean = meanDispersionSub(deleteNode, bestMean_, bestSolution_);
-    std::cout << "Media con rara " << newMean << "\n";
+    float newMean = meanDispersionSub(deleteNode, bestMean_, bestSolution_);
     updateSolution(auxSol, newMean);
   } while (auxSol != bestSolution_);
 }
