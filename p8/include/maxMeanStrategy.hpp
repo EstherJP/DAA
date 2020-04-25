@@ -152,7 +152,7 @@ class MyMaxMeanGreedy : public MaxMean {
 class Grasp : public MaxMean {
   private:
     std::vector<std::pair<int, float>> LRC_;
-    int cardinality_ = 4;
+    int cardinality_ = 2;
 
   public:
     Grasp(Graph affinities) : MaxMean(affinities) {
@@ -171,11 +171,14 @@ class Grasp : public MaxMean {
       int posMin = -1;
       for (int i = 0; i < cardinality_; i++) {
         std::cout << "Comparo: " << currentMean << " con " <<  LRC_[i].second << "\n";
-        if (currentMean > LRC_[i].second) {
+        if (changeMeanFlag && LRC_[posMin].second > LRC_[i].second) {
           std::cout << "Cambia en " << i << " " << swapMean << " por " << LRC_[i].second << "\n";
           posMin = i;
+          swapMean = LRC_[i].second;
+        } else if (currentMean > LRC_[i].second) {
+          posMin = i;
           changeMeanFlag = true;
-        }
+        } 
       }
       if (changeMeanFlag) {
         LRC_[posMin] = std::make_pair(currentNode, currentMean);
