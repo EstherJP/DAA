@@ -5,6 +5,10 @@
 #include "../include/destructiveGreedy.hpp"
 #include "../include/grasp.hpp"
 
+#define STOPCRITERIA 1
+#define LOCALSEARCHCRITERIA 2
+#define ENVIRONMENTCRITERIA 1
+
 int main(int argc, char* argv[]) {
   try {
     if (argc <= 1) {
@@ -18,11 +22,7 @@ int main(int argc, char* argv[]) {
     constructiveGreedy* constGreedy = new constructiveGreedy(graph);
     destructiveGreedy* descGreedy = new destructiveGreedy(graph);
 
-    int stopCriteria = 1;
-    int searchCriteria_ = 2;
-    int environmentCriteria_ = 1;
-    Grasp* grasp = new Grasp(graph, stopCriteria, searchCriteria_, environmentCriteria_);
-
+    Grasp* grasp = new Grasp(graph, STOPCRITERIA, LOCALSEARCHCRITERIA, ENVIRONMENTCRITERIA);
 
     maxMeanCalculator* interface = new maxMeanCalculator(constGreedy);
     interface->maxMeanInterface();
@@ -30,7 +30,6 @@ int main(int argc, char* argv[]) {
     interface->setStrategy(descGreedy);
     interface->maxMeanInterface();
 
-    // graph.write();
     interface->setStrategy(grasp);
     interface->maxMeanInterface();
 

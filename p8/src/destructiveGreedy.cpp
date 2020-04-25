@@ -10,7 +10,7 @@ void destructiveGreedy::initializeAll(void) {
   }
 }
 
-void destructiveGreedy::deleteWorstNode(void) {
+float destructiveGreedy::deleteWorstNode(void) {
   int min = INT_MAX;
   int minNode;
       
@@ -38,7 +38,7 @@ void destructiveGreedy::deleteWorstNode(void) {
   for (auto iter = bestSolution_.begin(); iter != bestSolution_.end(); iter++) {
     if (*iter == minNode) {
       bestSolution_.erase(iter);
-      break;
+      return minNode;
     }
   }
 }
@@ -51,13 +51,11 @@ void destructiveGreedy::searchSolution(void) {
 
   do {
     auxSol = bestSolution_;
-    deleteWorstNode();
+    float deleteNode = deleteWorstNode();
     float newMean = meanDispersion(bestSolution_);
+    std::cout << "Media con vector " << newMean << "\n";
+    newMean = meanDispersionSub(deleteNode, bestMean_, bestSolution_);
+    std::cout << "Media con rara " << newMean << "\n";
     updateSolution(auxSol, newMean);
-    // if (newMean >= bestMean_) {
-    //   bestMean_ = newMean;
-    // } else {
-    //   bestSolution_ = auxSol;
-    // }
   } while (auxSol != bestSolution_);
 }

@@ -9,10 +9,13 @@ float constructiveGreedy::getCurrentBestAffinity(void) {
   float newMean = INT_MIN;
   float oldMean;
   int bestNodeFound = -1;
+
   for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
     if (!isInCurrentSolution(currentNode)) {
       auxSol.push_back(currentNode);
-      oldMean = meanDispersion(auxSol);
+      // oldMean = meanDispersion(auxSol);
+      oldMean = meanDispersionAdd(currentNode, bestMean_, auxSol);
+
       if (newMean < oldMean) {
         newMean = oldMean;
         bestNodeFound = currentNode;
@@ -39,12 +42,6 @@ void constructiveGreedy::searchSolution(void) {
   do {
     auxSol = bestSolution_;
     float currentMean = getCurrentBestAffinity();
-    // if (bestMean_ >= currentMean) {
-      // bestSolution_.pop_back();
-      updateSolution(auxSol, currentMean);
-
-    // } else {
-    //   bestMean_ = currentMean;
-    // }
+    updateSolution(auxSol, currentMean);
   } while (auxSol != bestSolution_);
 }

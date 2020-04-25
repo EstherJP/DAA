@@ -34,7 +34,11 @@ class MaxMean {
     float getMax(void);
     void updateSolution(std::vector<int> newSolution, float newMean);
     std::vector<int> getBestSolution(void);
+    
     float meanDispersion(std::vector<int> nodes);
+    float meanDispersionAdd(int node, float currentMean, std::vector<int> nodes);
+    float meanDispersionSub(int node, float currentMean, std::vector<int> nodes);
+
     void showSolution(void);
     virtual void searchSolution(void) = 0;
 

@@ -7,6 +7,6 @@ class destructiveGreedy : public MaxMean {
     destructiveGreedy(Graph affinities);
 
     void initializeAll(void);
-    void deleteWorstNode(void);
+    float deleteWorstNode(void);
     void searchSolution(void);
 };

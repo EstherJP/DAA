@@ -96,20 +96,27 @@ bool MaxMean::stopCriteria(int nIterations) {
 
 void MaxMean::localGreedySearch(void) {
   float currentMean = bestMean_;
+  std::vector<int> currentSolution_;
+
   float neightbourdMean;
   std::vector<int> neightbourdSolution;
-
-  showSolution();
-  for (int node = 0; node < affinities_.getNumberVertex(); node++) {
-    neightbourdSolution = generateNeightbourd(node);
-    neightbourdMean = meanDispersion(neightbourdSolution);
+  bool keepSearchingBest;
   
-    if (neightbourdMean > bestMean_) {
-      bestSolution_ = neightbourdSolution;
-      bestMean_ = neightbourdMean;
-      node = 0;
-    } 
-  }
+  do {
+    keepSearchingBest = false;
+    for (int node = 0; node < affinities_.getNumberVertex(); node++) {
+      neightbourdSolution = generateNeightbourd(node);
+      neightbourdMean = meanDispersion(neightbourdSolution);
+
+      if (neightbourdMean > bestMean_) {
+        currentSolution_ = neightbourdSolution;
+        currentMean = neightbourdMean;
+        keepSearchingBest = true;
+      } 
+    }
+    bestSolution_ = currentSolution_;
+    bestMean_ = currentMean;
+  } while (keepSearchingBest);
 }
 
 std::vector<int> MaxMean::generateNeightbourd(int node) {
@@ -167,4 +174,21 @@ void MaxMean::postProcessing(void) {
     throw "Error: You need to set a local search";
     break;
   }
+}
+
+float MaxMean::meanDispersionAdd(int node, float currentMean, std::vector<int> nodes) {
+  float costNode = 0;
+  for (int i = 0; i < nodes.size(); i++) {
+    costNode += affinities_.getValue(nodes[i], node);
+  }
+  costNode++;
+  return ((currentMean * (nodes.size() - 1) + costNode) / nodes.size());
+}
+
+float MaxMean::meanDispersionSub(int node, float currentMean, std::vector<int> nodes) {
+  float costNode = 0;
+  for (int i = 0; i < nodes.size(); i++) {
+    costNode += affinities_.getValue(nodes[i], node);
+  }
+  return ((currentMean * (nodes.size()) - costNode) / (nodes.size() - 1));
 }

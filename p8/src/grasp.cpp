@@ -66,7 +66,6 @@ void Grasp::searchSolution(void) {
   std::vector<int> auxSol;
   float auxMean;
   do {
-    std::cout << "Construir jeje\n";
     bestSolution_.clear();
     bestMean_ = getMax();
     constructivePhase();
