@@ -1,3 +1,11 @@
+/**
+ * @file main.cpp
+ * @author Esther Jorge Paramio (alu0101102498@ull.edu.es)
+ * @brief Programa principañ
+ * @version 0.1
+ * @date 2020-04-26
+ */
+
 #include <iostream>
 #include "../include/graph.hpp"
 #include "../include/maxMeanCalculator.hpp"
@@ -7,14 +15,13 @@
 #include "../include/multiBoot.hpp"
 #include "../include/VNS.hpp"
 
-#define STOP_ITERATIONS 1
-#define STOP_WITHOUTIMPROVE 2
-
-#define ANXIOUS_SEARCH 1
-#define GREEDY_SEARCH 2
-#define ENV_OPENING 1
-#define ENV_CLOSING 2
-
+/**
+ * @brief Función principal del programa
+ * 
+ * @param argc Número de parámetros por la línea de entrada
+ * @param argv Fichero con el grafo
+ * @return int Código de salida
+ */
 int main(int argc, char* argv[]) {
   try {
     if (argc <= 1) {

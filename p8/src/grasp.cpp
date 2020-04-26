@@ -1,6 +1,23 @@
+/**
+ * @file grasp.cpp
+ * @author Esther Jorge Paramio (alu0101102498@ull.edu.es)
+ * @brief Implementación del algoritmo de GRASP
+ * @version 0.1
+ * @date 2020-04-26
+ */
+
 #include "../include/grasp.hpp"
 
-Grasp::Grasp(Graph affinities, int stopCriteria, int searchCriteria, int environmentCriteria) : MaxMean(affinities)
+/**
+ * @brief Construct a new Grasp:: Grasp object
+ * 
+ * @param affinities Objeto con la matriz de afinidades que le pasamos al constructor de la clase padre
+ * @param stopCriteria Criterio de parada
+ * @param searchCriteria Búsqueda local
+ * @param environmentCriteria Entorno
+ */
+Grasp::Grasp(Graph affinities, int stopCriteria, int searchCriteria, int environmentCriteria) : 
+  MaxMean(affinities)
 {
   stopCriteria_ = stopCriteria;
   searchCriteria_ = searchCriteria;
@@ -8,7 +25,28 @@ Grasp::Grasp(Graph affinities, int stopCriteria, int searchCriteria, int environ
   srand(time(NULL));
 }
 
+/**
+ * @brief Inicializa el LRC
+ */
+void Grasp::createLRC(void) {
+  LRC_.clear();
+  float newMean = bestMean_;
+  for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
+    if (!isInCurrentSolution(currentNode)) {
+      bestSolution_.push_back(currentNode);
+      newMean = meanDispersionAdd(currentNode, bestMean_, bestSolution_);
+      addLRC(currentNode, newMean);
+      bestSolution_.pop_back();
+    }
+  }
+}
 
+/**
+ * @brief Actualiza el LRC para coger los mejor nodos
+ * 
+ * @param currentNode Nodo a comprobar para meter
+ * @param currentMean Media actual
+ */
 void Grasp::addLRC(int currentNode, float currentMean) {
   if (LRC_.size() < cardinality_) {
     LRC_.push_back(std::make_pair(currentNode, currentMean));
@@ -32,19 +70,9 @@ void Grasp::addLRC(int currentNode, float currentMean) {
   }
 }
 
-void Grasp::createLRC(void) {
-  LRC_.clear();
-  float newMean = bestMean_;
-  for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
-    if (!isInCurrentSolution(currentNode)) {
-      bestSolution_.push_back(currentNode);
-      newMean = meanDispersionAdd(currentNode, bestMean_, bestSolution_);
-      addLRC(currentNode, newMean);
-      bestSolution_.pop_back();
-    }
-  }
-}
-
+/**
+ * @brief Fase constructiva del GRASP
+ */
 void Grasp::constructivePhase(void) {
   createLRC();
   float auxMean;
@@ -60,13 +88,16 @@ void Grasp::constructivePhase(void) {
   } while (auxSol != bestSolution_);
 }
 
+/**
+ * @brief Búsqueda de la mejor solución
+ */
 void Grasp::searchSolution(void) {
   std::cout << "----------Grasp----------\n";
   int numberOfIterations = 0;
   std::vector<int> auxSol;
   float auxMean;
   do {
-    bestMean_ = getMax();
+    bestMean_ = initializeBestSolution();
     constructivePhase();
     postProcessing();
     if (bestMean_ > auxMean) {
