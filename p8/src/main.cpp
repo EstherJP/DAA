@@ -5,6 +5,7 @@
 #include "../include/destructiveGreedy.hpp"
 #include "../include/grasp.hpp"
 #include "../include/multiBoot.hpp"
+#include "../include/VNS.hpp"
 
 #define STOP_ITERATIONS 1
 #define STOP_WITHOUTIMPROVE 2
@@ -28,6 +29,7 @@ int main(int argc, char* argv[]) {
     destructiveGreedy* descGreedy = new destructiveGreedy(graph);
     Grasp* grasp = new Grasp(graph, STOP_ITERATIONS, ANXIOUS_SEARCH, ENV_OPENING);
     MultiBoot* multiboot = new MultiBoot(graph, STOP_ITERATIONS, ANXIOUS_SEARCH, ENV_OPENING);
+    VNS* vns = new VNS(graph);
 
     maxMeanCalculator* interface = new maxMeanCalculator(constGreedy);
     interface->maxMeanInterface();
@@ -44,6 +46,16 @@ int main(int argc, char* argv[]) {
     interface->setStrategy(multiboot);
     interface->maxMeanInterface();
     std::cout << std::endl;
+
+    interface->setStrategy(vns);
+    interface->maxMeanInterface();
+    std::cout << std::endl;
+
+    delete constGreedy;
+    delete descGreedy;
+    delete grasp;
+    delete multiboot;
+    delete vns;
 
   } catch(char const* error) {
     std::cout << error << std::endl;
