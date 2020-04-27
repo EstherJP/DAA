@@ -6,7 +6,12 @@
  * @date 2020-04-26
  */
 
-#include "../include/maxMeanStrategyBase.hpp"
+#include "../include/maxMeanProblem.hpp"
+
+/**
+ * @brief Construct a new Max Mean:: Max Mean object
+ */
+MaxMean::MaxMean(void) {} 
 
 /**
  * @brief Construct a new Max Mean:: Max Mean object
@@ -80,20 +85,45 @@ std::vector<int> MaxMean::getBestSolution(void) {
 }
 
 /**
+ * @brief Devuelve la mejor media
+ * 
+ * @return float 
+ */
+float MaxMean::getBestMean(void) {
+  return bestMean_;
+}
+
+/**
  * @brief Comprueba si un nodo se encuentra en la solución actual
  * 
  * @param node Nodo a buscar
  * @return true Si se encuentra
  * @return false Si no se encuentra
  */
-bool MaxMean::isInCurrentSolution(int node) {
-  for (size_t i = 0; i < bestSolution_.size(); i++) {
-    if (bestSolution_[i] == node) {
+bool MaxMean::isInSolution(int node, std::vector<int> solution) {
+  for (size_t i = 0; i < solution.size(); i++) {
+    if (solution[i] == node) {
       return true;
     }
   }
   return false;
 }
+
+/**
+ * @brief Genera una solución aleatoria
+ */
+void MaxMean::generateRandomSolution(void) {
+  bestSolution_.clear();
+  int randomSize = 2 + rand() % (affinities_.getNumberVertex() - 2);
+  for (int i = 0; i < randomSize; i++) {
+    int randomNode = rand() %  affinities_.getNumberVertex();
+    if (!isInSolution(randomNode, bestSolution_)) {
+      bestSolution_.push_back(randomNode);
+    }
+  }
+  bestMean_ = meanDispersion(bestSolution_);
+}
+
 
 /**
  * @brief Calcula la media a partir de un conjunto de nodos
@@ -256,14 +286,14 @@ std::vector<int> MaxMean::generateNeightbourd(int node) {
   
   switch (environmentCriteria_) {
   case 1: // Apertura
-    if (!isInCurrentSolution(node)) {
+    if (!isInSolution(node, bestSolution_)) {
       neightbourd.push_back(node);
       return neightbourd;
     }
     break;
   
   case 2: // Cierre
-    if (isInCurrentSolution(node)) {
+    if (isInSolution(node, bestSolution_)) {
       for (auto iter = neightbourd.begin(); iter != neightbourd.end(); iter++) {
         if (*iter == node) {
           neightbourd.erase(iter);

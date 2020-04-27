@@ -16,7 +16,8 @@
 #include <time.h>
 #include <utility>
 
-#include "../include/graph.hpp"
+#include "graph.hpp"
+#include "problem.hpp"
 
 #define MAXITERATIONS 10
 
@@ -33,7 +34,7 @@
  * @brief Clase que los atributos y métodos necesarios para resolver
  * problema de maximizar la media en subconjutos de un grafo.
  */
-class MaxMean {
+class MaxMean /*: public Problem*/ {
   protected:
     Graph affinities_;                            // Objeto que contiene la matriz distancia del grafo
     std::vector<int> bestSolution_;               // Subconjunto de nodos con la mejor solución encontrada
@@ -43,15 +44,20 @@ class MaxMean {
     int searchCriteria_ = ANXIOUS_SEARCH;         // Criterio de bísqueda local (por defecto de inicializa a la búsqueda ansiosa)
     int environmentCriteria_ = ENV_OPENING;       // Criterio de entorno (por defecto de inicializa a movimiento de apertura)
 
-    bool isInCurrentSolution(int node);         // Comprueba si un nodo está en la solución actual
+    bool isInSolution(int node, std::vector<int> solution); // Comprueba si un nodo está en la solución actual
   
   public:
-    MaxMean(Graph affinities);                    // Constructor
+    MaxMean(void);                                 // Constructor por defecto
+    MaxMean(Graph affinities);                     // Constructor
     ~MaxMean(void);                               // Destructor por defecto
+
+    void generateRandomSolution(void);            // Genera soluciones aleatorias
 
     float initializeBestSolution(void);           // Inicializa la mejor solución con los nodos con función objetivo más alta
     void updateSolution(std::vector<int> newSolution, float newMean); // Actualiza si la solución recibida es mejor
+
     std::vector<int> getBestSolution(void);       // Devuelve la mejor solución
+    float getBestMean(void);
     
     float meanDispersion(std::vector<int> nodes); // Función objetivo
     float meanDispersionAdd(int node, float currentMean, std::vector<int> nodes); // Suma el peso del nodo a añadir a la función objetivo

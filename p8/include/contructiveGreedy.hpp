@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "maxMeanStrategyBase.hpp"
+#include "maxMeanProblem.hpp"
 
 /**
  * @brief Clase que contiene la implementación del algoritmo de greedy constructivo

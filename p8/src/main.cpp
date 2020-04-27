@@ -7,6 +7,8 @@
  */
 
 #include <iostream>
+#include <ctime>
+#include <chrono>
 #include "../include/graph.hpp"
 #include "../include/maxMeanCalculator.hpp"
 #include "../include/contructiveGreedy.hpp"
@@ -14,6 +16,8 @@
 #include "../include/grasp.hpp"
 #include "../include/multiBoot.hpp"
 #include "../include/VNS.hpp"
+
+using namespace std;
 
 /**
  * @brief Función principal del programa
@@ -36,33 +40,59 @@ int main(int argc, char* argv[]) {
     destructiveGreedy* descGreedy = new destructiveGreedy(graph);
     Grasp* grasp = new Grasp(graph, STOP_ITERATIONS, ANXIOUS_SEARCH, ENV_OPENING);
     MultiBoot* multiboot = new MultiBoot(graph, STOP_ITERATIONS, ANXIOUS_SEARCH, ENV_OPENING);
-    VNS* vns = new VNS(graph);
+    VNS* vns = new VNS(graph, grasp, STOP_ITERATIONS, ANXIOUS_SEARCH, ENV_OPENING);
+ 
+    std::chrono::time_point<chrono::system_clock> startTime, endTime;
 
     maxMeanCalculator* interface = new maxMeanCalculator(constGreedy);
+    std::cout << "----------Constructive Greedy----------\n";
+    startTime = std::chrono::system_clock::now();
     interface->maxMeanInterface();
-    std::cout << std::endl;
+    endTime = std::chrono::system_clock::now();
+    std::chrono::duration<float, std::milli> duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
 
+    std::cout << "----------Destructive Greedy----------\n";
     interface->setStrategy(descGreedy);
+    startTime = std::chrono::system_clock::now();
     interface->maxMeanInterface();
-    std::cout << std::endl;
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" <<  std::endl << std::endl;
 
+
+    std::cout << "----------Grasp----------\n";
     interface->setStrategy(grasp);
+    startTime = std::chrono::system_clock::now();
     interface->maxMeanInterface();
-    std::cout << std::endl;
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl << std::endl;
 
+
+    std::cout << "----------Multi Boot----------\n";
     interface->setStrategy(multiboot);
+    startTime = std::chrono::system_clock::now();
     interface->maxMeanInterface();
-    std::cout << std::endl;
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl << std::endl;
 
+
+    std::cout << "----------VNS----------\n";
     interface->setStrategy(vns);
+    startTime = std::chrono::system_clock::now();
     interface->maxMeanInterface();
-    std::cout << std::endl;
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl << std::endl;
 
     delete constGreedy;
     delete descGreedy;
     delete grasp;
     delete multiboot;
     delete vns;
+    delete interface;
 
   } catch(char const* error) {
     std::cout << error << std::endl;

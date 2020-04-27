@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "maxMeanStrategyBase.hpp"
+#include "maxMeanProblem.hpp"
 
 /**
  * @brief Clase que contiene la implementación del algoritmo de Multi-Boot
@@ -17,7 +17,7 @@ class MultiBoot : public MaxMean {
   public:
     MultiBoot(Graph affinities, int stopCriteria, int searchCriteria, int environmentCriteria); // Constructor
     
-    void generateRandomSolution(void); // Genera soluciones aleatorias
+    // void generateRandomSolution(void); // Genera soluciones aleatorias
     void searchSolution(void);         // Búsqueda de la mejor solución
 
 };

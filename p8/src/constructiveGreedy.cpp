@@ -31,7 +31,7 @@ float constructiveGreedy::getCurrentBestAffinity(void) {
   int bestNodeFound = -1;
 
   for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
-    if (!isInCurrentSolution(currentNode)) {
+    if (!isInSolution(currentNode, bestSolution_)) {
       auxSol.push_back(currentNode);
       oldMean = meanDispersionAdd(currentNode, bestMean_, auxSol);
 
@@ -56,7 +56,6 @@ float constructiveGreedy::getCurrentBestAffinity(void) {
  * @brief Búsqueda de la mejor solución
  */
 void constructiveGreedy::searchSolution(void) {
-  std::cout << "----------Constructive Greedy----------\n";
   std::vector<int> auxSol;
   bestMean_ = initializeBestSolution();
 

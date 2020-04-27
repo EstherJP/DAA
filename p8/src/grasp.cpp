@@ -32,7 +32,7 @@ void Grasp::createLRC(void) {
   LRC_.clear();
   float newMean = bestMean_;
   for (int currentNode = 0; currentNode < affinities_.getNumberVertex(); currentNode++) {
-    if (!isInCurrentSolution(currentNode)) {
+    if (!isInSolution(currentNode, bestSolution_)) {
       bestSolution_.push_back(currentNode);
       newMean = meanDispersionAdd(currentNode, bestMean_, bestSolution_);
       addLRC(currentNode, newMean);
@@ -92,10 +92,9 @@ void Grasp::constructivePhase(void) {
  * @brief Búsqueda de la mejor solución
  */
 void Grasp::searchSolution(void) {
-  std::cout << "----------Grasp----------\n";
   int numberOfIterations = 0;
   std::vector<int> auxSol;
-  float auxMean;
+  float auxMean = FLT_MIN;
   do {
     bestMean_ = initializeBestSolution();
     constructivePhase();

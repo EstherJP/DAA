@@ -38,7 +38,7 @@ float destructiveGreedy::deleteWorstNode(void) {
   int minNode;
   for (size_t i = 0; i < bestSolution_.size(); i++) {
     for (int j = 0; j < affinities_.getNumberVertex(); j++) {
-      if (isInCurrentSolution(j) && affinities_.getValue(i, j) < min) {
+      if (isInSolution(j, bestSolution_) && affinities_.getValue(i, j) < min) {
         min = affinities_.getValue(i, j);
         int random = rand() % 2;
         if (random == 1) {
@@ -46,7 +46,7 @@ float destructiveGreedy::deleteWorstNode(void) {
         } else {
           minNode = j;
         } 
-      } else if (isInCurrentSolution(j) && affinities_.getValue(i, j) == min) {
+      } else if (isInSolution(j, bestSolution_) && affinities_.getValue(i, j) == min) {
         int random = rand() % 3;
         if (random == 1) {
           minNode = i;
@@ -68,7 +68,6 @@ float destructiveGreedy::deleteWorstNode(void) {
  * @brief Búsqueda de la mejor solución
  */
 void destructiveGreedy::searchSolution(void) {
-  std::cout << "----------Destructive Greedy----------\n";
   initializeAll();
   bestMean_ = meanDispersion(bestSolution_);
   std::vector<int> auxSol;

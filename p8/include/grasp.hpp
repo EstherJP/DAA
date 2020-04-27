@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "maxMeanStrategyBase.hpp"
+#include "maxMeanProblem.hpp"
 
 #define CARDINALITY 4
 
@@ -21,6 +21,7 @@ class Grasp : public MaxMean {
     int cardinality_ = CARDINALITY;           // Cardinalidad
 
   public:
+    Grasp() {}
     Grasp(Graph affinities, int stopCriteria, int searchCriteria, int environmentCriteria); // Constructor
 
     void createLRC(void);                     // Inicializa el LRC de cero

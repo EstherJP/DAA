@@ -24,6 +24,7 @@ class Graph {
     void setData(int pos, float data);        // Modifica los datos de la matriz
 
   public:
+    Graph() {}
     Graph(char* filename);                    // Constructor
     ~Graph();                                 // Destructor
 

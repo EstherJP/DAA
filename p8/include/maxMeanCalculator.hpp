@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "../include/maxMeanStrategyBase.hpp"
+#include "../include/maxMeanProblem.hpp"
 
 class maxMeanCalculator {
   private:

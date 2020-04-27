@@ -25,26 +25,25 @@ MultiBoot::MultiBoot(Graph affinities, int stopCriteria, int searchCriteria, int
   srand(time(NULL));
 }
 
-/**
- * @brief Genera una solución aleatoria
- */
-void MultiBoot::generateRandomSolution(void) {
-  bestSolution_.clear();
-  int randomSize = 2 + rand() % (affinities_.getNumberVertex() - 2);
-  for (int i = 0; i < randomSize; i++) {
-    int randomNode = rand() %  affinities_.getNumberVertex();
-    if (!isInCurrentSolution(randomNode)) {
-      bestSolution_.push_back(randomNode);
-    }
-  }
-  bestMean_ = meanDispersion(bestSolution_);
-}
+// /**
+//  * @brief Genera una solución aleatoria
+//  */
+// void MultiBoot::generateRandomSolution(void) {
+//   bestSolution_.clear();
+//   int randomSize = 2 + rand() % (affinities_.getNumberVertex() - 2);
+//   for (int i = 0; i < randomSize; i++) {
+//     int randomNode = rand() %  affinities_.getNumberVertex();
+//     if (!isInCurrentSolution(randomNode)) {
+//       bestSolution_.push_back(randomNode);
+//     }
+//   }
+//   bestMean_ = meanDispersion(bestSolution_);
+// }
 
 /**
  * @brief Búsqueda de la mejor solución
  */
 void MultiBoot::searchSolution(void) {
-  std::cout << "----------Multi Boot----------\n";
   std::vector<int> auxSol;
   float auxMean = FLT_MIN;
   int iterationsNumber = 0;
