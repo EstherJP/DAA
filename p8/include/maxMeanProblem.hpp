@@ -39,7 +39,8 @@ class MaxMean /*: public Problem*/ {
     Graph affinities_;                            // Objeto que contiene la matriz distancia del grafo
     std::vector<int> bestSolution_;               // Subconjunto de nodos con la mejor solución encontrada
     float bestMean_;                              // Media de la mejor solución encontrada
-    int numberIterWithoutImprove = 0;             // Número de iteraciones sin mejora
+    int numberIterWithoutImprove_ = 0;             // Número de iteraciones sin mejora
+    int numberIterations_ = 0;
     int stopCriteria_ = STOP_ITERATIONS;          // Criterio de parada (por defecto de inicializa a un número máximo de iteraciones)
     int searchCriteria_ = ANXIOUS_SEARCH;         // Criterio de bísqueda local (por defecto de inicializa a la búsqueda ansiosa)
     int environmentCriteria_ = ENV_OPENING;       // Criterio de entorno (por defecto de inicializa a movimiento de apertura)
@@ -66,7 +67,7 @@ class MaxMean /*: public Problem*/ {
     void showSolution(void);                       // Muestra la solución
     virtual void searchSolution(void) = 0;         // Método virtual que contendrá el código para buscar la mejor solución
 
-    bool stopCriteria(int nIterations);            // Selecciona el criterio de parada según el seleccionado
+    bool stopCriteria(void);            // Selecciona el criterio de parada según el seleccionado
     void localGreedySearch(void);                  // Búsqueda local greedy
     void localAnxiousSearch(void);                 // Búsqueda local ansiosa
 

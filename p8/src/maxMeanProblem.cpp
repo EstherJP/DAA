@@ -68,10 +68,10 @@ float MaxMean::initializeBestSolution(void) {
 void MaxMean::updateSolution(std::vector<int> currentSolution, float currentMean) {
   if (bestMean_ < currentMean) {
     bestMean_ = currentMean;
-    numberIterWithoutImprove = 0;
+    numberIterWithoutImprove_ = 0;
   } else {
     bestSolution_ = currentSolution;
-    numberIterWithoutImprove++;
+    numberIterWithoutImprove_++;
   }
 }
 
@@ -194,14 +194,14 @@ void MaxMean::showSolution(void) {
  * @return true Si ha realizado más que el máximo de iteraciones
  * @return false Si no ha superado el máximo de iteraciones
  */
-bool MaxMean::stopCriteria(int nIterations) {
+bool MaxMean::stopCriteria(void) {
   switch (stopCriteria_)  {
   case 1:
-    return nIterations < MAXITERATIONS;
+    return numberIterations_ < MAXITERATIONS;
     break;
   
   case 2:
-    return numberIterWithoutImprove < MAXITERATIONS;
+    return numberIterWithoutImprove_ < MAXITERATIONS;
     break;
   
   default:

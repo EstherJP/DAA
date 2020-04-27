@@ -89,7 +89,6 @@ void VNS::shake(std::vector<int> auxSol, float auxMean, int swapNumber) {
 }
 
 void VNS::searchSolution(void) {
-  int iterations = 0;
   std::vector<int> auxSol;
   float auxMean;
 
@@ -106,8 +105,8 @@ void VNS::searchSolution(void) {
       finalSol = bestSolution_;
       finalMean = bestMean_;
     }
-    iterations++;
-  } while(stopCriteria(iterations));
+    numberIterations_++;
+  } while(stopCriteria());
   bestSolution_ = finalSol;
   bestMean_ = finalMean;
 }

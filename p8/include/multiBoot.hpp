@@ -17,7 +17,5 @@ class MultiBoot : public MaxMean {
   public:
     MultiBoot(Graph affinities, int stopCriteria, int searchCriteria, int environmentCriteria); // Constructor
     
-    // void generateRandomSolution(void); // Genera soluciones aleatorias
     void searchSolution(void);         // Búsqueda de la mejor solución
-
 };

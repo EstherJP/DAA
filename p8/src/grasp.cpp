@@ -92,7 +92,6 @@ void Grasp::constructivePhase(void) {
  * @brief Búsqueda de la mejor solución
  */
 void Grasp::searchSolution(void) {
-  int numberOfIterations = 0;
   std::vector<int> auxSol;
   float auxMean = FLT_MIN;
   do {
@@ -102,12 +101,12 @@ void Grasp::searchSolution(void) {
     if (bestMean_ > auxMean) {
       auxMean = bestMean_;
       auxSol = bestSolution_;
-      numberIterWithoutImprove = 0;
+      numberIterWithoutImprove_ = 0;
     } else {
-      numberIterWithoutImprove++;
+      numberIterWithoutImprove_++;
     }
-    numberOfIterations++;
-  } while (stopCriteria(numberOfIterations));
+    numberIterations_++;
+  } while (stopCriteria());
   bestSolution_ = auxSol;
   bestMean_ = auxMean;
 }

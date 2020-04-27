@@ -31,7 +31,6 @@ MultiBoot::MultiBoot(Graph affinities, int stopCriteria, int searchCriteria, int
 void MultiBoot::searchSolution(void) {
   std::vector<int> auxSol;
   float auxMean = FLT_MIN;
-  int iterationsNumber = 0;
   do {
     generateRandomSolution();
     postProcessing();
@@ -39,12 +38,12 @@ void MultiBoot::searchSolution(void) {
     if (bestMean_ > auxMean) {
         auxMean = bestMean_;
         auxSol = bestSolution_;
-        numberIterWithoutImprove = 0;
+        numberIterWithoutImprove_ = 0;
     } else {
-        numberIterWithoutImprove++;
+        numberIterWithoutImprove_++;
     }
-    iterationsNumber++;
-  } while (stopCriteria(iterationsNumber));
+    numberIterations_++;
+  } while (stopCriteria());
   bestSolution_ = auxSol;
   bestMean_ = auxMean;
 }
