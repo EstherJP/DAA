@@ -1,5 +1,22 @@
+/**
+ * @file VNS.cpp
+ * @author Esther Jorge Paramio (alu0101102498@ull.edu.es)
+ * @brief Implementación del algoritmo de Multi-Arranque
+ * @version 0.1
+ * @date 2020-04-27
+ */
+
 #include "../include/VNS.hpp"
 
+
+/**
+ * @brief Construct a new VNS::VNS object
+ * 
+ * @param affinities Objeto con la matriz de afinidades que le pasamos al constructor de la clase padre
+ * @param stopCriteria Criterio de parada
+ * @param searchCriteria Búsqueda local
+ * @param environmentCriteria Entorno
+ */
 VNS::VNS(Graph affinities, Grasp* grasp, int stopCriteria, int searchCriteria, int environmentCriteria) : 
   MaxMean(affinities),
   grasp_(grasp)
@@ -10,8 +27,14 @@ VNS::VNS(Graph affinities, Grasp* grasp, int stopCriteria, int searchCriteria, i
   srand(time(NULL));
 }
 
+/**
+ * @brief Recorre los distintos entornos en busca de la solución óptima contenida en los tres a la vez
+ * 
+ * @param auxSol Primera solución a la que va a buscar en el entorno
+ * @param auxMean Media de la solución
+ */
 void VNS::makeVNS(std::vector<int> auxSol, float auxMean){
-  for (int swapChanges = 1; swapChanges < 4; swapChanges++) {
+  for (int swapChanges = 1; swapChanges < K; swapChanges++) {
     shake(auxSol, auxMean, swapChanges);
     if (bestMean_ > auxMean) {
       auxMean = bestMean_;
@@ -23,7 +46,14 @@ void VNS::makeVNS(std::vector<int> auxSol, float auxMean){
   bestMean_ = auxMean;
 }
 
-std::vector<int> VNS::shake(std::vector<int> auxSol, float auxMean, int swapNumber) {
+/**
+ * @brief Genera de forma aleatoria la vecina de la solución actual dependiendo del entorno
+ * 
+ * @param auxSol Solución en la que se va a buscar la vecina
+ * @param auxMean Media de la solución
+ * @param swapNumber Número de intercambios, define la estructura de entorno
+ */
+void VNS::shake(std::vector<int> auxSol, float auxMean, int swapNumber) {
   std::vector<int> candidates;
   for (int i = 0; i < affinities_.getNumberVertex(); i++) {
     if (!isInSolution(i, auxSol)) {

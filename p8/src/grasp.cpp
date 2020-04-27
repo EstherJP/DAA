@@ -80,7 +80,7 @@ void Grasp::constructivePhase(void) {
 
   do {
     auxSol = bestSolution_;
-    int randomNode = rand() % cardinality_;
+    int randomNode = rand() % LRC_.size();
     bestSolution_.push_back(LRC_[randomNode].first);
     auxMean = LRC_[randomNode].second;
     updateSolution(auxSol, auxMean);

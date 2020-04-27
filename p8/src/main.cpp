@@ -20,7 +20,18 @@
 using namespace std;
 
 /**
- * @brief Función principal del programa
+ * @brief Función principal del programa.
+ * 
+ * Esta función le llega como parámetro el fichero que contiene el grafo y lo lee. Luego
+ * crea punteros a los distintos algoritmos que vamos a utilizar. A los dos primero algoritmos les
+ * llega simplemente el grafo. En el caso de los otros, además del grafo, les mandamos el criterio de parada
+ * que en este caso existen dos, parar por el número de iteraciones y por el número de iteraciones sin mejora. El
+ * valor máximo de iteraciones es una constante que se encuentra en la clase MaxMean. Luego les llega la búsqueda local
+ * que se quiere realizar, en este caso también se han implementado dos, la ansiosa y la greedy, también declaradas como
+ * constantes en la clase padre del problema. Por último, les llega la estructura de entorno con la que se quiere realizar la 
+ * búsqueda local, las implementadas en este código son dos, de apertura y de cierre.
+ * 
+ * Por último, cuenta y muestra por pantalla el tiempo de ejecución de cada algoritmo. 
  * 
  * @param argc Número de parámetros por la línea de entrada
  * @param argv Fichero con el grafo

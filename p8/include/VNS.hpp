@@ -11,6 +11,8 @@
 #include "maxMeanProblem.hpp"
 #include "grasp.hpp"
 
+#define K 4
+
 /**
  * @brief Clase que contiene la implementación del algoritmo VNS
  */
@@ -21,7 +23,7 @@ class VNS : public MaxMean {
   public:
     VNS(Graph affinities, Grasp* grasp, int stopCriteria, int searchCriteria, int environmentCriteria); // Constructor
 
-    void makeVNS(std::vector<int> auxSol, float auxMean);     // Busca las soluciones optima en 3 entornos
-    std::vector<int> shake(std::vector<int> auxSol, float auxMean, int swapNumber); // Realiza la agitacion
+    void makeVNS(std::vector<int> auxSol, float auxMean);     // Busca las solucion optima en k entornos distintos
+    void shake(std::vector<int> auxSol, float auxMean, int swapNumber); // Realiza la agitacion
     void searchSolution(void);                                // Búsqueda de la solución
 };
