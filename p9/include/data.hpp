@@ -13,9 +13,12 @@ class Data {
     void build(char* filename);
 
   public:
+    Data();
     Data(char* filename);
     ~Data();
 
+    size_t getDataSize();
+    size_t getElementsSize();
     std::vector<std::vector<float>> getData(void);
     void write(void);
 };

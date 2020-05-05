@@ -1,5 +1,7 @@
 #include "../include/data.hpp"
 
+Data::Data() {}
+
 Data::Data(char* filename) {
   build(filename);
 }
@@ -48,4 +50,13 @@ void Data::write(void) {
     std::cout << "\n";
   }
   std::cout << "\n";
+}
+
+
+size_t Data::getDataSize() {
+  return dataSize_;
+}
+
+size_t Data::getElementsSize() {
+  return dataElementsSize_;
 }
