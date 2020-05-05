@@ -39,20 +39,13 @@ std::vector<float> MaxDivProblem::farElementOfCenter(std::vector<std::vector<flo
 
 
 std::vector<std::vector<float>> MaxDivProblem::deleteElement(std::vector<std::vector<float>> elements, std::vector<float> deleted) {
-  // std::vector<std::vector<float>> newSol;
-  // int isEqual = 0;
-  // for (int i = 0; i < elements.size(); i++) {
-  //   for (int j = 0; j < deleted.size(); j++) {
-  //     if (elements[i][j] != deleted[j]) {
-  //       break;
-  //     } else {
-  //       isEqual++;
-  //     }
-  //     if (isEqual == deleted.size()) {
-        
-  //     }
-  //   }
-  // } 
+  for (auto iter = elements.begin(); iter != elements.end(); iter++) {
+    if (*iter == deleted) {
+      elements.erase(iter);
+    }
+  }
+
+  return elements;
 }
 
 

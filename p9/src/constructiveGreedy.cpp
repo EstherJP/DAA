@@ -13,16 +13,6 @@ void consGreedy::searchSolution(void) {
   std::vector<float> center = gravityCenter(elements);
 
   std::vector<float> farElement = farElementOfCenter(elements, center); 
-  std::cout << "centro\n";
-  for (int i = 0; i < center.size(); i++) {
-      std::cout << center[i] << " ";
-  }
-  std::cout << "\n";
-  std::cout << "mas lejos\n";
-  for (int i = 0; i < farElement.size(); i++) {
-      std::cout << farElement[i] << " ";
-  }
-  std::cout << "\n";
 
   // do {
 
@@ -30,6 +20,26 @@ void consGreedy::searchSolution(void) {
 
   // bestSolution_ = auxSol;
 }
+/** TESTS CUTRES **/
+  // std::cout << "centro\n";
+  // for (int i = 0; i < center.size(); i++) {
+  //     std::cout << center[i] << " ";
+  // }
+  // std::cout << "\n";
+  // std::cout << "mas lejos\n";
+  // for (int i = 0; i < farElement.size(); i++) {
+  //     std::cout << farElement[i] << " ";
+  // }
+  // std::cout << "\n";
+  // elements =  deleteElement(elements, elements[2]);
+  // std::cout << "eliminar un vector\n";
+  // for (int i = 0; i < elements.size(); i++) {
+  //   for (int j = 0; j < elements[i].size(); j++) {
+  //     std::cout << elements[i][j] << " ";
+  //   }
+  //   std::cout << "\n";
+  // }
+  // std::cout << "\n";
   // std::cout << "distancia dos sets\n";
   // std::cout << distanceTwoSets(setData_.getData()[2], setData_.getData()[3]) << std::endl;
   // std::cout << "centro\n";
