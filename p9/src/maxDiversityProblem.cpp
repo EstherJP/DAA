@@ -39,12 +39,11 @@ std::vector<float> MaxDivProblem::farElementOfCenter(std::vector<std::vector<flo
 
 
 std::vector<std::vector<float>> MaxDivProblem::deleteElement(std::vector<std::vector<float>> elements, std::vector<float> deleted) {
-  for (auto iter = elements.begin(); iter != elements.end(); iter++) {
+  for (auto iter = elements.begin(); iter < elements.end(); iter++) {
     if (*iter == deleted) {
       elements.erase(iter);
     }
   }
-
   return elements;
 }
 
@@ -64,13 +63,13 @@ std::vector<float> MaxDivProblem::gravityCenter(std::vector<std::vector<float>> 
 
 
 
-void MaxDivProblem::showSolution(void) {
-  std::cout << "Distancia máxima: " << std::endl;
-  std::cout << "Mejor solución: " << std::endl;
-  for (int i = 0; i < bestSolution_.size(); i++) {
+void MaxDivProblem::showSolution(std::vector<std::vector<float>> sol) {
+  // std::cout << "Distancia máxima: " << std::endl;
+  // std::cout << "Mejor solución: " << std::endl;
+  for (int i = 0; i < sol.size(); i++) {
     std::cout << "Conjunto " << i + 1 << ":  ";
-    for (int j = 0; j < bestSolution_[i].size(); j++) {
-      std::cout << bestSolution_[i][j] << " ";
+    for (int j = 0; j < sol[i].size(); j++) {
+      std::cout << sol[i][j] << " ";
     }
     std::cout << "\n";
   }

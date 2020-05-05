@@ -32,5 +32,5 @@ class MaxDivProblem {
     float distanceTwoSets(std::vector<float> firstSet, std::vector<float> secondSet);
 
     virtual void searchSolution(void) = 0;
-    void showSolution(void);
+    void showSolution(std::vector<std::vector<float>> sol);
 };
