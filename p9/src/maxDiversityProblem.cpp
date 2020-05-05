@@ -18,16 +18,57 @@ float MaxDivProblem::distanceTwoSets(std::vector<float> firstSet, std::vector<fl
   float sum = 0;
   for (int i = 0; i < setData_.getElementsSize(); i++) {
     float sub = firstSet[i] - secondSet[i];
-    std::cout << firstSet[i] << " - " << secondSet[i] << "\n";
     sub = pow(sub, 2);
-    std::cout << sub << " ^2\n";
     sum += sub;
-    std::cout << "sum " << sum << "\n";
   }
-
-  std::cout << "return " << sqrt(sum) << "\n";
   return sqrt(sum);
 }
+
+std::vector<float> MaxDivProblem::farElementOfCenter(std::vector<std::vector<float>> elements, std::vector<float> center) {
+  float oldDistance = distanceTwoSets(elements[0], center);
+  int farIndex = 0;
+  for (int i = 1; i < elements.size(); i++) {
+    float newDistance = distanceTwoSets(elements[i], center);
+    if (oldDistance < newDistance) {
+      oldDistance = newDistance;
+      farIndex = i;
+    }
+  } 
+  return elements[farIndex];
+}
+
+
+std::vector<std::vector<float>> MaxDivProblem::deleteElement(std::vector<std::vector<float>> elements, std::vector<float> deleted) {
+  // std::vector<std::vector<float>> newSol;
+  // int isEqual = 0;
+  // for (int i = 0; i < elements.size(); i++) {
+  //   for (int j = 0; j < deleted.size(); j++) {
+  //     if (elements[i][j] != deleted[j]) {
+  //       break;
+  //     } else {
+  //       isEqual++;
+  //     }
+  //     if (isEqual == deleted.size()) {
+        
+  //     }
+  //   }
+  // } 
+}
+
+
+std::vector<float> MaxDivProblem::gravityCenter(std::vector<std::vector<float>> auxSol) {
+  std::vector<float> center;
+  for (int i = 0; i < setData_.getElementsSize(); i++) {
+    float sum = 0;
+    for (int j = 0; j < auxSol.size(); j++) {
+      sum += auxSol[j][i];
+    }
+    center.push_back(sum / auxSol.size());
+    sum = 0;
+  } 
+  return center;
+}
+
 
 
 void MaxDivProblem::showSolution(void) {

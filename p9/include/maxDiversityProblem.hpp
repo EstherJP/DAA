@@ -12,12 +12,22 @@ class MaxDivProblem {
     float solutionSize_;
     float distance_;
 
+    int m_ = 3;
+    // std::vector<float> gravityCenter_;
+
   public:
     MaxDivProblem();
     MaxDivProblem(Data setData);
     ~MaxDivProblem();
 
     std::vector<std::vector<float>> getBestSolution(void);
+
+    // void distance(void);
+    std::vector<std::vector<float>> deleteElement(std::vector<std::vector<float>> elements, std::vector<float> deleted);
+
+    std::vector<float> farElementOfCenter(std::vector<std::vector<float>> elements, std::vector<float> center);
+
+    std::vector<float> gravityCenter(std::vector<std::vector<float>> auxSol);
 
     float distanceTwoSets(std::vector<float> firstSet, std::vector<float> secondSet);
 
