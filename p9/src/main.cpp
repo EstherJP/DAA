@@ -4,6 +4,7 @@
 #include "../include/constructiveGreedy.hpp"
 #include "../include/destructiveGreedy.hpp"
 #include "../include/maxDiversityCalculator.hpp"
+#include "../include/grasp.hpp"
 
 int main(int argc, char* argv[]) {
   if (argc <= 1) {
@@ -19,6 +20,7 @@ int main(int argc, char* argv[]) {
 
     consGreedy* consgreedy = new consGreedy(setData);
     desGreedy* desgreedy = new desGreedy(setData);
+    Grasp* grasp = new Grasp(setData);
 
     maxDivCalculator* interface = new maxDivCalculator(consgreedy);
     std::cout << "--- Constructivo voraz ---\n";
@@ -28,6 +30,9 @@ int main(int argc, char* argv[]) {
     interface->setStrategy(desgreedy);
     interface->maxMeanInterface();
 
+    std::cout << "\n--- Grasp ---\n";
+    interface->setStrategy(grasp);
+    interface->maxMeanInterface();
 
 
   } catch(char const* error) {

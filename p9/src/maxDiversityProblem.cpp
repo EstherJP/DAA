@@ -37,6 +37,16 @@ std::vector<float> MaxDivProblem::farElementOfCenter(std::vector<std::vector<flo
   return elements[farIndex];
 }
 
+float MaxDivProblem::totalDistance(std::vector<std::vector<float>> auxSol) {
+  float auxDistance = 0;
+  for (int i = 0; i < auxSol.size() - 1; i++) {
+    for (int j = i + 1; j < auxSol.size(); j++) {
+      auxDistance += distanceTwoSets(auxSol[j], auxSol[i]);
+    }
+  }
+  // bestDistance_ = auxDistance;
+  return auxDistance;
+}
 
 std::vector<std::vector<float>> MaxDivProblem::deleteElement(std::vector<std::vector<float>> elements, std::vector<float> deleted) {
   for (auto iter = elements.begin(); iter < elements.end(); iter++) {
@@ -47,6 +57,38 @@ std::vector<std::vector<float>> MaxDivProblem::deleteElement(std::vector<std::ve
   return elements;
 }
 
+bool MaxDivProblem::isInSolution(std::vector<std::vector<float>> auxSol, std::vector<float> element) {
+  for (int i = 0; i < auxSol.size(); i++) {
+    if (auxSol[i] == element) {
+      return true;
+    }
+  }
+  return false;
+}
+
+std::vector<std::vector<float>> MaxDivProblem::generateNeightbour(std::vector<std::vector<float>> currentSol, std::vector<float> element, int swapNumber) {
+  
+  
+}
+
+std::vector<std::vector<float>> MaxDivProblem::localGreedySearch(std::vector<std::vector<float>> currentSol, float currentDistance) {
+  std::vector<std::vector<float>> neightbour;
+  float neightbourDistance;
+  std::vector<std::vector<float>> auxSol = currentSol;
+  float auxDistance = currentDistance;
+
+  for (int i = 0; i < currentSol.size(); i++) {
+    for (int j = 0; j < noInSolution_.size(); j++) {
+      neightbour = generateNeightbour(currentSol, noInSolution_[j], i);
+      neightbourDistance = totalDistance(neightbour); // Equilibramos con swap
+      if (auxDistance < neightbourDistance) {
+        auxSol = neightbour;
+        auxDistance = neightbourDistance;
+      }
+    }
+  }
+  return auxSol;
+}
 
 std::vector<float> MaxDivProblem::gravityCenter(std::vector<std::vector<float>> auxSol) {
   std::vector<float> center;
@@ -64,8 +106,9 @@ std::vector<float> MaxDivProblem::gravityCenter(std::vector<std::vector<float>> 
 
 
 void MaxDivProblem::showSolution(std::vector<std::vector<float>> sol) {
-  // std::cout << "Distancia máxima: " << std::endl;
-  // std::cout << "Mejor solución: " << std::endl;
+  bestDistance_ = totalDistance(bestSolution_);
+  std::cout << "Distancia máxima: " << bestDistance_<< std::endl;
+  std::cout << "Mejor solución: " << std::endl;
   for (int i = 0; i < sol.size(); i++) {
     std::cout << "Conjunto " << i + 1 << ":  ";
     for (int j = 0; j < sol[i].size(); j++) {

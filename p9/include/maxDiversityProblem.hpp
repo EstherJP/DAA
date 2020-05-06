@@ -8,6 +8,8 @@ class MaxDivProblem {
   protected:
     Data setData_;
     std::vector<std::vector<float>> bestSolution_;
+
+    std::vector<std::vector<float>> noInSolution_;
     float bestDistance_;
     float solutionSize_;
     float distance_;
@@ -22,12 +24,17 @@ class MaxDivProblem {
 
     std::vector<std::vector<float>> getBestSolution(void);
 
-    // void distance(void);
+    float totalDistance(std::vector<std::vector<float>> auxSol);
     std::vector<std::vector<float>> deleteElement(std::vector<std::vector<float>> elements, std::vector<float> deleted);
 
     std::vector<float> farElementOfCenter(std::vector<std::vector<float>> elements, std::vector<float> center);
 
     std::vector<float> gravityCenter(std::vector<std::vector<float>> auxSol);
+
+    std::vector<std::vector<float>> generateNeightbour(std::vector<std::vector<float>> elements, std::vector<float> element, int swapNumber);
+    std::vector<std::vector<float>> localGreedySearch(std::vector<std::vector<float>> elements, float currentDistance);
+
+    bool isInSolution(std::vector<std::vector<float>> auxSol, std::vector<float> element);
 
     float distanceTwoSets(std::vector<float> firstSet, std::vector<float> secondSet);
 

@@ -24,7 +24,7 @@ void desGreedy::searchSolution(void) {
 
   std::vector<float> center = gravityCenter(auxSol);
   do {
-    std::vector<float> nearElement = farElementOfCenter(auxSol, center); 
+    std::vector<float> nearElement = nearElementOfCenter(auxSol, center); 
     auxSol = deleteElement(auxSol, nearElement);
     center = gravityCenter(auxSol);
   } while (auxSol.size() > m_);
