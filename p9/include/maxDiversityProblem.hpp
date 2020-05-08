@@ -25,9 +25,12 @@ class MaxDivProblem {
     std::vector<std::vector<float>> getBestSolution(void);
 
     std::vector<float> gravityCenter(std::vector<std::vector<float>> auxSol);
+    // std::vector<float> gravityCenter(std::vector<std::vector<float>> auxSol);
+
     float distanceTwoSets(std::vector<float> firstSet, std::vector<float> secondSet);
     float totalDistance(std::vector<std::vector<float>> auxSol);
     float swapDistance(std::vector<std::vector<float>> newSol, std::vector<float> added, std::vector<float> swapped, float currentDistance);
+    float addDistance(std::vector<std::vector<float>> newSol, std::vector<float> added, float currentDistance);
 
     std::vector<std::vector<float>> deleteElement(std::vector<std::vector<float>> elements, std::vector<float> deleted);
     std::vector<float> farElementOfCenter(std::vector<std::vector<float>> elements, std::vector<float> center);
