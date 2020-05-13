@@ -138,7 +138,9 @@ std::vector<float> MaxDivProblem::gravityCenter(std::vector<std::vector<float>> 
   return center;
 }
 
-
+void MaxDivProblem::postProcessing(void) {
+  localGreedySearch(bestSolution_, bestDistance_);
+}
 
 void MaxDivProblem::showSolution(std::vector<std::vector<float>> sol) {
   bestDistance_ = totalDistance(sol);

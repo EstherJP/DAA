@@ -37,6 +37,7 @@ class MaxDivProblem {
 
     std::vector<std::vector<float>> generateNeightbour(std::vector<std::vector<float>> elements, std::vector<float> element, int swapNumber);
     void localGreedySearch(std::vector<std::vector<float>> elements, float currentDistance);
+    void postProcessing(void);
 
     bool isInSolution(std::vector<std::vector<float>> auxSol, std::vector<float> element);
     virtual void searchSolution(void) = 0;

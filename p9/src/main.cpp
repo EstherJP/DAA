@@ -26,6 +26,8 @@ int main(int argc, char* argv[]) {
     std::cout << "--- Constructivo voraz ---\n";
     interface->maxMeanInterface();
 
+    std::cout << "--- Constructivo voraz con búsqueda local ---\n";
+
     std::cout << "\n--- Destruvtivo voraz ---\n";
     interface->setStrategy(desgreedy);
     interface->maxMeanInterface();

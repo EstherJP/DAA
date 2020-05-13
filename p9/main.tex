@@ -1,0 +1,111 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[language]{latin}
+\usepackage[spanish]{babel}
+\usepackage{enumitem}       % usado para las listas anidadas
+
+
+
+\title{Maximum Diversity Problem}
+
+\author{Nombre y Apellidos}
+
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introducción}
+En esta práctica hemos abordado el problema ¿¿??¿¿
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Descripción del problema}
+Siendo  $S = \{s_i : i \in N\}$ un conjunto de elementos donde $N=\{1,2,3,…n\}$ es el conjunto de los índices y cada elemento $s_i$ puede ser representado como un punto en el espacio con k diemensiones $s_i = (s_{i1},s_{i2}, s_{i3}, … , s_{ik})$.
+
+Siendo {$d_{ij}$} la distancia entre los elementos {$s_i$} y {$s_j$} y siendo $m < n$ el número de conjuntos deseados, el problema consiste en seleccionar $m$ elementos de $S$ de tal manera que se maximice la suma de las distancias entre ellos.
+
+\vspace{10pt}
+
+$$d_{ij} = \sqrt{\sum_{k=1}^{K}(s_{ik} - s_{jk})^2}$$
+
+\vspace{10pt}
+
+ Maximizar $\sum_{i=1}^{n-1}\sum_{j=i+1}^{n}d_{ij}x_{i}x_{j}$
+											
+\vspace{10pt}												
+												
+Sujeto a 
+
+$$\sum_{i=1}^{n}x_{i}=m$$
+
+\vspace{5pt}
+
+$$x_{i} = \{0, 1\},	1 \leq i \leq n$$
+
+\subsection{Codificación de la solución}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Búsquedas por entornos}
+
+\subsection{Muestreo de los entornos}
+
+Tipos de muestreo utilizados:
+\begin{itemize}
+    \item \underline{Muestreo de entorno \textit{greedy}:} Seleccionando siempre la vecina con valor máximo.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%\section{Algoritmo voraz determinista}
+\section{Algoritmos voraces}
+
+%%%%
+\subsection{Voraz 1}
+
+...
+
+\subsubsection{Experiencia Computacional}
+
+...
+%%%%
+\subsection{Voraz 2}
+
+...
+
+\subsubsection{Experiencia Computacional}
+
+...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{GRASP}
+
+......
+
+\subsection{Experiencia Computacional}
+
+.....
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Búsqueda Tabú}
+
+.....
+
+\subsection{Experiencia Computacional}
+
+.......
+
+\subsection{Experiencia Computacional}
+
+......
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ramificación y Poda}
+
+....
+
+\subsection{Experiencia Computacional}
+
+...
+
+
+\end{document}
