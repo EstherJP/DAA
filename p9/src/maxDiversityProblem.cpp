@@ -66,12 +66,6 @@ bool MaxDivProblem::isInSolution(std::vector<std::vector<float>> auxSol, std::ve
   return false;
 }
 
-std::vector<std::vector<float>> MaxDivProblem::generateNeightbour(std::vector<std::vector<float>> currentSol, std::vector<float> element, int swapNumber) {
-  // Intercambio
-  currentSol[swapNumber] = element;
-  return currentSol;
-  
-}
 
 float MaxDivProblem::swapDistance(std::vector<std::vector<float>> newSol, std::vector<float> added, std::vector<float> swapped, float currentDistance) {
   for (int i = 0; i < newSol.size(); i++) {
@@ -93,22 +87,40 @@ float MaxDivProblem::addDistance(std::vector<std::vector<float>> newSol, std::ve
   return currentDistance / newSol.size();
 }
 
+std::vector<std::vector<float>> MaxDivProblem::generateNeightbour(std::vector<std::vector<float>> currentSol, std::vector<float> element, int swapNumber) {
+  currentSol[swapNumber] = element;
+  return currentSol;
+  
+}
+
 void MaxDivProblem::localGreedySearch(std::vector<std::vector<float>> currentSol, float currentDistance) {
   std::vector<std::vector<float>> neightbour;
   float neightbourDistance;
   std::vector<std::vector<float>> auxSol = currentSol;
   float auxDistance = currentDistance;
-
-  for (int i = 0; i < currentSol.size(); i++) {
-    for (int j = 0; j < noInSolution_.size(); j++) {
-      neightbour = generateNeightbour(currentSol, noInSolution_[j], i);
-      neightbourDistance = swapDistance(neightbour, noInSolution_[j], currentSol[i], currentDistance); // E
-      if (auxDistance < neightbourDistance) {
-        auxSol = neightbour;
-        auxDistance = neightbourDistance;
+  bool keepSearching;
+  std::vector<float> added;
+  std::vector<float> deleted;
+  do {
+    keepSearching = false;
+    for (int i = 0; i < currentSol.size(); i++) {
+      for (int j = 0; j < noInSolution_.size(); j++) {
+        neightbour = generateNeightbour(currentSol, noInSolution_[j], i);
+        neightbourDistance = swapDistance(neightbour, noInSolution_[j], currentSol[i], currentDistance);
+        if (auxDistance < neightbourDistance) {
+          auxSol = neightbour;
+          auxDistance = neightbourDistance;
+          deleted = noInSolution_[j];
+          added = currentSol[i];
+          keepSearching = true;
+        }
       }
     }
-  }
+    noInSolution_ = deleteElement(noInSolution_, deleted);
+    noInSolution_.push_back(added);
+    currentSol = auxSol;
+    currentDistance = auxDistance;
+  } while (keepSearching);
   bestSolution_ = auxSol;
   bestDistance_ = auxDistance;
 }

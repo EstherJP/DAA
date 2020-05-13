@@ -8,7 +8,7 @@
 #include "maxDiversityProblem.hpp"
 
 #define CARDINALITY 3
-#define MAXITER 100
+#define MAXITER 1000
 
 class Grasp : public MaxDivProblem {
   private:
