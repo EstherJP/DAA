@@ -2,8 +2,8 @@
 
 desGreedy::desGreedy() {}
 
-desGreedy::desGreedy(Data setData) : 
-  MaxDivProblem(setData)
+desGreedy::desGreedy(Data setData, int solSize, int maxIter) : 
+  MaxDivProblem(setData, solSize, maxIter)
 {}
 
 std::vector<float> desGreedy::nearElementOfCenter(std::vector<std::vector<float>> elements, std::vector<float> center) {
@@ -26,8 +26,9 @@ void desGreedy::searchSolution(void) {
   do {
     std::vector<float> nearElement = nearElementOfCenter(auxSol, center); 
     auxSol = deleteElement(auxSol, nearElement);
+    noInSolution_.push_back(nearElement);
     center = gravityCenter(auxSol);
-  } while (auxSol.size() > m_);
+  } while (auxSol.size() > solutionSize_);
   bestSolution_ = auxSol;
   showSolution(auxSol);
 }

@@ -16,6 +16,7 @@
 #include "../include/grasp.hpp"
 #include "../include/multiBoot.hpp"
 #include "../include/VNS.hpp"
+#include "../include/GRASP-VNS.hpp"
 
 using namespace std;
 
@@ -50,8 +51,11 @@ int main(int argc, char* argv[]) {
     constructiveGreedy* constGreedy = new constructiveGreedy(graph);
     destructiveGreedy* descGreedy = new destructiveGreedy(graph);
     Grasp* grasp = new Grasp(graph, STOP_ITERATIONS, ANXIOUS_SEARCH, ENV_OPENING);
-    MultiBoot* multiboot = new MultiBoot(graph, STOP_ITERATIONS, ANXIOUS_SEARCH, ENV_OPENING);
+    MultiBoot* multiboot = new MultiBoot(graph, STOP_ITERATIONS, GREEDY_SEARCH, ENV_OPENING);
     VNS* vns = new VNS(graph, grasp, STOP_ITERATIONS, ANXIOUS_SEARCH, ENV_OPENING);
+    // TAREA 3  
+    GraspVNS* graspvns = new GraspVNS(graph, grasp, STOP_ITERATIONS, ANXIOUS_SEARCH, ENV_CLOSING);
+
  
     std::chrono::time_point<chrono::system_clock> startTime, endTime;
 
@@ -92,6 +96,15 @@ int main(int argc, char* argv[]) {
 
     std::cout << "----------VNS----------\n";
     interface->setStrategy(vns);
+    startTime = std::chrono::system_clock::now();
+    interface->maxMeanInterface();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl << std::endl;
+
+    // TAREA 3  
+    std::cout << "----------GRASP-VNS----------\n";
+    interface->setStrategy(graspvns);
     startTime = std::chrono::system_clock::now();
     interface->maxMeanInterface();
     endTime = std::chrono::system_clock::now();

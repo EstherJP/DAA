@@ -8,15 +8,14 @@
 #include "maxDiversityProblem.hpp"
 
 #define CARDINALITY 3
-#define MAXITER 1000
 
 class Grasp : public MaxDivProblem {
   private:
     std::vector<std::pair<std::vector<float>, float>> LRC_;
-    int cardinality_ = CARDINALITY;
+    int cardinality_;
   public:
     Grasp();
-    Grasp(Data setData);
+    Grasp(Data setData, int solSize, int maxIter, int cardinality);
     ~Grasp();
 
     void createLRC(void);

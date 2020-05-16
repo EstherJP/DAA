@@ -11,18 +11,22 @@ class MaxDivProblem {
 
     std::vector<std::vector<float>> noInSolution_;
     float bestDistance_;
-    float solutionSize_;
-    float distance_;
+    // float solutionSize_;
+    // float distance_;
 
-    int m_ = 3;
+    int solutionSize_;
+    int maxIter_;
     // std::vector<float> gravityCenter_;
 
   public:
     MaxDivProblem();
-    MaxDivProblem(Data setData);
+    MaxDivProblem(Data setData, int solSize, int maxIter);
     ~MaxDivProblem();
 
     std::vector<std::vector<float>> getBestSolution(void);
+    float getBestDistance(void);
+    int getSolutionSize(void);
+    std::vector<std::vector<float>> getAllNodes(void);
 
     std::vector<float> gravityCenter(std::vector<std::vector<float>> auxSol);
     // std::vector<float> gravityCenter(std::vector<std::vector<float>> auxSol);
@@ -39,6 +43,7 @@ class MaxDivProblem {
     void localGreedySearch(std::vector<std::vector<float>> elements, float currentDistance);
     void postProcessing(void);
 
+    void generateRandomSolution(void);
     bool isInSolution(std::vector<std::vector<float>> auxSol, std::vector<float> element);
     virtual void searchSolution(void) = 0;
     void showSolution(std::vector<std::vector<float>> sol);

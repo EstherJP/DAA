@@ -10,7 +10,7 @@
 
 #include "maxMeanProblem.hpp"
 
-#define CARDINALITY 4
+#define CARDINALITY 2
 
 /**
  * @brief Clase que contiene la implementación del algoritmo de GRASP

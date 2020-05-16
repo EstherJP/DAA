@@ -17,9 +17,8 @@
 #include <utility>
 
 #include "graph.hpp"
-#include "problem.hpp"
 
-#define MAXITERATIONS 10
+#define MAXITERATIONS 50
 
 #define STOP_ITERATIONS 1
 #define STOP_WITHOUTIMPROVE 2
@@ -34,7 +33,7 @@
  * @brief Clase que los atributos y métodos necesarios para resolver
  * problema de maximizar la media en subconjutos de un grafo.
  */
-class MaxMean /*: public Problem*/ {
+class MaxMean  {
   protected:
     Graph affinities_;                            // Objeto que contiene la matriz distancia del grafo
     std::vector<int> bestSolution_;               // Subconjunto de nodos con la mejor solución encontrada
@@ -72,6 +71,8 @@ class MaxMean /*: public Problem*/ {
     void localAnxiousSearch(void);                 // Búsqueda local ansiosa
 
     void postProcessing(void);                     // Selecciona la búsqueda local para el post procesamiento
+
+    void initializeAll(void);
 
     std::vector<int> generateNeightbourd(int node); // Devuelve la mejor solución vecina
 };

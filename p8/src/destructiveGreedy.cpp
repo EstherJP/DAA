@@ -19,14 +19,14 @@ destructiveGreedy::destructiveGreedy(Graph affinities) :
   srand(time(NULL));
 }
 
-/**
- * @brief Inicializa la solución actual con todos los todos
- */
-void destructiveGreedy::initializeAll(void) {
-  for (int i = 0; i < affinities_.getNumberVertex(); i++) {
-    bestSolution_.push_back(i);
-  }
-}
+// /**
+//  * @brief Inicializa la solución actual con todos los todos
+//  */
+// void destructiveGreedy::initializeAll(void) {
+//   for (int i = 0; i < affinities_.getNumberVertex(); i++) {
+//     bestSolution_.push_back(i);
+//   }
+// }
 
 /**
  * @brief Busca el peor nodo y lo elimina

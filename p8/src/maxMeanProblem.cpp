@@ -29,6 +29,15 @@ MaxMean::MaxMean(Graph affinities):
 MaxMean::~MaxMean() {}
 
 /**
+ * @brief Inicializa la solución actual con todos los todos
+ */
+void MaxMean::initializeAll(void) {
+  for (int i = 0; i < affinities_.getNumberVertex(); i++) {
+    bestSolution_.push_back(i);
+  }
+}
+
+/**
  * @brief Inicializa la mejor solución con los dos nodos cuya función objetivo es máxima
  * 
  * @return float Media de los nodos calculados

@@ -17,7 +17,7 @@ class destructiveGreedy : public MaxMean {
   public:
     destructiveGreedy(Graph affinities); // Constructor
 
-    void initializeAll(void);            // Inicializa la solución con todos los nodos
+    // void initializeAll(void);            // Inicializa la solución con todos los nodos
     float deleteWorstNode(void);         // Elimina el nodo que minimice la función objetivo
     void searchSolution(void);           // Búsqueda de la solución
 };

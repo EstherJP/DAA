@@ -30,4 +30,25 @@ class maxDivCalculator {
         throw "Error: Strategy not set";
       }
     }
+
+    void greedySearch(void) {
+      if(calculateMaxDiv_) {
+        calculateMaxDiv_->postProcessing();
+        // calculateMaxDiv_->showSolution();
+      }
+      else {
+        throw "Error: Strategy not set";
+      }
+    }
+
+    void greedySearchRandom(void) {
+      if(calculateMaxDiv_) {
+        calculateMaxDiv_ -> generateRandomSolution();
+        calculateMaxDiv_->postProcessing();
+        // calculateMaxDiv_->showSolution();
+      }
+      else {
+        throw "Error: Strategy not set";
+      }
+    }
 };

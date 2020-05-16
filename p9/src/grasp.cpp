@@ -2,8 +2,9 @@
     
 Grasp::Grasp() {}
 
-Grasp::Grasp(Data setData) :
-  MaxDivProblem(setData)
+Grasp::Grasp(Data setData, int solSize, int maxIter, int cardinality) :
+  MaxDivProblem(setData, solSize, maxIter),
+  cardinality_(cardinality)
 {
   srand(time(NULL));
 }
@@ -69,7 +70,7 @@ void Grasp::constructivePhase(void) {
     bestSolution_.push_back(LRC_[randomNode].first);
     noInSolution_ = deleteElement(noInSolution_, LRC_[randomNode].first);
     createLRC();
-  } while (bestSolution_.size() < m_);
+  } while (bestSolution_.size() < solutionSize_);
   bestDistance_ = totalDistance(bestSolution_);
 }
 
@@ -94,7 +95,7 @@ void Grasp::searchSolution(void) {
     bestSolution_.clear();
     bestDistance_ = 0;
     i++;
-  } while (i < MAXITER);
+  } while (i < maxIter_);
   bestSolution_ = auxSol;
   bestDistance_ = auxDistance;
   // std::cout << "final\n";

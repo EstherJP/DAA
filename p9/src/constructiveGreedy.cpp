@@ -2,8 +2,8 @@
 
 consGreedy::consGreedy() {}
 
-consGreedy::consGreedy(Data setData) : 
-  MaxDivProblem(setData)
+consGreedy::consGreedy(Data setData, int solSize, int maxIter) : 
+  MaxDivProblem(setData, solSize, maxIter)
 {}
 
 void consGreedy::searchSolution(void) {
@@ -16,11 +16,14 @@ void consGreedy::searchSolution(void) {
     auxSol.push_back(farElement);
     elements = deleteElement(elements, farElement);
     center = gravityCenter(auxSol);
-  } while (auxSol.size() < m_);
-
+  } while (auxSol.size() < solutionSize_);
+  noInSolution_ = elements;
   bestSolution_ = auxSol;
+  bestDistance_ = totalDistance(bestSolution_);
+  // postProcessing(bestSolution_, bestDistance_)
   showSolution(bestSolution_);
 }
+
 /** TESTS CUTRES **/
   // std::cout << "mas lejos\n";
   // elements =  deleteElement(elements, elements[2]);
