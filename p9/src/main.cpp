@@ -1,3 +1,11 @@
+/**
+ * @file main.cpp
+ * @author Esther Jorge Paramio (alu0101102498@ull.edu.es)
+ * @brief Programa principal 
+ * @version 0.1
+ * @date 2020-05-18
+ */
+
 #include <iostream>
 #include <ctime>
 #include <chrono>
@@ -11,7 +19,16 @@
 
 using namespace std;
 
-// LINEA DE COMANDOS: fichero m iter lrc
+/**
+ * @brief Programa principal que implementa todos los algoritmos pedidos en la práctica
+ * 
+ * Los datos se introducen por línea de comandos de la siguiente forma:
+ * ./bin/main nombre_fichero tamaño_solucion maximo_iter cardinalidad
+ * 
+ * @param argc Número de argumentos por la línea de comandos
+ * @param argv Array de argumentos
+ * @return int Salida del programa
+ */
 int main(int argc, char* argv[]) {
   if (argc <= 1) {
     throw "Error: needs a file";
@@ -25,7 +42,6 @@ int main(int argc, char* argv[]) {
     int cardinality = atoi(argv[4]);
 
     Data setData(filename);
-    // setData.write();
 
     consGreedy* consgreedy = new consGreedy(setData, solutionSize, maxIter);
     desGreedy* desgreedy = new desGreedy(setData, solutionSize, maxIter);
@@ -71,11 +87,6 @@ int main(int argc, char* argv[]) {
     duration = endTime - startTime;
     std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
 
-    // delete consgreedy;
-    // delete desgreedy;
-    // delete grasp;
-    // delete interface;
-
     std::cout << "\n--- Ramificación y poda con constructivo voraz expandiendo la cota más pequeña ---\n";
     consgreedy = new consGreedy(setData, solutionSize, maxIter);
     consgreedy->searchSolution();
@@ -108,7 +119,7 @@ int main(int argc, char* argv[]) {
     endTime = std::chrono::system_clock::now();
     duration = endTime - startTime;
     std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
     std::cout << "\n--- Ramificación y poda con constructivo voraz expandiendo por profundidad ---\n";
     consgreedy = new consGreedy(setData, solutionSize, maxIter);
     consgreedy->searchSolution();
@@ -141,6 +152,7 @@ int main(int argc, char* argv[]) {
     endTime = std::chrono::system_clock::now();
     duration = endTime - startTime;
     std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
+
   } catch(char const* error) {
     std::cout << error << std::endl;
   }

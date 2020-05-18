@@ -1,9 +1,25 @@
+/**
+ * @file tree.hpp
+ * @author Esther Jorge Paramio (alu0101102498@ull.edu.es)
+ * @brief Clase que representa el árbol ramificación y poda
+ * @version 0.1
+ * @date 2020-05-18
+ */
+
 #include "../include/tree.hpp"
 
+/**
+ * @brief Construct a new Tree:: Tree object
+ */
 Tree::Tree() {}
 
+/**
+ * @brief Construct a new Tree:: Tree object
+ * 
+ * @param sol Solución que coge la cota superior
+ * @param str Estrategia a expandir
+ */
 Tree::Tree(MaxDivProblem* sol, int str) {
-  sol_ = sol;
   allNodes_ = sol->getAllNodes();
   totalNodes_ = sol->getAllNodes().size();
   currentDepth_ = 0;
@@ -12,6 +28,13 @@ Tree::Tree(MaxDivProblem* sol, int str) {
   expandStrategy_ = str;
 }
 
+/**
+ * @brief Elimina un subconjunto de nodos de un conjunto
+ * 
+ * @param nodes Conjunto de subconjuntos
+ * @param node Subconjunt
+ * @return std::vector<std::vector<float>> Nuevo subconjunto
+ */
 std::vector<std::vector<float>> Tree::deleteNode(std::vector<std::vector<float>> nodes, std::vector<float> node) {
   for (auto iter = nodes.begin(); iter < nodes.end(); iter++) {
     if (*iter == node) {
@@ -21,6 +44,9 @@ std::vector<std::vector<float>> Tree::deleteNode(std::vector<std::vector<float>>
   }
 }
 
+/**
+ * @brief Inicializa el árbol 
+ */
 void Tree::initializeTree(void) {
   currentDepth_++;
   for (int i = 0; i < totalNodes_ - solutionSize_ + 1; i++) {
@@ -28,21 +54,26 @@ void Tree::initializeTree(void) {
     std::vector<std::vector<float>> partialSolution;
     partialSolution.push_back(allNodes_[i]);
     ExpansiveNode* currentNode = new ExpansiveNode(allNodes_[i], i, currentDepth_, noInSolution, partialSolution, 0);
-    // currentNode->setPartialSolution(allNodes_[i]);
     currentNode->upperBound(solutionSize_);
     nodesToExpand_.push_back(currentNode);
     generateNodes_.push_back(currentNode);
-    // currentNode->writeNode();
   }
 }
 
+/**
+ * @brief Escribe el árbol
+ */
 void Tree::writeTree(void) {
-  std::cout << "NODOS GENERADOS\n";
   for (int i = 0; i < generateNodes_.size(); i++) {
     generateNodes_[i]->writeNode();
   }
 }
 
+/**
+ * @brief Poda un nodo del árbol
+ * 
+ * @param node Nodo a podar
+ */
 void Tree::bound(ExpansiveNode* node) {
   for (auto iter = nodesToExpand_.begin(); iter < nodesToExpand_.end(); iter++) {
     if (*iter == node) {
@@ -51,6 +82,11 @@ void Tree::bound(ExpansiveNode* node) {
   }
 }
  
+ /**
+  * @brief Expande un nodo
+  * 
+  * @param node Nodo a expandir
+  */
 void Tree::expandNode(ExpansiveNode* node) {
   int maxNode = allNodes_.size() - (solutionSize_ - node->getPartialSolution().size()) - (node->getId());
   for (int i = node->getId() + 1; i < node->getId() + 1 + maxNode; i++) {
@@ -73,14 +109,29 @@ void Tree::expandNode(ExpansiveNode* node) {
   bound(node);
 }
 
+/**
+ * @brief Devuelve la solución
+ * 
+ * @return std::vector<std::vector<float>> Solución
+ */
 std::vector<std::vector<float>> Tree::getSolution() {
   return solution_;
 }
 
+/**
+ * @brief Devuelve la cota inferior
+ * 
+ * @return float Cota inferior
+ */
 float Tree::getLowerBound() {
   return lowerBound_;
 }
 
+/**
+ * @brief Elige que estrategia de nodos a expendir usar
+ * 
+ * @return ExpansiveNode* Nodo a expandir
+ */
 ExpansiveNode* Tree::nodeToExpand(void) {
   if (expandStrategy_ == 0) {
     return expandNodeByLowerUpperBound();
@@ -89,6 +140,11 @@ ExpansiveNode* Tree::nodeToExpand(void) {
   }
 }
 
+/**
+ * @brief Expande un nodo por profundidad
+ * 
+ * @return ExpansiveNode* Nodo a expandir
+ */
 ExpansiveNode* Tree::expandNodeByDepth(void) {
   int index = 0;
   float maxDepth = nodesToExpand_[0]->getDepth();
@@ -101,10 +157,11 @@ ExpansiveNode* Tree::expandNodeByDepth(void) {
   return nodesToExpand_[index];
 }
 
-void Tree::setExpandStrategy(int str) {
-  expandStrategy_ = str;
-}
-
+/**
+ * @brief Expande un nodo por la cota superior más baja
+ * 
+ * @return ExpansiveNode* 
+ */
 ExpansiveNode* Tree::expandNodeByLowerUpperBound(void) {
   int indexNode = 0;
   float minUB = nodesToExpand_[0]->getUpperBound();
@@ -117,6 +174,11 @@ ExpansiveNode* Tree::expandNodeByLowerUpperBound(void) {
   return nodesToExpand_[indexNode];
 }
 
+/**
+ * @brief Devuelve el conjunto de nodos a expandir
+ * 
+ * @return std::vector<ExpansiveNode*> Nodos a expandir
+ */
 std::vector<ExpansiveNode*> Tree::getNodesToExpand() {
   return nodesToExpand_;
 }

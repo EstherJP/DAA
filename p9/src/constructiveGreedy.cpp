@@ -1,11 +1,33 @@
+/**
+ * @file constructiveGreedy.cpp
+ * @author Esther Jorge Paramio (alu0101102498@ull.edu.es)
+ * @brief Clase que contiene la implementación de un algoritmo voraz constructivo
+ * que resuelve el problema de máxima diverdidad
+ * @version 0.1
+ * @date 2020-05-18
+ */
+
 #include "../include/constructiveGreedy.hpp"
 
+/**
+ * @brief Construct a new cons Greedy::cons Greedy object
+ */
 consGreedy::consGreedy() {}
 
+/**
+ * @brief Construct a new cons Greedy::cons Greedy object
+ * 
+ * @param setData Datos del problema
+ * @param solSize Tamaño de la solución 
+ * @param maxIter Máximo número de iteraciones
+ */
 consGreedy::consGreedy(Data setData, int solSize, int maxIter) : 
   MaxDivProblem(setData, solSize, maxIter)
 {}
 
+/**
+ * @brief Algoritmo voraz constructivo
+ */
 void consGreedy::searchSolution(void) {
   std::vector<std::vector<float>> elements = setData_.getData();
   std::vector<std::vector<float>> auxSol;
@@ -20,26 +42,4 @@ void consGreedy::searchSolution(void) {
   noInSolution_ = elements;
   bestSolution_ = auxSol;
   bestDistance_ = totalDistance(bestSolution_);
-  // postProcessing(bestSolution_, bestDistance_)
-  // showSolution(bestSolution_);
 }
-
-/** TESTS CUTRES **/
-  // std::cout << "mas lejos\n";
-  // elements =  deleteElement(elements, elements[2]);
-  // std::cout << "eliminar un vector\n";
-  // for (int i = 0; i < elements.size(); i++) {
-  //   for (int j = 0; j < elements[i].size(); j++) {
-  //     std::cout << elements[i][j] << " ";
-  //   }
-  //   std::cout << "\n";
-  // }
-  // std::cout << "\n";
-  // std::cout << "distancia dos sets\n";
-  // std::cout << distanceTwoSets(setData_.getData()[2], setData_.getData()[3]) << std::endl;
-  // std::cout << "centro\n";
-  // std::vector<float> centro = gravityCenter(setData_.getData());
-  // for (int i = 0; i < centro.size(); i++) {
-  //     std::cout << centro[i] << " ";
-  // }
-  // std::cout << "\n";

@@ -1,3 +1,12 @@
+/**
+ * @file branchAndBound.hpp
+ * @author Esther Jorge Paramio (alu0101102498@ull.edu.es)
+ * @brief Clase que contiene el código de ramificación y poda que resulve el
+ * problema de máxima diversidad
+ * @version 0.1
+ * @date 2020-05-18
+ */
+
 #pragma once
 
 #include <iostream>
@@ -6,36 +15,19 @@
 #include "node.hpp"
 #include "tree.hpp"
 
+/**
+ * @brief Clase que contiene la implementación de ramificación y poda
+ */
 class BranchBound {
   private:
-    MaxDivProblem* LBSolution_;
-    float LB_;
-    Tree* tree_;
-    std::vector<std::vector<float>> partialSolution_;
-
-    // std::vector<std::vector<float>> allNodes_;
-
-    // int totalNodes_;
-    // int currentDepth_;
-    // int solutionSize_;
-
-    // std::vector<ExpansiveNode*> nodesToExpand_;
-    // std::vector<ExpansiveNode*> expandedNodes_;
-    // std::vector<std::vector<float>> partialSolution_;
+    MaxDivProblem* LBSolution_;                           // Objeto problema que nos da la cota inferior
+    float LB_;                                            // Cota inferior
+    Tree* tree_;                                          // Árbol de nodos  
   
   public:
-    BranchBound();
-    BranchBound(MaxDivProblem* LBSolution, int str);
-    void showSolution();
+    BranchBound();                                        // Constructor por defecto
+    BranchBound(MaxDivProblem* LBSolution, int str);      // Constructor de la clase ramificación
+    void showSolution();                                  // Método que muestra la solución óptima    
 
-    void setExpandStrategy(int str);
-
-
-    // void initializeTree(void);
-    // void expandTree(void);
-
-    void branchBound(void);
-    // void writeTree(void);
-    
-    // float nodeUpperBound(ExpansiveNode* node);
+    void branchBound(void);                               // Método de ramificación y poda
 };

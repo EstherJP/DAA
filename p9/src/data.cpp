@@ -1,20 +1,43 @@
+/**
+ * @file grasp.cpp
+ * @author Esther Jorge Paramio (alu0101102498@ull.edu.es)
+ * @brief Clase que contiene la implementación de manejo de datos del problema
+ * @version 0.1
+ * @date 2020-05-18
+ */
+
 #include "../include/data.hpp"
 
+/**
+ * @brief Construct a new Data:: Data object
+ */
 Data::Data() {}
 
+/**
+ * @brief Construct a new Data:: Data object
+ * 
+ * @param filename Nombre del fichero que contiene los datos
+ */
 Data::Data(char* filename) {
   build(filename);
 }
 
+/**
+ * @brief Destroy the Data:: Data object
+ */
 Data::~Data() {}
 
+/**
+ * @brief Lee el fichero e inicializa los datos
+ * 
+ * @param filename Nombre del fichero
+ */
 void Data::build(char* filename) {
   std::ifstream file(filename);
 
   if (!file) {
     throw "Error: Can't open file";
   } 
-
   file >> dataSize_;
   file >> dataElementsSize_;
 
@@ -34,10 +57,18 @@ void Data::build(char* filename) {
   }
 }
 
+/**
+ * @brief Devuelve el conjunto de subconjuntos
+ * 
+ * @return std::vector<std::vector<float>> Conjuntos de subconjuntos
+ */
 std::vector<std::vector<float>> Data::getData(void) {
   return setData_;
 }
 
+/**
+ * @brief Muestra los datos del problema
+ */
 void Data::write(void) {
   std::cout << "\nTamaño del conjunto: " << dataSize_ << "\n";
   std::cout << "Tamaño de los elementos: " << dataElementsSize_ << "\n"; 
@@ -52,11 +83,20 @@ void Data::write(void) {
   std::cout << "\n";
 }
 
-
+/**
+ * @brief Devuelve el tamaño del conjunto
+ * 
+ * @return size_t Tamaño del conjunto
+ */
 size_t Data::getDataSize() {
   return dataSize_;
 }
 
+/**
+ * @brief Devuelve el tamaño de los subconjuntos
+ * 
+ * @return size_t Tamaño de los subconjuntos
+ */
 size_t Data::getElementsSize() {
   return dataElementsSize_;
 }
