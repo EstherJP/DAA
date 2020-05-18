@@ -21,7 +21,7 @@ void consGreedy::searchSolution(void) {
   bestSolution_ = auxSol;
   bestDistance_ = totalDistance(bestSolution_);
   // postProcessing(bestSolution_, bestDistance_)
-  showSolution(bestSolution_);
+  // showSolution(bestSolution_);
 }
 
 /** TESTS CUTRES **/

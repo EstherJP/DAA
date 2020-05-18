@@ -25,8 +25,10 @@ class BranchBound {
   
   public:
     BranchBound();
-    BranchBound(MaxDivProblem* LBSolution);
+    BranchBound(MaxDivProblem* LBSolution, int str);
     void showSolution();
+
+    void setExpandStrategy(int str);
 
 
     // void initializeTree(void);

@@ -34,49 +34,113 @@ int main(int argc, char* argv[]) {
 
     std::chrono::time_point<chrono::system_clock> startTime, endTime;
     std::chrono::duration<float, std::milli> duration; 
-    std::cout << "--- Constructivo voraz ---\n";
+    std::cout << "\n--- Constructivo voraz ---\n";
     startTime = std::chrono::system_clock::now();
     interface->maxMeanInterface();
     endTime = std::chrono::system_clock::now();
     duration = endTime - startTime;
     std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
 
-    // std::cout << "--- Constructivo voraz con búsqueda local ---\n";
-    // startTime = std::chrono::system_clock::now();
-    // interface->greedySearch();
-    // endTime = std::chrono::system_clock::now();
-    // duration = endTime - startTime;
-    // std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
+    std::cout << "\n--- Constructivo voraz con búsqueda local ---\n";
+    startTime = std::chrono::system_clock::now();
+    interface->greedySearch();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
 
-    // std::cout << "\n--- Destructivo voraz ---\n";
-    // interface->setStrategy(desgreedy);
-    // startTime = std::chrono::system_clock::now();
-    // interface->maxMeanInterface();
-    // endTime = std::chrono::system_clock::now();
-    // duration = endTime - startTime;
-    // std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
+    std::cout << "\n--- Destructivo voraz ---\n";
+    interface->setStrategy(desgreedy);
+    startTime = std::chrono::system_clock::now();
+    interface->maxMeanInterface();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
 
-    // std::cout << "--- Destructivo voraz con búsqueda local ---\n";
-    // startTime = std::chrono::system_clock::now();
-    // interface->greedySearch();
-    // endTime = std::chrono::system_clock::now();
-    // duration = endTime - startTime;
-    // std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
+    std::cout << "\n--- Destructivo voraz con búsqueda local ---\n";
+    startTime = std::chrono::system_clock::now();
+    interface->greedySearch();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
 
-    // std::cout << "\n--- Grasp ---\n";
-    // interface->setStrategy(grasp);
-    // startTime = std::chrono::system_clock::now();
-    // interface->maxMeanInterface();
-    // endTime = std::chrono::system_clock::now();
-    // duration = endTime - startTime;
-    // std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
+    std::cout << "\n--- Grasp ---\n";
+    interface->setStrategy(grasp);
+    startTime = std::chrono::system_clock::now();
+    interface->maxMeanInterface();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
 
-    std::cout << "\n--- Ramificación y poda ---\n";
-    BranchBound* bb = new BranchBound(consgreedy);
-    bb->branchBound();
-    bb->showSolution();
+    // delete consgreedy;
+    // delete desgreedy;
+    // delete grasp;
+    // delete interface;
+
+    std::cout << "\n--- Ramificación y poda con constructivo voraz expandiendo la cota más pequeña ---\n";
+    consgreedy = new consGreedy(setData, solutionSize, maxIter);
+    consgreedy->searchSolution();
+    BranchBound* branchBound = new BranchBound(consgreedy, 0);
+    startTime = std::chrono::system_clock::now();
+    branchBound->branchBound();
+    branchBound->showSolution();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
     
+    std::cout << "\n--- Ramificación y poda con destructivo voraz expandiendo la cota más pequeña ---\n";
+    desgreedy = new desGreedy(setData, solutionSize, maxIter);
+    desgreedy->searchSolution();
+    branchBound = new BranchBound(desgreedy, 0);
+    startTime = std::chrono::system_clock::now();
+    branchBound->branchBound();
+    branchBound->showSolution();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
 
+    std::cout << "\n--- Ramificación y poda con grasp expandiendo la cota más pequeña ---\n";
+    grasp = new Grasp(setData, solutionSize, maxIter, cardinality);
+    grasp->searchSolution();
+    branchBound = new BranchBound(grasp, 0);
+    startTime = std::chrono::system_clock::now();
+    branchBound->branchBound();
+    branchBound->showSolution();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    std::cout << "\n--- Ramificación y poda con constructivo voraz expandiendo por profundidad ---\n";
+    consgreedy = new consGreedy(setData, solutionSize, maxIter);
+    consgreedy->searchSolution();
+    branchBound = new BranchBound(consgreedy, 1);
+    startTime = std::chrono::system_clock::now();
+    branchBound->branchBound();
+    branchBound->showSolution();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
+    
+    std::cout << "\n--- Ramificación y poda con destructivo voraz expandiendo por profundidad ---\n";
+    desgreedy = new desGreedy(setData, solutionSize, maxIter);
+    desgreedy->searchSolution();
+    branchBound = new BranchBound(desgreedy, 1);
+    startTime = std::chrono::system_clock::now();
+    branchBound->branchBound();
+    branchBound->showSolution();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
+
+    std::cout << "\n--- Ramificación y poda con grasp expandiendo por profundidad ---\n";
+    grasp = new Grasp(setData, solutionSize, maxIter, cardinality);
+    grasp->searchSolution();
+    branchBound = new BranchBound(grasp, 1);
+    startTime = std::chrono::system_clock::now();
+    branchBound->branchBound();
+    branchBound->showSolution();
+    endTime = std::chrono::system_clock::now();
+    duration = endTime - startTime;
+    std::cout << "Tiempo transcurrido: " << duration.count() << "ms" << std::endl;
   } catch(char const* error) {
     std::cout << error << std::endl;
   }

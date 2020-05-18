@@ -2,11 +2,11 @@
 
 BranchBound::BranchBound() {}
 
-BranchBound::BranchBound(MaxDivProblem* LBSolution) : 
+BranchBound::BranchBound(MaxDivProblem* LBSolution, int str) : 
   LBSolution_(LBSolution)
 {
   LB_ = LBSolution_->getBestDistance();
-  tree_ = new Tree(LBSolution);
+  tree_ = new Tree(LBSolution, str);
   // allNodes_ = LBSolution_->getAllNodes();
 
 }
@@ -37,6 +37,10 @@ void BranchBound::branchBound(void) {
 
   // tree_->writeTree();
   // std::cout << "lower final " << tree_->getLowerBound() << "\n";
+}
+
+void BranchBound::setExpandStrategy(int str) {
+  tree_->setExpandStrategy(str);
 }
 
 void BranchBound::showSolution() {

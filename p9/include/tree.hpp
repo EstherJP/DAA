@@ -19,9 +19,11 @@ class Tree {
 
     std::vector<std::vector<float>> solution_;
 
+    int expandStrategy_;
+
   public:
     Tree();
-    Tree(MaxDivProblem*);
+    Tree(MaxDivProblem*, int);
     ~Tree();
 
     std::vector<std::vector<float>> deleteNode(std::vector<std::vector<float>> nodes, std::vector<float> node);
@@ -32,8 +34,13 @@ class Tree {
 
     void bound(ExpansiveNode* node);
 
+    void expandNode(ExpansiveNode* node);
     void writeTree(void);
     void initializeTree(void);
-    void expandNode(ExpansiveNode* node);
+
+    void setExpandStrategy(int str);
+    
     ExpansiveNode* nodeToExpand();
+    ExpansiveNode* expandNodeByLowerUpperBound();
+    ExpansiveNode* expandNodeByDepth();
 };

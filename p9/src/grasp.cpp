@@ -99,7 +99,7 @@ void Grasp::searchSolution(void) {
   bestSolution_ = auxSol;
   bestDistance_ = auxDistance;
   // std::cout << "final\n";
-  showSolution(bestSolution_);
+  // showSolution(bestSolution_);
 }
 
 

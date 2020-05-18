@@ -24,7 +24,7 @@ class maxDivCalculator {
     void maxMeanInterface(void) {
       if(calculateMaxDiv_) {
         calculateMaxDiv_->searchSolution();
-        // calculateMaxDiv_->showSolution();
+        calculateMaxDiv_->showSolution(calculateMaxDiv_->getBestSolution());
       }
       else {
         throw "Error: Strategy not set";
@@ -34,7 +34,7 @@ class maxDivCalculator {
     void greedySearch(void) {
       if(calculateMaxDiv_) {
         calculateMaxDiv_->postProcessing();
-        // calculateMaxDiv_->showSolution();
+        calculateMaxDiv_->showSolution(calculateMaxDiv_->getBestSolution());
       }
       else {
         throw "Error: Strategy not set";
@@ -45,7 +45,7 @@ class maxDivCalculator {
       if(calculateMaxDiv_) {
         calculateMaxDiv_ -> generateRandomSolution();
         calculateMaxDiv_->postProcessing();
-        // calculateMaxDiv_->showSolution();
+        calculateMaxDiv_->showSolution(calculateMaxDiv_->getBestSolution());
       }
       else {
         throw "Error: Strategy not set";

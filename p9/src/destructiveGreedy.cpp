@@ -30,5 +30,5 @@ void desGreedy::searchSolution(void) {
     center = gravityCenter(auxSol);
   } while (auxSol.size() > solutionSize_);
   bestSolution_ = auxSol;
-  showSolution(auxSol);
+  // showSolution(auxSol);
 }

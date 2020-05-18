@@ -2,13 +2,14 @@
 
 Tree::Tree() {}
 
-Tree::Tree(MaxDivProblem* sol) {
+Tree::Tree(MaxDivProblem* sol, int str) {
   sol_ = sol;
   allNodes_ = sol->getAllNodes();
   totalNodes_ = sol->getAllNodes().size();
   currentDepth_ = 0;
   solutionSize_ = sol->getSolutionSize();
   lowerBound_ = sol->getBestDistance();
+  expandStrategy_ = str;
 }
 
 std::vector<std::vector<float>> Tree::deleteNode(std::vector<std::vector<float>> nodes, std::vector<float> node) {
@@ -36,11 +37,6 @@ void Tree::initializeTree(void) {
 }
 
 void Tree::writeTree(void) {
-  // std::cout << "NODOS A EXPANDIR\n";
-  // for (int i = 0; i < nodesToExpand_.size(); i++) {
-  //   nodesToExpand_[i]->writeNode();
-  // }
-
   std::cout << "NODOS GENERADOS\n";
   for (int i = 0; i < generateNodes_.size(); i++) {
     generateNodes_[i]->writeNode();
@@ -54,7 +50,7 @@ void Tree::bound(ExpansiveNode* node) {
     }
   }
 }
-
+ 
 void Tree::expandNode(ExpansiveNode* node) {
   int maxNode = allNodes_.size() - (solutionSize_ - node->getPartialSolution().size()) - (node->getId());
   for (int i = node->getId() + 1; i < node->getId() + 1 + maxNode; i++) {
@@ -86,6 +82,30 @@ float Tree::getLowerBound() {
 }
 
 ExpansiveNode* Tree::nodeToExpand(void) {
+  if (expandStrategy_ == 0) {
+    return expandNodeByLowerUpperBound();
+  } else if (expandStrategy_ == 1) {
+    return expandNodeByDepth();
+  }
+}
+
+ExpansiveNode* Tree::expandNodeByDepth(void) {
+  int index = 0;
+  float maxDepth = nodesToExpand_[0]->getDepth();
+  for (int i = 1; i < nodesToExpand_.size(); i++) {
+    if (maxDepth < nodesToExpand_[i]->getDepth()) {
+      index = i;
+      maxDepth = nodesToExpand_[i]->getDepth();
+    }
+  }
+  return nodesToExpand_[index];
+}
+
+void Tree::setExpandStrategy(int str) {
+  expandStrategy_ = str;
+}
+
+ExpansiveNode* Tree::expandNodeByLowerUpperBound(void) {
   int indexNode = 0;
   float minUB = nodesToExpand_[0]->getUpperBound();
   for (int i = 1; i < nodesToExpand_.size(); i++) {
