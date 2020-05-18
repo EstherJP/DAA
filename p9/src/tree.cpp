@@ -89,8 +89,6 @@ ExpansiveNode* Tree::nodeToExpand(void) {
   int indexNode = 0;
   float minUB = nodesToExpand_[0]->getUpperBound();
   for (int i = 1; i < nodesToExpand_.size(); i++) {
-    // std::cout << "\nCota actual " << minUB << " del id " << indexNode << "\n";
-    // std::cout << "Cota a comparar " << nodesToExpand_[i]->getUpperBound() << " del id " << i << "\n";
     if (minUB > nodesToExpand_[i]->getUpperBound()) {
       minUB = nodesToExpand_[i]->getUpperBound();
       indexNode = i;

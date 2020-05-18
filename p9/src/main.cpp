@@ -74,6 +74,7 @@ int main(int argc, char* argv[]) {
     std::cout << "\n--- Ramificación y poda ---\n";
     BranchBound* bb = new BranchBound(consgreedy);
     bb->branchBound();
+    bb->showSolution();
     
 
   } catch(char const* error) {

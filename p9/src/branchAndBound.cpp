@@ -36,5 +36,17 @@ void BranchBound::branchBound(void) {
   }
 
   // tree_->writeTree();
-  std::cout << "lower final " << tree_->getLowerBound() << "\n";
+  // std::cout << "lower final " << tree_->getLowerBound() << "\n";
+}
+
+void BranchBound::showSolution() {
+  std::cout << "Distancia máxima: " << tree_->getLowerBound() << "\n";
+  for (int i = 0; i < tree_->getSolution().size(); i++) {
+    std::cout << "Conjunto " << i + 1 << ":  ";
+    for (int j = 0; j < tree_->getSolution()[i].size(); j++) {
+      std::cout << tree_->getSolution()[i][j] << " ";
+    }
+    std::cout << "\n";
+  }
+  std::cout << "\n";
 }
