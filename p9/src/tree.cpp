@@ -2,47 +2,103 @@
 
 Tree::Tree() {}
 
-Tree::Tree(MaxDivProblem* sol)
-
-{
+Tree::Tree(MaxDivProblem* sol) {
   sol_ = sol;
   allNodes_ = sol->getAllNodes();
   totalNodes_ = sol->getAllNodes().size();
   currentDepth_ = 0;
   solutionSize_ = sol->getSolutionSize();
+  lowerBound_ = sol->getBestDistance();
 }
 
+std::vector<std::vector<float>> Tree::deleteNode(std::vector<std::vector<float>> nodes, std::vector<float> node) {
+  for (auto iter = nodes.begin(); iter < nodes.end(); iter++) {
+    if (*iter == node) {
+      nodes.erase(iter);
+      return nodes;
+    }
+  }
+}
 
 void Tree::initializeTree(void) {
   currentDepth_++;
-  for (int i = 0; i < totalNodes_ - solutionSize_; i++) {
-    std::vector<std::vector<float>> noInSolution = allNodes_;
-    for (auto iter = noInSolution.begin(); iter < noInSolution.end(); iter++) {
-      if (*iter == allNodes_[i]) {
-        noInSolution.erase(iter);
-      }
-    }
-    ExpansiveNode* currentNode = new ExpansiveNode(allNodes_[i], i, currentDepth_, noInSolution);
+  for (int i = 0; i < totalNodes_ - solutionSize_ + 1; i++) {
+    std::vector<std::vector<float>> noInSolution = deleteNode(allNodes_, allNodes_[i]);
+    std::vector<std::vector<float>> partialSolution;
+    partialSolution.push_back(allNodes_[i]);
+    ExpansiveNode* currentNode = new ExpansiveNode(allNodes_[i], i, currentDepth_, noInSolution, partialSolution, 0);
+    // currentNode->setPartialSolution(allNodes_[i]);
     currentNode->upperBound(solutionSize_);
     nodesToExpand_.push_back(currentNode);
+    generateNodes_.push_back(currentNode);
+    // currentNode->writeNode();
   }
 }
 
 void Tree::writeTree(void) {
-  for (int i = 0; i < nodesToExpand_.size(); i++) {
-    nodesToExpand_[i]->writeNode();
+  // std::cout << "NODOS A EXPANDIR\n";
+  // for (int i = 0; i < nodesToExpand_.size(); i++) {
+  //   nodesToExpand_[i]->writeNode();
+  // }
+
+  std::cout << "NODOS GENERADOS\n";
+  for (int i = 0; i < generateNodes_.size(); i++) {
+    generateNodes_[i]->writeNode();
   }
 }
 
-float Tree::nodeUpperBound(std::vector<std::vector<float>> sol) {
-  // float z1, z2, z3;
-  // // z1, distancia solucion actual
-  // int i = currentDepth_;
-  // z1 = sol_->totalDistance(currentBranch_);
-  // std::cout << "z1 " << z1 << std::endl;
+void Tree::bound(ExpansiveNode* node) {
+  for (auto iter = nodesToExpand_.begin(); iter < nodesToExpand_.end(); iter++) {
+    if (*iter == node) {
+      nodesToExpand_.erase(iter);
+    }
+  }
 }
 
+void Tree::expandNode(ExpansiveNode* node) {
+  int maxNode = allNodes_.size() - (solutionSize_ - node->getPartialSolution().size()) - (node->getId());
+  for (int i = node->getId() + 1; i < node->getId() + 1 + maxNode; i++) {
+    std::vector<std::vector<float>> noInSolution = deleteNode(node->getNoInSolution(), allNodes_[i]);
+    std::vector<std::vector<float>> partialSolution = node->getPartialSolution();
+    partialSolution.push_back(allNodes_[i]);
+    ExpansiveNode* currentNode = new ExpansiveNode(allNodes_[i], i, node->getPartialSolution().size() + 1, noInSolution, partialSolution, node->getDispersion());
+    currentNode->upperBound(solutionSize_);
 
-void Tree::expandTree(void) {
-  // for ()
+    if (node->getDepth() + 1 == solutionSize_) {
+      if (currentNode->getUpperBound() > lowerBound_) {
+        lowerBound_ = currentNode->getUpperBound();
+        solution_ = currentNode->getPartialSolution();
+      }
+    } else {
+      nodesToExpand_.push_back(currentNode);
+    }
+    generateNodes_.push_back(currentNode);
+  }
+  bound(node);
+}
+
+std::vector<std::vector<float>> Tree::getSolution() {
+  return solution_;
+}
+
+float Tree::getLowerBound() {
+  return lowerBound_;
+}
+
+ExpansiveNode* Tree::nodeToExpand(void) {
+  int indexNode = 0;
+  float minUB = nodesToExpand_[0]->getUpperBound();
+  for (int i = 1; i < nodesToExpand_.size(); i++) {
+    // std::cout << "\nCota actual " << minUB << " del id " << indexNode << "\n";
+    // std::cout << "Cota a comparar " << nodesToExpand_[i]->getUpperBound() << " del id " << i << "\n";
+    if (minUB > nodesToExpand_[i]->getUpperBound()) {
+      minUB = nodesToExpand_[i]->getUpperBound();
+      indexNode = i;
+    }
+  }
+  return nodesToExpand_[indexNode];
+}
+
+std::vector<ExpansiveNode*> Tree::getNodesToExpand() {
+  return nodesToExpand_;
 }
