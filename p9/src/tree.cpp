@@ -26,6 +26,7 @@ Tree::Tree(MaxDivProblem* sol, int str) {
   solutionSize_ = sol->getSolutionSize();
   lowerBound_ = sol->getBestDistance();
   expandStrategy_ = str;
+  solution_ = sol->getBestSolution();
 }
 
 /**
@@ -42,6 +43,15 @@ std::vector<std::vector<float>> Tree::deleteNode(std::vector<std::vector<float>>
       return nodes;
     }
   }
+}
+
+/**
+ * @brief Devuelve los nodos generados
+ * 
+ * @return std::vector<ExpansiveNode*> 
+ */
+std::vector<ExpansiveNode*> Tree::getGenerateNodes() {
+  return generateNodes_;
 }
 
 /**
@@ -137,6 +147,8 @@ ExpansiveNode* Tree::nodeToExpand(void) {
     return expandNodeByLowerUpperBound();
   } else if (expandStrategy_ == 1) {
     return expandNodeByDepth();
+  } else if (expandStrategy_ == 2) {
+    return expandBySecondBestNode();
   }
 }
 
@@ -172,6 +184,30 @@ ExpansiveNode* Tree::expandNodeByLowerUpperBound(void) {
     }
   }
   return nodesToExpand_[indexNode];
+}
+
+// PRIMER MODIFICACION
+ExpansiveNode* Tree::expandBySecondBestNode() {
+  int indexFisrtBest = 0;
+  float firstUB = nodesToExpand_[0]->getUpperBound();
+  for (int i = 1; i < nodesToExpand_.size(); i++) {
+    if (firstUB < nodesToExpand_[i]->getUpperBound()) {
+      firstUB = nodesToExpand_[i]->getUpperBound();
+      indexFisrtBest = i;
+    }
+  }
+
+  int indexSecondBest = 0;
+  float secondUB = nodesToExpand_[0]->getUpperBound();
+  for (int i = 0; i < nodesToExpand_.size(); i++) {
+    if (secondUB < nodesToExpand_[i]->getUpperBound() && 
+        nodesToExpand_[i] != nodesToExpand_[indexFisrtBest]) {
+      secondUB = nodesToExpand_[i]->getUpperBound();
+      indexSecondBest = i;
+    }
+  }
+
+  return nodesToExpand_[indexFisrtBest];
 }
 
 /**

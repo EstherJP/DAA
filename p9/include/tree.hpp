@@ -39,6 +39,7 @@ class Tree {
     std::vector<std::vector<float>> deleteNode(std::vector<std::vector<float>> nodes, std::vector<float> node); // Elimina un nodo de nu conjunto de nodos
 
     std::vector<ExpansiveNode*> getNodesToExpand();  // Devuelve los nodos a expandir
+    std::vector<ExpansiveNode*> getGenerateNodes();  // Devuelve los nodos generados
     float getLowerBound();                           // Devuelve la cota inferior
     std::vector<std::vector<float>> getSolution();   // Devuelve la solución
 
@@ -51,4 +52,5 @@ class Tree {
     ExpansiveNode* nodeToExpand();                   // Elige el nodo a expandir según la estrategia
     ExpansiveNode* expandNodeByLowerUpperBound();    // Elige el nodo a expandir por la cota superior más bajas
     ExpansiveNode* expandNodeByDepth();              // Elige el nodo a expandir por profundidad
+    ExpansiveNode* expandBySecondBestNode();
 };

@@ -48,6 +48,7 @@ void BranchBound::branchBound(void) {
  */
 void BranchBound::showSolution() {
   std::cout << "Distancia máxima: " << tree_->getLowerBound() << "\n";
+  std::cout << "Número de nodos generados: " << tree_->getGenerateNodes().size() << "\n";
   for (int i = 0; i < tree_->getSolution().size(); i++) {
     std::cout << "Conjunto " << i + 1 << ":  ";
     for (int j = 0; j < tree_->getSolution()[i].size(); j++) {
